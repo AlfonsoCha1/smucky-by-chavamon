@@ -7,7 +7,7 @@ const products = [
         category: ["playeras_hombre"],
         price: 150,
         rating: 4.9,
-        image: "Imagenes de ropa/Ropa de Hombre/Playera Premium/WhatsApp Image 2026-03-02 at 7.19.14 PM.jpg",
+        image: "Imagenes de ropa/Ropa de Hombre/Playera Premium/Azul_claro.jpg",
         featured: true,
         badge: "new"
     },
@@ -17,7 +17,7 @@ const products = [
         category: ["playeras_hombre"],
         price: 150,
         rating: 4.8,
-        image: "Imagenes de ropa/Ropa de Hombre/Playera Premium/WhatsApp Image 2026-03-02 at 7.19.13 PM (1).jpg",
+        image: "Imagenes de ropa/Ropa de Hombre/Playera Premium/Rojo.jpg",
         featured: true,
         badge: "new"
     },
@@ -27,7 +27,7 @@ const products = [
         category: ["playeras_hombre"],
         price: 150,
         rating: 4.7,
-        image: "Imagenes de ropa/Ropa de Hombre/Playera Premium/WhatsApp Image 2026-03-02 at 7.19.13 PM (2).jpg",
+        image: "Imagenes de ropa/Ropa de Hombre/Playera Premium/Rojo_Vino.jpg",
         featured: true,
         badge: "new"
     },
@@ -37,7 +37,7 @@ const products = [
         category: ["playeras_hombre"],
         price: 150,
         rating: 4.9,
-        image: "Imagenes de ropa/Ropa de Hombre/Playera Premium/WhatsApp Image 2026-03-02 at 7.19.13 PM (3).jpg",
+        image: "Imagenes de ropa/Ropa de Hombre/Playera Premium/Blanco.jpg",
         featured: true,
         badge: "new"
     },
@@ -49,7 +49,7 @@ const products = [
         category: ["playeras_sin_mangas_hombre"],
         price: 70,
         rating: 4.8,
-        image: "Imagenes de ropa/Ropa de Hombre/Playera sin mangas/WhatsApp Image 2026-03-02 at 7.19.15 PM (3).jpg",
+        image: "Imagenes de ropa/Ropa de Hombre/Playera sin mangas/Todos_Colores.jpg",
         featured: true,
         badge: "new"
     },
@@ -60,7 +60,7 @@ const products = [
         category: ["calcetines"],
         price: 45,
         rating: 4.8,
-        image: "Imagenes de ropa/Calcetines deportivo/WhatsApp Image 2026-03-02 at 7.19.14 PM (3).jpg",
+        image: "Imagenes de ropa/Calcetines deportivo/cacetines_blanco_negro.jpg",
         featured: true,
         badge: "new"
     },
@@ -70,7 +70,7 @@ const products = [
         category: ["calcetines"],
         price: 45,
         rating: 4.7,
-        image: "Imagenes de ropa/Calcetines deportivo/WhatsApp Image 2026-03-02 at 7.19.15 PM.jpg",
+        image: "Imagenes de ropa/Calcetines deportivo/cioc_color_blanco_negro.jpg",
         featured: false,
         badge: "new"
     },
@@ -80,7 +80,7 @@ const products = [
         category: ["calcetines"],
         price: 45,
         rating: 4.9,
-        image: "Imagenes de ropa/Calcetines deportivo/WhatsApp Image 2026-03-02 at 7.19.15 PM (1).jpg",
+        image: "Imagenes de ropa/Calcetines deportivo/Rosa_azul_dama.jpg",
         featured: false,
         badge: "new"
     },
@@ -133,6 +133,8 @@ const heroSlides = document.querySelectorAll(".hero-slide");
 const heroPrev = document.querySelector(".hero-prev");
 const heroNext = document.querySelector(".hero-next");
 const heroDots = document.querySelectorAll(".dot");
+const heroImages = document.querySelectorAll(".hero-image img");
+const heroFallbackImage = "Imagenes de ropa/Ropa de Hombre/Playera Premium/Azul_claro.jpg";
 
 // Navigation
 const navLinks = document.querySelectorAll(".nav-link");
@@ -164,6 +166,14 @@ let currentCategory = "all";
 let filteredProducts = [...products];
 let cart = [];
 let currentSlide = 0;
+
+heroImages.forEach((img) => {
+    img.addEventListener("error", () => {
+        if (!img.src.includes("Azul_claro.jpg")) {
+            img.src = heroFallbackImage;
+        }
+    });
+});
 
 // ====== HERO SLIDER ======
 function showSlide(index) {
@@ -330,8 +340,11 @@ function loadCategoryProducts(category) {
         case "playeras_sin_mangas":
             sectionId = "playeras-sin-mangas-hombre";
             break;
-        case "calcetines":
+        case "calcetines_hombre":
             sectionId = "calcetines";
+            break;
+        case "calcetines_mujer":
+            sectionId = "calcetines-mujer";
             break;
         case "blusas":
             sectionId = "blusas-mujer";
