@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smucky Store - Tu Tienda Online</title>
+    <title>Smucky Chavarín - Ropa Deportiva Premium</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
@@ -11,57 +14,146 @@
     <header class="header">
         <div class="header-container">
             <div class="logo">
-                <h1>🛍️ Smucky Chavarín</h1>
+                <h1>SMUCKY´s By CHAVAMON</h1>
             </div>
-            <div class="search-bar">
-                <input type="text" id="searchInput" placeholder="Buscar productos...">
-                <button id="searchBtn">🔍 Buscar</button>
-            </div>
+            <nav class="main-nav">
+                <a href="#" class="nav-link" data-category="all">Inicio</a>
+                <a href="#" class="nav-link" data-category="clothing">Ropa</a>
+                <a href="#" class="nav-link" data-category="navidad">Navidad</a>
+                <a href="#nuevos">Nuevos</a>
+                <a href="#ofertas">Ofertas</a>
+            </nav>
             <div class="header-actions">
+                <div class="search-icon" id="searchToggle">🔍</div>
                 <button class="cart-btn" id="cartBtn">
-                    🛒 Carrito <span id="cartCount" class="cart-count">0</span>
+                    <span class="cart-icon">🛒</span>
+                    <span id="cartCount" class="cart-count">0</span>
                 </button>
             </div>
         </div>
+        <div class="search-bar" id="searchBar">
+            <input type="text" id="searchInput" placeholder="¿Qué estás buscando?">
+            <button id="searchBtn">Buscar</button>
+        </div>
     </header>
 
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="#" class="nav-link active">Inicio</a>
-            <a href="#" class="nav-link" data-category="navidad">Navidad</a>
-            <a href="#" class="nav-link" data-category="clothing">Ropa</a>
-            <!--<a href="#" class="nav-link" data-category="home">Hogar</a>
-            <a href="#" class="nav-link" data-category="books">Libros</a>
-            <a href="#" class="nav-link" data-category="sports">Deportes</a>-->
-        </div>
-    </nav>
-
-    <!-- Banner Promocional -->
-    <div class="banner">
-        <h2>¡Bienvenido a Smucky Chavarín!</h2>
-        <p>Descubre miles de productos con los mejores precios</p>
-    </div>
-
-    <!-- Main Content -->
-    <main class="container">
-        <!-- Filtros y Ordenamiento -->
-        <div class="filters-section">
-            <div class="sort-container">
-                <label for="sortSelect">Ordenar por:</label>
-                <select id="sortSelect">
-                    <option value="default">Más relevante</option>
-                    <option value="price-low">Menor precio</option>
-                    <option value="price-high">Mayor precio</option>
-                    <option value="rating">Mejor valorados</option>
-                </select>
+    <!-- Hero Section con Slider -->
+    <section class="hero-slider">
+        <div class="hero-slide active" style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);">
+            <div class="hero-content">
+                <h1 class="hero-title">Colección Premium 2026</h1>
+                <p class="hero-subtitle">Diseño + Comodidad + Calidad</p>
+                <button class="hero-cta">Comprar Ahora</button>
+            </div>
+            <div class="hero-image">
+                <img src="Imagenes de ropa/Playera Premium/WhatsApp Image 2026-03-02 at 7.19.14 PM.jpg" alt="Playera Premium">
             </div>
         </div>
-
-        <!-- Products Grid -->
-        <div class="products-grid" id="productsGrid">
-            <!-- Los productos se cargarán aquí con JavaScript -->
+        <div class="hero-slide" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+            <div class="hero-content">
+                <h1 class="hero-title">Hasta 40% Descuento</h1>
+                <p class="hero-subtitle">En toda la colección de calcetines premium</p>
+                <button class="hero-cta">Ver Promoción</button>
+            </div>
+            <div class="hero-image">
+                <img src="Imagenes de ropa/Calcetines deportivo/WhatsApp Image 2026-03-02 at 7.19.14 PM (3).jpg" alt="Calcetines Premium">
+            </div>
         </div>
+        <div class="hero-slide" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+            <div class="hero-content">
+                <h1 class="hero-title">Ropa Deportiva Elite</h1>
+                <p class="hero-subtitle">Tecnología avanzada para tu mejor rendimiento</p>
+                <button class="hero-cta">Explorar Colección</button>
+            </div>
+            <div class="hero-image">
+                <img src="Imagenes de ropa/Playera sin mangas/WhatsApp Image 2026-03-02 at 7.19.15 PM (3).jpg" alt="Playera Sin Mangas">
+            </div>
+        </div>
+        <button class="hero-arrow hero-prev">‹</button>
+        <button class="hero-arrow hero-next">›</button>
+        <div class="hero-dots">
+            <span class="dot active" data-slide="0"></span>
+            <span class="dot" data-slide="1"></span>
+            <span class="dot" data-slide="2"></span>
+        </div>
+    </section>
+
+    <!-- Featured Categories -->
+    <section class="featured-categories">
+        <div class="container">
+            <div class="category-grid">
+                <div class="category-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                    <h3>Ropa Deportiva</h3>
+                    <p>Diseñada para alto rendimiento</p>
+                    <button class="category-btn">Comprar</button>
+                </div>
+                <div class="category-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                    <h3>Colección Navidad</h3>
+                    <p>Edición limitada</p>
+                    <button class="category-btn">Comprar</button>
+                </div>
+                <div class="category-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                    <h3>Accesorios</h3>
+                    <p>Completa tu look</p>
+                    <button class="category-btn">Comprar</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Sección de Productos Destacados -->
+        <section class="featured-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Productos Destacados</h2>
+                    <p class="section-subtitle">Lo más popular de nuestra colección</p>
+                </div>
+                <div class="featured-grid" id="featuredGrid">
+                    <!-- Productos destacados se cargarán aquí -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Todos los Productos -->
+        <section class="products-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Todos los Productos</h2>
+                    <!-- Filtros y Ordenamiento -->
+                    <div class="filters-section">
+                        <div class="sort-container">
+                            <label for="sortSelect">Ordenar por:</label>
+                            <select id="sortSelect">
+                                <option value="default">Más relevante</option>
+                                <option value="price-low">Menor precio</option>
+                                <option value="price-high">Mayor precio</option>
+                                <option value="rating">Mejor valorados</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <!-- Products Grid -->
+                <div class="products-grid" id="productsGrid">
+                    <!-- Los productos se cargarán aquí con JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter Section -->
+        <section class="newsletter-section">
+            <div class="container">
+                <div class="newsletter-content">
+                    <h2>Únete a nuestra comunidad</h2>
+                    <p>Recibe ofertas exclusivas y novedades directo en tu correo</p>
+                    <div class="newsletter-form">
+                        <input type="email" placeholder="Tu correo electrónico" id="newsletterEmail">
+                        <button id="newsletterBtn">Suscribirme</button>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
     <!-- Modal del Carrito -->
@@ -90,7 +182,7 @@
         <div class="footer-content">
             <div class="footer-section">
                 <h4>Sobre Nosotros</h4>
-                <p>Smucky Chavarín es tu tienda online de confianza con los mejores productos a los mejores precios.</p>
+                <p>SMUCKY´s By CHAVAMON es tu tienda online de confianza con los mejores productos a los mejores precios.</p>
             </div>
             <div class="footer-section">
                 <h4>Información</h4>
@@ -112,7 +204,7 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2025 Smucky Chavarín. Todos los derechos reservados.</p>
+            <p>&copy; 2026 SMUCKY´s By CHAVAMON. Todos los derechos reservados.</p>
         </div>
     </footer>
 

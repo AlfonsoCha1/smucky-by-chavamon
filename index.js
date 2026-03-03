@@ -1,84 +1,115 @@
-// ====== DATOS DE PRODUCTOS (ejemplo) ======
+// ====== DATOS DE PRODUCTOS ======
 const products = [
     {
         id: 1,
-        name: "Suéter navideño rojo para dama",
+        name: "Playera Premium Smucky Rojo",
         category: "clothing",
         price: 299,
-        rating: 4.8,
-        image: "https://via.placeholder.com/200x200?text=Sueter+Navideno"
+        rating: 4.9,
+        image: "Imagenes de ropa/Playera Premium/WhatsApp Image 2026-03-02 at 7.19.14 PM.jpg",
+        featured: true,
+        badge: "new"
     },
     {
         id: 2,
-        name: "Playera deportiva Smucky hombre",
+        name: "Playera Premium Smucky Negro",
         category: "clothing",
-        price: 199,
-        rating: 4.5,
-        image: "https://via.placeholder.com/200x200?text=Playera+Smucky"
+        price: 299,
+        rating: 4.8,
+        image: "Imagenes de ropa/Playera Premium/WhatsApp Image 2026-03-02 at 7.19.13 PM (1).jpg",
+        featured: true,
+        badge: null
     },
     {
         id: 3,
-        name: "Short deportivo dama Smucky",
+        name: "Playera Premium Performance Azul",
         category: "clothing",
-        price: 249,
-        rating: 4.6,
-        image: "https://via.placeholder.com/200x200?text=Short+Smucky"
+        price: 289,
+        rating: 4.7,
+        image: "Imagenes de ropa/Playera Premium/WhatsApp Image 2026-03-02 at 7.19.13 PM (2).jpg",
+        featured: true,
+        badge: "sale"
     },
     {
         id: 4,
-        name: "Calcetines deportivos premium (3 pares)",
+        name: "Playera Premium Edición Limitada",
         category: "clothing",
-        price: 149,
-        rating: 4.7,
-        image: "https://via.placeholder.com/200x200?text=Calcetines"
+        price: 349,
+        rating: 4.9,
+        image: "Imagenes de ropa/Playera Premium/WhatsApp Image 2026-03-02 at 7.19.13 PM (3).jpg",
+        featured: true,
+        badge: "new"
     },
     {
         id: 5,
-        name: "Juego de esferas navideñas doradas",
-        category: "navidad",
-        price: 189,
-        rating: 4.4,
-        image: "https://via.placeholder.com/200x200?text=Esferas+Navidenas"
+        name: "Playera Premium White Collection",
+        category: "clothing",
+        price: 279,
+        rating: 4.6,
+        image: "Imagenes de ropa/Playera Premium/WhatsApp Image 2026-03-02 at 7.19.15 PM (2).jpg",
+        featured: true,
+        badge: null
     },
     {
         id: 6,
-        name: "Series de luces LED navideñas",
-        category: "navidad",
-        price: 159,
-        rating: 4.9,
-        image: "https://via.placeholder.com/200x200?text=Luces+LED"
+        name: "Calcetines Deportivos Premium Negro",
+        category: "clothing",
+        price: 149,
+        rating: 4.8,
+        image: "Imagenes de ropa/Calcetines deportivo/WhatsApp Image 2026-03-02 at 7.19.14 PM (3).jpg",
+        featured: true,
+        badge: "sale"
     },
     {
         id: 7,
-        name: "Luces navideñosas para árbol (100 piezas)",
-        category: "navidad",
-        price: 399,
-        rating: 4.2,
-        image: "https://via.placeholder.com/200x200?text=Audifonos"
+        name: "Calcetines Deportivos Multicolor",
+        category: "clothing",
+        price: 159,
+        rating: 4.7,
+        image: "Imagenes de ropa/Calcetines deportivo/WhatsApp Image 2026-03-02 at 7.19.15 PM.jpg",
+        featured: false,
+        badge: null
     },
-    /*{
+    {
         id: 8,
-        name: "Balón de fútbol tamaño 5",
-        category: "sports",
-        price: 259,
-        rating: 4.3,
-        image: "https://via.placeholder.com/200x200?text=Balon+Futbol"
-    },*/
-    /*{
+        name: "Calcetines Premium Pack Completo",
+        category: "clothing",
+        price: 169,
+        rating: 4.9,
+        image: "Imagenes de ropa/Calcetines deportivo/WhatsApp Image 2026-03-02 at 7.19.15 PM (1).jpg",
+        featured: false,
+        badge: null
+    },
+    {
         id: 9,
-        name: "Libro: Guía de regalos navideños",
-        category: "books",
+        name: "Playera Sin Mangas Smucky",
+        category: "clothing",
         price: 199,
-        rating: 4.1,
-        image: "https://via.placeholder.com/200x200?text=Libro"
-    }*/
+        rating: 4.8,
+        image: "Imagenes de ropa/Playera sin mangas/WhatsApp Image 2026-03-02 at 7.19.15 PM (3).jpg",
+        featured: true,
+        badge: "new"
+    },
+    {
+        id: 10,
+        name: "Blusa Premium Smucky Dama",
+        category: "clothing",
+        price: 329,
+        rating: 4.9,
+        image: "Imagenes de ropa/Blusa/1.jpg",
+        featured: true,
+        badge: "sale"
+    }
 ];
 
 // ====== REFERENCIAS A ELEMENTOS DEL DOM ======
 const productsGrid = document.getElementById("productsGrid");
-const navLinks = document.querySelectorAll(".nav-link");
+const featuredGrid = document.getElementById("featuredGrid");
+const navLinks = document.querySelectorAll(".main-nav .nav-link");
 const searchInput = document.getElementById("searchInput");
 const searchBtn = document.getElementById("searchBtn");
+const searchToggle = document.getElementById("searchToggle");
+const searchBar = document.getElementById("searchBar");
 const sortSelect = document.getElementById("sortSelect");
 const cartBtn = document.getElementById("cartBtn");
 const cartCount = document.getElementById("cartCount");
@@ -87,39 +118,116 @@ const closeCartBtn = document.getElementById("closeCartBtn");
 const cartItemsContainer = document.getElementById("cartItems");
 const cartTotalSpan = document.getElementById("cartTotal");
 const checkoutBtn = document.getElementById("checkoutBtn");
+const newsletterBtn = document.getElementById("newsletterBtn");
+const newsletterEmail = document.getElementById("newsletterEmail");
+
+// Hero Slider
+const heroSlides = document.querySelectorAll(".hero-slide");
+const heroPrev = document.querySelector(".hero-prev");
+const heroNext = document.querySelector(".hero-next");
+const heroDots = document.querySelectorAll(".dot");
 
 // ====== ESTADO ======
 let currentCategory = "all";
 let filteredProducts = [...products];
 let cart = [];
+let currentSlide = 0;
+
+// ====== HERO SLIDER ======
+function showSlide(index) {
+    heroSlides.forEach((slide, i) => {
+        slide.classList.remove("active");
+        if (i === index) {
+            slide.classList.add("active");
+        }
+    });
+
+    heroDots.forEach((dot, i) => {
+        dot.classList.remove("active");
+        if (i === index) {
+            dot.classList.add("active");
+        }
+    });
+}
+
+function nextSlide() {
+    currentSlide = (currentSlide + 1) % heroSlides.length;
+    showSlide(currentSlide);
+}
+
+function prevSlide() {
+    currentSlide = (currentSlide - 1 + heroSlides.length) % heroSlides.length;
+    showSlide(currentSlide);
+}
+
+// Auto-slide cada 5 segundos
+let slideInterval = setInterval(nextSlide, 5000);
+
+heroPrev.addEventListener("click", () => {
+    clearInterval(slideInterval);
+    prevSlide();
+    slideInterval = setInterval(nextSlide, 5000);
+});
+
+heroNext.addEventListener("click", () => {
+    clearInterval(slideInterval);
+    nextSlide();
+    slideInterval = setInterval(nextSlide, 5000);
+});
+
+heroDots.forEach((dot, index) => {
+    dot.addEventListener("click", () => {
+        clearInterval(slideInterval);
+        currentSlide = index;
+        showSlide(currentSlide);
+        slideInterval = setInterval(nextSlide, 5000);
+    });
+});
 
 // ====== RENDER DE PRODUCTOS ======
-function renderProducts(list) {
-    productsGrid.innerHTML = "";
+function renderProducts(list, container = productsGrid) {
+    container.innerHTML = "";
 
     if (list.length === 0) {
-        productsGrid.innerHTML = "<p>No se encontraron productos.</p>";
+        container.innerHTML = "<p style='grid-column: 1/-1; text-align: center; padding: 40px; color: #666;'>No se encontraron productos.</p>";
         return;
     }
 
     list.forEach(product => {
         const card = document.createElement("div");
         card.classList.add("product-card");
+        
+        let badgeHTML = "";
+        if (product.badge === "new") {
+            badgeHTML = '<span class="product-badge new">Nuevo</span>';
+        } else if (product.badge === "sale") {
+            badgeHTML = '<span class="product-badge sale">Oferta</span>';
+        }
+
         card.innerHTML = `
+            ${badgeHTML}
             <div class="product-image">
                 <img src="${product.image}" alt="${product.name}">
             </div>
-            <h3 class="product-title">${product.name}</h3>
-            <p class="product-price">$${product.price.toFixed(2)}</p>
-            <p class="product-rating">⭐ ${product.rating.toFixed(1)}</p>
-            <button class="add-to-cart-btn" data-id="${product.id}">
-                Agregar al carrito
-            </button>
+            <div class="product-info">
+                <h3 class="product-title">${product.name}</h3>
+                <p class="product-price">$${product.price.toFixed(2)}</p>
+                <p class="product-rating">⭐ ${product.rating.toFixed(1)} / 5.0</p>
+                <button class="add-to-cart-btn" data-id="${product.id}">
+                    Agregar
+                </button>
+            </div>
         `;
-        productsGrid.appendChild(card);
+        container.appendChild(card);
     });
 
     attachAddToCartEvents();
+}
+
+// Render Featured Products
+function renderFeaturedProducts() {
+    const featured = products.filter(p => p.featured);
+    renderProducts(featured, featuredGrid);
 }
 
 // ====== AÑADIR EVENTOS A BOTONES "AGREGAR AL CARRITO" ======
@@ -265,6 +373,15 @@ function closeCartModal() {
 }
 
 // ====== EVENTOS GLOBALES ======
+// Toggle search bar
+searchToggle.addEventListener("click", () => {
+    searchBar.classList.toggle("active");
+    if (searchBar.classList.contains("active")) {
+        searchInput.focus();
+    }
+});
+
+// Nav links
 navLinks.forEach(link => {
     link.addEventListener("click", (e) => {
         e.preventDefault();
@@ -277,6 +394,7 @@ navLinks.forEach(link => {
     });
 });
 
+// Search functionality
 searchBtn.addEventListener("click", searchProducts);
 
 searchInput.addEventListener("keyup", (e) => {
@@ -285,8 +403,10 @@ searchInput.addEventListener("keyup", (e) => {
     }
 });
 
+// Sort
 sortSelect.addEventListener("change", applySortAndRender);
 
+// Cart
 cartBtn.addEventListener("click", openCartModal);
 closeCartBtn.addEventListener("click", closeCartModal);
 
@@ -296,15 +416,39 @@ window.addEventListener("click", (e) => {
     }
 });
 
+// Checkout
 checkoutBtn.addEventListener("click", () => {
     if (cart.length === 0) {
         alert("Tu carrito está vacío.");
         return;
     }
 
-    alert("Gracias por tu compra 🧡 (demo). Aquí iría el proceso de pago real.");
+    alert("¡Gracias por tu compra! 🎉\\n\\nEn una versión real, aquí se procesaría el pago.");
+    cart = [];
+    updateCartUI();
+    closeCartModal();
+});
+
+// Newsletter
+newsletterBtn.addEventListener("click", () => {
+    const email = newsletterEmail.value.trim();
+    
+    if (!email) {
+        alert("Por favor ingresa tu correo electrónico.");
+        return;
+    }
+
+    if (!email.includes("@")) {
+        alert("Por favor ingresa un correo electrónico válido.");
+        return;
+    }
+
+    alert(`¡Gracias por suscribirte! 🎉\\n\\nTe enviaremos las mejores ofertas a ${email}`);
+    newsletterEmail.value = "";
 });
 
 // ====== INICIO ======
+renderFeaturedProducts();
 filterByCategory("all");
 updateCartUI();
+showSlide(0);
