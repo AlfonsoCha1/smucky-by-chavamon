@@ -45,11 +45,11 @@ const products = [
     // PLAYERAS SIN MANGAS HOMBRE
     {
         id: 9,
-        name: "Playera Sin Mangas",
+        name: "Playera Sin Mangas Gris",
         category: ["playeras_sin_mangas_hombre"],
         price: 70,
         rating: 4.8,
-        image: "Imagenes de ropa/Ropa de Hombre/Playera sin mangas/Todos_Colores.jpg",
+        image: "Imagenes de ropa/Ropa de Hombre/Playera sin mangas/ropa interior gris.jpeg",
         featured: true,
         badge: "new"
     },
@@ -87,11 +87,21 @@ const products = [
     // BLUSAS MUJER
     {
         id: 10,
-        name: "Blusa Premium Smucky Dama",
+        name: "Blusa Premium Roja",
         category: ["blusas_mujer"],
         price: 60,
         rating: 4.9,
-        image: "Imagenes de ropa/Ropa de Mujer/Blusa/1.jpg",
+        image: "Imagenes de ropa/Ropa de Mujer/Blusa/blusa rojo.jpeg",
+        featured: true,
+        badge: "new"
+    },
+    {
+        id: 12,
+        name: "Blusa Premium Rosa",
+        category: ["blusas_mujer"],
+        price: 60,
+        rating: 4.8,
+        image: "Imagenes de ropa/Ropa de Mujer/Blusa/blusa rosa.jpeg",
         featured: true,
         badge: "new"
     },
@@ -104,9 +114,9 @@ const products = [
         image: "Imagenes de ropa/Ropa de Mujer/Short deportivo/2.jpg",
         gallery: [
             "Imagenes de ropa/Ropa de Mujer/Short deportivo/2.jpg",
-            "Imagenes de ropa/Ropa de Mujer/Short deportivo/4.jpg"
+            "Imagenes de ropa/Ropa de Mujer/Short deportivo/1.jpg"
         ],
-        subtitle: "Parte de enfrente y parte de atrás",
+        // subtitle: "Costo: $150 (cada uno)",
         featured: true,
         badge: "new"
     }
@@ -133,6 +143,7 @@ const heroSlides = document.querySelectorAll(".hero-slide");
 const heroPrev = document.querySelector(".hero-prev");
 const heroNext = document.querySelector(".hero-next");
 const heroDots = document.querySelectorAll(".dot");
+const heroCtas = document.querySelectorAll(".hero-cta");
 const heroImages = document.querySelectorAll(".hero-image img");
 const heroFallbackImage = "Imagenes de ropa/Ropa de Hombre/Playera Premium/Azul_claro.jpg";
 
@@ -223,6 +234,18 @@ heroDots.forEach((dot, index) => {
         currentSlide = index;
         showSlide(currentSlide);
         slideInterval = setInterval(nextSlide, 5000);
+    });
+});
+
+heroCtas.forEach((button) => {
+    button.addEventListener("click", () => {
+        const targetId = button.dataset.target;
+        if (!targetId) return;
+
+        const section = document.getElementById(targetId);
+        if (section) {
+            section.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
     });
 });
 
@@ -318,15 +341,13 @@ function renderProducts(sectionId) {
                 <h3 class="product-title">${product.name}</h3>
                 ${product.subtitle ? `<p class="product-subtitle">${product.subtitle}</p>` : ""}
                 <p class="product-price">$${product.price.toFixed(2)}</p>
-                <button class="add-to-cart-btn" data-id="${product.id}">
-                    Agregar
-                </button>
+                <!-- Botón de carrito desactivado temporalmente -->
             </div>
         `;
         grid.appendChild(card);
     });
 
-    attachAddToCartEvents();
+    // attachAddToCartEvents(); // desactivado temporalmente
 }
 
 function loadCategoryProducts(category) {
@@ -389,15 +410,13 @@ function renderFeaturedProducts() {
                 <h3 class="product-title">${product.name}</h3>
                 ${product.subtitle ? `<p class="product-subtitle">${product.subtitle}</p>` : ""}
                 <p class="product-price">$${product.price.toFixed(2)}</p>
-                <button class="add-to-cart-btn" data-id="${product.id}">
-                    Agregar
-                </button>
+                <!-- Botón de carrito desactivado temporalmente -->
             </div>
         `;
         featuredGrid.appendChild(card);
     });
     
-    attachAddToCartEvents();
+    // attachAddToCartEvents(); // desactivado temporalmente
 }
 
 // ====== AÑADIR EVENTOS A BOTONES "AGREGAR AL CARRITO" ======
@@ -461,15 +480,13 @@ function searchProducts() {
                 <h3 class="product-title">${product.name}</h3>
                 ${product.subtitle ? `<p class="product-subtitle">${product.subtitle}</p>` : ""}
                 <p class="product-price">$${product.price.toFixed(2)}</p>
-                <button class="add-to-cart-btn" data-id="${product.id}">
-                    Agregar
-                </button>
+                <!-- Botón de carrito desactivado temporalmente -->
             </div>
         `;
         featuredGrid.appendChild(card);
     });
     
-    attachAddToCartEvents();
+    // attachAddToCartEvents(); // desactivado temporalmente
 }
 
 // ====== ORDENAMIENTO ======
@@ -504,6 +521,8 @@ function removeFromCart(productId) {
 }
 
 function updateCartUI() {
+    if (!cartCount || !cartItemsContainer || !cartTotalSpan) return;
+
     // contador
     const totalQty = cart.reduce((acc, item) => acc + item.qty, 0);
     cartCount.textContent = totalQty;
@@ -548,10 +567,12 @@ function updateCartUI() {
 
 // ====== MODAL DEL CARRITO ======
 function openCartModal() {
+    if (!cartModal) return;
     cartModal.style.display = "flex";
 }
 
 function closeCartModal() {
+    if (!cartModal) return;
     cartModal.style.display = "none";
 }
 
@@ -585,11 +606,18 @@ searchInput.addEventListener("keyup", (e) => {
 });
 
 // Sort
-sortSelect.addEventListener("change", applySortAndRender);
+if (sortSelect) {
+    sortSelect.addEventListener("change", applySortAndRender);
+}
 
 // Cart
-cartBtn.addEventListener("click", openCartModal);
-closeCartBtn.addEventListener("click", closeCartModal);
+if (cartBtn) {
+    cartBtn.addEventListener("click", openCartModal);
+}
+
+if (closeCartBtn) {
+    closeCartBtn.addEventListener("click", closeCartModal);
+}
 
 window.addEventListener("click", (e) => {
     if (e.target === cartModal) {
@@ -598,35 +626,39 @@ window.addEventListener("click", (e) => {
 });
 
 // Checkout
-checkoutBtn.addEventListener("click", () => {
-    if (cart.length === 0) {
-        alert("Tu carrito está vacío.");
-        return;
-    }
+if (checkoutBtn) {
+    checkoutBtn.addEventListener("click", () => {
+        if (cart.length === 0) {
+            alert("Tu carrito está vacío.");
+            return;
+        }
 
-    alert("¡Gracias por tu compra! 🎉\\n\\nEn una versión real, aquí se procesaría el pago.");
-    cart = [];
-    updateCartUI();
-    closeCartModal();
-});
+        alert("¡Gracias por tu compra! 🎉\\n\\nEn una versión real, aquí se procesaría el pago.");
+        cart = [];
+        updateCartUI();
+        closeCartModal();
+    });
+}
 
 // Newsletter
-newsletterBtn.addEventListener("click", () => {
-    const email = newsletterEmail.value.trim();
-    
-    if (!email) {
-        alert("Por favor ingresa tu correo electrónico.");
-        return;
-    }
+if (newsletterBtn && newsletterEmail) {
+    newsletterBtn.addEventListener("click", () => {
+        const email = newsletterEmail.value.trim();
+        
+        if (!email) {
+            alert("Por favor ingresa tu correo electrónico.");
+            return;
+        }
 
-    if (!email.includes("@")) {
-        alert("Por favor ingresa un correo electrónico válido.");
-        return;
-    }
+        if (!email.includes("@")) {
+            alert("Por favor ingresa un correo electrónico válido.");
+            return;
+        }
 
-    alert(`¡Gracias por suscribirte! 🎉\\n\\nTe enviaremos las mejores ofertas a ${email}`);
-    newsletterEmail.value = "";
-});
+        alert(`¡Gracias por suscribirte! 🎉\\n\\nTe enviaremos las mejores ofertas a ${email}`);
+        newsletterEmail.value = "";
+    });
+}
 
 // ====== INICIO ======
 // Renderizar todos los productos en sus respectivas secciones
@@ -637,5 +669,5 @@ renderProducts("blusas-mujer");
 renderProducts("short-deportivo-mujer");
 renderProducts("calcetines-mujer");
 
-updateCartUI();
+// updateCartUI(); // desactivado temporalmente
 showSlide(0);

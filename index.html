@@ -34,13 +34,16 @@
                         <a href="#" class="dropdown-link" data-subcategory="calcetines_mujer"><span class="dropdown-icon">🧦</span> Calcetines Deportivos</a>
                     </div>
                 </div>
+                <a href="#contacto" class="nav-link" data-category="contacto">Contacto</a>
             </nav>
             <div class="header-actions">
                 <div class="search-icon" id="searchToggle">🔍</div>
+                <!--
                 <button class="cart-btn" id="cartBtn">
                     <span class="cart-icon">🛒</span>
                     <span id="cartCount" class="cart-count">0</span>
                 </button>
+                -->
             </div>
         </div>
         <div class="search-bar" id="searchBar">
@@ -53,59 +56,40 @@
     <section class="hero-slider">
         <div class="hero-slide active" style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);">
             <div class="hero-content">
-                <h1 class="hero-title">Colección Premium 2026</h1>
+                <h1 class="hero-title">Playeras Premium 2026</h1>
                 <p class="hero-subtitle">Diseño + Comodidad + Calidad</p>
-                <button class="hero-cta">Comprar Ahora</button>
+                <button class="hero-cta" data-target="playeras-hombre">Ver</button>
             </div>
             <div class="hero-image">
-                <img src="Imagenes de ropa/Ropa de Hombre/Playera Premium/Azul_claro.jpg" alt="Playera Premium">
+                <img src="Imagenes de ropa/Ropa de Hombre/Playera Premium/Todos _colores.jpg" alt="Playera Premium">
             </div>
         </div>
         <div class="hero-slide" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
             <div class="hero-content">
                 <h1 class="hero-title">Blusas Premium</h1>
                 <p class="hero-subtitle">Comodidad y estilo para mujer</p>
-                <button class="hero-cta">Ver Blusas</button>
+                <button class="hero-cta" data-target="blusas-mujer">Ver</button>
             </div>
             <div class="hero-image">
-                <img src="Imagenes de ropa/Ropa de Hombre/Playera Premium/Azul_claro.jpg" alt="Playera Premium">
+                <img src="Imagenes de ropa/Ropa de Mujer/Blusa/blusas rosa y rojo.jpeg" alt="Blusa Premium">
             </div>
         </div>
         <div class="hero-slide" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
             <div class="hero-content">
                 <h1 class="hero-title">Playeras Sin Mangas</h1>
                 <p class="hero-subtitle">Máxima libertad de movimiento</p>
-                <button class="hero-cta">Ver Sin Mangas</button>
+                <button class="hero-cta" data-target="playeras-sin-mangas-hombre">Ver</button>
             </div>
             <div class="hero-image">
-                <img src="Imagenes de ropa/Ropa de Hombre/Playera Premium/Azul_claro.jpg" alt="Playera Premium">
+                <img src="Imagenes de ropa/Ropa de Hombre/Playera sin mangas/ropa interior gris.jpeg" alt="Playera Premium">
             </div>
         </div>
-        <div class="hero-slide" style="background: linear-gradient(135deg, #43cea2 0%, #185a9d 100%);">
-            <div class="hero-content">
-                <h1 class="hero-title">Calcetines Hombre y Mujer</h1>
-                <p class="hero-subtitle">Confort premium para todos</p>
-                <button class="hero-cta">Ver Calcetines</button>
-            </div>
-            <div class="hero-image">
-                <img src="Imagenes de ropa/Ropa de Hombre/Playera Premium/Azul_claro.jpg" alt="Playera Premium">
-            </div>
-        </div>
-        <div class="hero-slide" style="background: linear-gradient(135deg, #0f172a 0%, #334155 100%);">
-            <div class="hero-content">
-                <h1 class="hero-title">Calcetines Blanco y Negro</h1>
-                <p class="hero-subtitle">Segundo modelo clásico</p>
-                <button class="hero-cta">Ver Calcetines</button>
-            </div>
-            <div class="hero-image">
-                <img src="Imagenes de ropa/Ropa de Hombre/Playera Premium/Azul_claro.jpg" alt="Playera Premium">
-            </div>
-        </div>
+        
         <div class="hero-slide" style="background: linear-gradient(135deg, #ec4899 0%, #3b82f6 100%);">
             <div class="hero-content">
                 <h1 class="hero-title">Calcetines Mujer</h1>
                 <p class="hero-subtitle">Rosa y azul</p>
-                <button class="hero-cta">Ver Calcetines Mujer</button>
+                <button class="hero-cta" data-target="calcetines-mujer">Ver</button>
             </div>
             <div class="hero-image">
                 <img src="Imagenes de ropa/Calcetines deportivo/Rosa_azul_dama.jpg" alt="Calcetines Mujer Rosa y Azul">
@@ -115,7 +99,7 @@
             <div class="hero-content">
                 <h1 class="hero-title">Short Deportivo</h1>
                 <p class="hero-subtitle">Ligero, cómodo y listo para entrenar</p>
-                <button class="hero-cta">Ver Short</button>
+                <button class="hero-cta" data-target="short-deportivo-mujer">Ver</button>
             </div>
             <div class="hero-image">
                 <img src="Imagenes de ropa/Ropa de Mujer/Short deportivo/1.jpg" alt="Short Deportivo">
@@ -129,8 +113,6 @@
             <span class="dot" data-slide="2"></span>
             <span class="dot" data-slide="3"></span>
             <span class="dot" data-slide="4"></span>
-            <span class="dot" data-slide="5"></span>
-            <span class="dot" data-slide="6"></span>
         </div>
     </section>
 
@@ -237,7 +219,8 @@
             </div>
         </section>
 
-        <!-- Newsletter Section -->
+        <!-- Newsletter Section (desactivada temporalmente) -->
+        <!--
         <section class="newsletter-section">
             <div class="container">
                 <div class="newsletter-content">
@@ -250,9 +233,11 @@
                 </div>
             </div>
         </section>
+        -->
     </main>
 
-    <!-- Modal del Carrito -->
+    <!-- Modal del Carrito (desactivado temporalmente) -->
+    <!--
     <div id="cartModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -261,7 +246,7 @@
             </div>
             <div class="modal-body">
                 <div id="cartItems" class="cart-items">
-                    <!-- Los items del carrito se cargarán aquí -->
+                    Los items del carrito se cargarán aquí
                 </div>
             </div>
             <div class="modal-footer">
@@ -272,6 +257,7 @@
             </div>
         </div>
     </div>
+    -->
 
     <!-- Footer -->
     <footer class="footer">
@@ -280,12 +266,12 @@
                 <h4>Sobre Nosotros</h4>
                 <p>SMUCKY´s By CHAVAMON es tu tienda online de confianza con los mejores productos a los mejores precios.</p>
             </div>
-            <div class="footer-section">
+            <div class="footer-section" id="contacto">
                 <h4>Información</h4>
                 <ul>
-                    <li><a href="#">Política de Privacidad</a></li>
-                    <li><a href="#">Términos de Servicio</a></li>
-                    <li><a href="#">Contacto</a></li>
+                    <!-- <li><a href="#">Política de Privacidad</a></li> -->
+                    <!-- <li><a href="#">Términos de Servicio</a></li> -->
+                    <li><a href="tel:+527775206401">📞 Tel: +52 (777)5206401</a></li>
                 </ul>
             </div>
             <div class="footer-section">
