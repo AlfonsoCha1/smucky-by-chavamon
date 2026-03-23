@@ -55,26 +55,6 @@ const products = [
     },
     // CALCETINES (AMBOS)
     {
-        id: 6,
-        name: "Calcetines Deportivos Multicolores",
-        category: ["calcetines"],
-        price: 45,
-        rating: 4.8,
-        image: "Imagenes de ropa/Calcetines deportivo/cacetines_blanco_negro.jpg",
-        featured: true,
-        badge: "new"
-    },
-    {
-        id: 7,
-        name: "Calcetines Deportivos Multicolor",
-        category: ["calcetines"],
-        price: 45,
-        rating: 4.7,
-        image: "Imagenes de ropa/Calcetines deportivo/cioc_color_blanco_negro.jpg",
-        featured: false,
-        badge: "new"
-    },
-    {
         id: 8,
         name: "Calcetines Premium Pack Completo",
         category: ["calcetines"],
