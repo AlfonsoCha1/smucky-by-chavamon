@@ -11,7 +11,7 @@
 // ============================================================
 
 // ── Credenciales EmailJS (Hotmail — compras) ─────────────────
-const EMAILJS_PUBLIC_KEY = ["I7Z9IQ", "aIfsl", "pauQQn"].join(""); // Public Key dividida por seguridad
+const EMAILJS_PUBLIC_KEY = ["I7Z9IQ", "aIfsl", "pauQQn"].join(""); // ← Hotmail //Public Key dividida por seguridad
 const EMAILJS_SERVICE_ID = "SMUCKYs-CHAVAMON_EMAIL";                // Servicio Hotmail en EmailJS
 const TPL_CLIENTE        = "template_wpjwmxb";                      // Template: confirmación al cliente
 const TPL_VENDEDOR       = "template_z1ddwme";                      // Template: aviso al vendedor
