@@ -12,15 +12,21 @@ const EMAILJS_TEMPLATE_VERIFICACION = "template_fey9ch4";  // Template: código 
 const EMAILJS_TEMPLATE_RECUPERACION = "template_rkr5dld";  // Template: recuperar contraseña
 
 // ── Carga EmailJS una sola vez ───────────────────────────────
-let _ejsListo = false;
+// ── Carga EmailJS una sola vez (cuenta Gmail) ────────────────
+let _ejsListoGmail = false; // ← nombre diferente para no chocar con Hotmail
 function cargarEmailJS() {
     return new Promise((resolve, reject) => {
-        if (_ejsListo && window.emailjs) { resolve(); return; }
+        if (_ejsListoGmail && window.emailjs) {
+            // Reinicializa siempre con la key de Gmail
+            window.emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+            resolve();
+            return;
+        }
         const s    = document.createElement("script");
         s.src      = "https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js";
         s.onload   = () => {
-            window.emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY }); // inicializa con key de Gmail
-            _ejsListo = true;
+            window.emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY }); // key de Gmail
+            _ejsListoGmail = true;
             resolve();
         };
         s.onerror  = reject;
