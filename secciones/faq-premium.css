@@ -1,0 +1,228 @@
+/* ES: Comentarios base para mantenimiento. EN: Baseline comments for maintenance. */
+body.page-faq {
+    font-family: "Montserrat", "Segoe UI", sans-serif;
+    background:
+        radial-gradient(circle at 10% 10%, rgba(4, 120, 87, 0.24) 0, transparent 34%),
+        radial-gradient(circle at 90% 8%, rgba(71, 85, 105, 0.3) 0, transparent 38%),
+        linear-gradient(160deg, #080b12 0%, #101824 46%, #151c2a 100%);
+    color: #e9eff7;
+}
+
+.page-faq .page {
+    position: relative;
+    isolation: isolate;
+    max-width: 980px;
+    padding-top: 18px;
+    padding-bottom: 54px;
+}
+
+.page-faq .page::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("../LOGO DE LA EMPRESA/La-pura-letra-logo.png");
+    background-repeat: repeat;
+    background-size: 170px;
+    opacity: 0.045;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.page-faq .page > * {
+    position: relative;
+    z-index: 1;
+}
+
+.page-faq .hero-faq {
+    background: linear-gradient(120deg, rgba(6, 12, 20, 0.92) 0%, rgba(17, 32, 44, 0.94) 52%, rgba(16, 46, 46, 0.95) 100%);
+    border: 1px solid rgba(148, 163, 184, 0.24);
+    border-radius: 28px;
+    padding: clamp(24px, 4vw, 42px);
+    box-shadow: 0 24px 48px rgba(2, 6, 23, 0.45);
+    margin-bottom: 26px;
+}
+
+.page-faq .hero-faq::after {
+    width: 350px;
+    height: 350px;
+    right: -148px;
+    top: -118px;
+    background: radial-gradient(circle, rgba(52, 211, 153, 0.34) 0%, rgba(52, 211, 153, 0.03) 74%);
+}
+
+.page-faq .hero-main-icon {
+    width: 68px;
+    height: 68px;
+    border-radius: 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+    color: #bbf7d0;
+    background: linear-gradient(140deg, rgba(6, 78, 59, 0.46), rgba(16, 185, 129, 0.22));
+    border: 1px solid rgba(167, 243, 208, 0.45);
+    box-shadow: 0 10px 22px rgba(16, 185, 129, 0.2);
+}
+
+.page-faq .hero-main-icon svg {
+    width: 36px;
+    height: 36px;
+}
+
+.page-faq .hero-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #d2dae6;
+    margin-bottom: 12px;
+}
+
+.page-faq .hero-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #bbf7d0;
+    background: linear-gradient(135deg, rgba(6, 78, 59, 0.45), rgba(16, 185, 129, 0.2));
+    border: 1px solid rgba(167, 243, 208, 0.45);
+}
+
+.page-faq .hero-icon svg {
+    width: 20px;
+    height: 20px;
+}
+
+.page-faq .hero h1 {
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    font-weight: 800;
+    margin-bottom: 10px;
+    color: #f5fdf8;
+}
+
+.page-faq .hero-divider {
+    display: block;
+    width: 90px;
+    height: 4px;
+    border-radius: 99px;
+    margin: 2px auto 12px;
+    background: linear-gradient(90deg, #6ee7b7 0%, #34d399 100%);
+}
+
+.page-faq .hero p {
+    color: #d0dbe8;
+    font-size: 1.03rem;
+    line-height: 1.74;
+}
+
+.page-faq .faq-accordion {
+    display: grid;
+    gap: 14px;
+}
+
+.page-faq .faq-item {
+    background: linear-gradient(145deg, rgba(11, 17, 27, 0.9) 0%, rgba(17, 29, 42, 0.94) 100%);
+    border: 1px solid rgba(148, 163, 184, 0.28);
+    border-radius: 18px;
+    box-shadow: 0 12px 30px rgba(2, 6, 23, 0.34);
+    overflow: hidden;
+    transition: border-color 0.28s ease, box-shadow 0.28s ease, transform 0.28s ease;
+}
+
+.page-faq .faq-item:hover {
+    transform: translateY(-4px);
+    border-color: rgba(52, 211, 153, 0.5);
+    box-shadow: 0 18px 34px rgba(2, 6, 23, 0.45);
+}
+
+.page-faq .faq-trigger {
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: #f1f5f9;
+    padding: 18px 20px;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    font: inherit;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.page-faq .faq-trigger:focus-visible {
+    outline: 2px solid rgba(52, 211, 153, 0.9);
+    outline-offset: -2px;
+}
+
+.page-faq .faq-chevron {
+    width: 26px;
+    height: 26px;
+    border-radius: 999px;
+    border: 1px solid rgba(148, 163, 184, 0.38);
+    color: #86efac;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.05rem;
+    font-weight: 700;
+    line-height: 1;
+    transition: transform 0.24s ease, background-color 0.24s ease, border-color 0.24s ease;
+}
+
+.page-faq .faq-item.is-open .faq-chevron {
+    transform: rotate(45deg);
+    background: rgba(16, 185, 129, 0.18);
+    border-color: rgba(52, 211, 153, 0.7);
+}
+
+.page-faq .faq-panel {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    padding: 0 20px;
+    transition: max-height 0.34s ease, opacity 0.26s ease, padding 0.26s ease;
+}
+
+.page-faq .faq-item.is-open .faq-panel {
+    opacity: 1;
+    padding: 0 20px 18px;
+}
+
+.page-faq .faq-panel p {
+    color: #cbd7e5;
+    line-height: 1.7;
+    font-size: 0.97rem;
+}
+
+@media (max-width: 800px) {
+    .page-faq .page {
+        padding-top: 10px;
+        padding-bottom: 36px;
+    }
+
+    .page-faq .hero-faq {
+        border-radius: 22px;
+        margin-bottom: 20px;
+    }
+
+    .page-faq .faq-trigger {
+        padding: 15px 16px;
+        font-size: 0.95rem;
+    }
+
+    .page-faq .faq-item.is-open .faq-panel {
+        padding: 0 16px 14px;
+    }
+
+    .page-faq .faq-panel {
+        padding: 0 16px;
+    }
+}

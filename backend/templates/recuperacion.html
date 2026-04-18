@@ -1,0 +1,286 @@
+﻿
+<!-- ES: Comentarios base para mantenimiento. EN: Baseline comments for maintenance. -->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recuperación de contraseña — SMUCKY'S BY CHAVARIN</title>
+<!--
+    PLANTILLA JINJA2 — recuperacion.html
+    Variables disponibles:
+      {{ nombre_usuario }}      — nombre del usuario
+      {{ codigo_verificacion }} — código de 6 dígitos
+-->
+<style>
+  /* ── Reset ── */
+  body,table,td,a{-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%}
+  table,td{mso-table-lspace:0;mso-table-rspace:0}
+  img{border:0;height:auto;line-height:100%;outline:none;text-decoration:none}
+
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: #0b0b0b;
+    font-family: "Segoe UI", Arial, sans-serif;
+  }
+
+  .outer {
+    width: 100%;
+    background-color: #0b0b0b;
+    padding: 36px 0;
+  }
+
+  .card {
+    max-width: 620px;
+    margin: 0 auto;
+    background: #141414;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 0 0 1px #222, 0 20px 60px rgba(0,0,0,.7);
+  }
+
+  /* ── Cabecera oscura con acento naranja ── */
+  .header {
+    background: linear-gradient(160deg, #1a0c08 0%, #150b07 100%);
+    padding: 40px 32px 30px;
+    text-align: center;
+    border-bottom: 3px solid #e4572e;
+  }
+
+  .brand-icon {
+    display: inline-block;
+    width: 64px;
+    height: 64px;
+    background: linear-gradient(135deg, #e4572e 0%, #c03d1e 100%);
+    border-radius: 16px;
+    margin-bottom: 16px;
+    line-height: 64px;
+    font-size: 2rem;
+    font-weight: 900;
+    color: #ffffff;
+    letter-spacing: -1px;
+  }
+
+  .brand-name {
+    margin: 0 0 6px;
+    color: #ffffff;
+    font-size: 1.55rem;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    line-height: 1.1;
+  }
+
+  .brand-name span {
+    color: #e4572e;
+  }
+
+  .brand-tagline {
+    margin: 0;
+    color: rgba(255,255,255,0.45);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  /* ── Franja verde ── */
+  .stripe {
+    height: 4px;
+    background: linear-gradient(90deg, #61d33c 0%, #3ea820 50%, #61d33c 100%);
+  }
+
+  /* ── Cuerpo ── */
+  .body {
+    padding: 36px 40px;
+  }
+
+  .tipo-badge {
+    display: inline-block;
+    background: rgba(228,87,46,0.10);
+    color: #e4572e;
+    border: 1px solid rgba(228,87,46,0.30);
+    border-radius: 999px;
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    padding: 4px 16px;
+    margin-bottom: 20px;
+  }
+
+  .saludo {
+    margin: 0 0 8px;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #f0f0f0;
+  }
+
+  .intro {
+    margin: 0 0 28px;
+    font-size: 0.95rem;
+    color: #8a8a8a;
+    line-height: 1.65;
+  }
+
+  /* ── Caja del código ── */
+  .code-box {
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-radius: 16px;
+    padding: 30px 20px;
+    text-align: center;
+    margin-bottom: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .code-box::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #e4572e 0%, #ff7a4d 100%);
+  }
+
+  .code-label {
+    margin: 0 0 14px;
+    font-size: 0.77rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #e4572e;
+  }
+
+  .code-number {
+    margin: 0;
+    font-size: 3.2rem;
+    font-weight: 900;
+    letter-spacing: 14px;
+    color: #ffffff;
+    font-family: "Courier New", Courier, monospace;
+    text-shadow: 0 0 30px rgba(228,87,46,0.3);
+  }
+
+  .code-expiry {
+    margin: 14px 0 0;
+    font-size: 0.78rem;
+    color: #555;
+  }
+
+  .code-expiry strong {
+    color: #e4572e;
+  }
+
+  /* ── Aviso de seguridad ── */
+  .warning-box {
+    background: rgba(228,87,46,0.08);
+    border: 1px solid rgba(228,87,46,0.25);
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin-bottom: 24px;
+    font-size: 0.88rem;
+    color: #cc6040;
+    line-height: 1.55;
+  }
+
+  .warning-box strong {
+    color: #e4572e;
+  }
+
+  .ignore-note {
+    font-size: 0.80rem;
+    color: #484848;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* ── Pie ── */
+  .footer {
+    border-top: 1px solid #1e1e1e;
+    padding: 22px 40px;
+    text-align: center;
+    background: #0f0f0f;
+  }
+
+  .footer p {
+    margin: 0 0 4px;
+    font-size: 0.77rem;
+    color: #404040;
+    line-height: 1.55;
+  }
+
+  .footer strong {
+    color: #e4572e;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 640px) {
+    .body  { padding: 24px 22px; }
+    .footer { padding: 18px 22px; }
+    .code-number { font-size: 2.4rem; letter-spacing: 8px; }
+  }
+</style>
+</head>
+<body>
+<div class="outer">
+  <div class="card">
+
+    <!-- CABECERA -->
+    <div class="header">
+      <div class="brand-icon">&#128273;</div>
+      <h1 class="brand-name">SMUCKY'S <span>BY CHAVARIN</span></h1>
+      <p class="brand-tagline">Ropa &amp; Estilo — Tienda Oficial</p>
+    </div>
+
+    <!-- FRANJA VERDE -->
+    <div class="stripe"></div>
+
+    <!-- CUERPO -->
+    <div class="body">
+
+      <span class="tipo-badge">&#128273; Recuperación de contraseña</span>
+
+      <p class="saludo">Hola, {{ nombre_usuario }} 👋</p>
+      <p class="intro">
+        Recibimos una solicitud para restablecer la contraseña de tu cuenta en
+        <strong style="color:#f0f0f0;">SMUCKY'S BY CHAVARIN</strong>.
+        Usa el siguiente código para continuar con el proceso. Si no fuiste tú, ignora este mensaje.
+      </p>
+
+      <!-- CÓDIGO -->
+      <div class="code-box">
+        <p class="code-label">Tu código de recuperación</p>
+        <p class="code-number">{{ codigo_verificacion }}</p>
+        <p class="code-expiry">
+          &#9200; Este código vence en <strong>10 minutos</strong>
+        </p>
+      </div>
+
+      <!-- AVISO -->
+      <div class="warning-box">
+        <strong>&#9888; Importante:</strong> Nunca compartas este código con nadie.
+        Si no solicitaste un cambio de contraseña, tu cuenta sigue siendo segura.
+      </div>
+
+      <p class="ignore-note">
+        Este correo fue enviado porque alguien ingresó tu dirección de correo electrónico
+        en el formulario de recuperación. Si no reconoces esta acción, ignora este mensaje.
+      </p>
+
+    </div>
+
+    <!-- PIE -->
+    <div class="footer">
+      <p><strong>SMUCKY'S BY CHAVARIN</strong></p>
+      <p>Este correo fue enviado automáticamente. Por favor, no respondas.</p>
+      <p>&copy; 2026 SMUCKY'S BY CHAVARIN — Todos los derechos reservados</p>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>
+
+

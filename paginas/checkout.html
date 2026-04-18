@@ -1,0 +1,373 @@
+﻿
+<!-- ES: Comentarios base para mantenimiento. EN: Baseline comments for maintenance. -->
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finalizar compra - Smucky's BY CHAVARIN</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../LOGO DE LA EMPRESA/La-pura-letra-logo.png">
+    <link rel="shortcut icon" href="../LOGO DE LA EMPRESA/La-pura-letra-logo.png">
+    <link rel="apple-touch-icon" href="../LOGO DE LA EMPRESA/La-pura-letra-logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="checkout.css">
+\ \ \ \ <link\ rel="stylesheet"\ href="\.\./secciones/footer-global\.css">\r\n    <link rel="stylesheet" href="../secciones/footer-global.css">
+</head>
+<body>
+
+    <!-- Header de checkout (logo + seguro) -->
+    <header class="co-header">
+        <div class="co-header-left">
+            <a href="../index.html" class="co-logo-link">
+                <img src="../LOGO DE LA EMPRESA/La-pura-letra-logo.png" alt="Smucky's" class="co-logo-img"
+                     onerror="this.style.display='none'">
+                <span class="co-logo-text">SMUCKY'S BY CHAVARIN</span>
+            </a>
+        </div>
+        <div class="co-header-secure">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </svg>
+            Pago seguro
+        </div>
+    </header>
+
+    <!-- Layout principal -->
+    <main class="co-main">
+        <div class="co-layout">
+
+            <!-- â•â•â•â• COLUMNA IZQUIERDA â•â•â•â• -->
+            <div class="co-left">
+
+                <!-- Fecha de entrega estimada -->
+                <div class="co-delivery-banner">
+                    <p class="co-arrives">Llega <strong id="coDeliveryDate">miÃ©rcoles, 15 abr 2026</strong></p>
+                    <p class="co-urgency" id="coUrgency"></p>
+                </div>
+
+                <!-- Productos del pedido -->
+                <div id="coItemsSection" class="co-items-section">
+                    <!-- injected by JS -->
+                </div>
+
+                <a href="#" class="co-gift-link" onclick="return false;">AÃ±adir opciones de regalo</a>
+
+                <hr class="co-divider">
+
+                <!-- â”€â”€ MÃ©todo de pago â”€â”€ -->
+                <div class="co-payment-section">
+                    <h3 class="co-section-title">MÃ©todo de pago</h3>
+
+                    <!-- Lista de tarjetas guardadas -->
+                    <div id="coSavedCardArea" class="co-saved-card-area" style="display:none;">
+                        <div id="coSavedCardsList" class="co-saved-cards-list">
+                            <!-- injected by JS -->
+                        </div>
+                    </div>
+
+                    <p class="co-bank-note">Los meses sin intereses y la aprobaciÃ³n dependen del banco, del tipo de tarjeta y del estado de tu cuenta.</p>
+                    <p id="coPaymentStatus" class="co-payment-status" style="display:none;"></p>
+
+                    <!-- Fila "Agregar tarjeta" estilo imagen 4 -->
+                    <button id="coAddCardBtn" class="co-add-card-row">
+                        <span class="co-add-plus">+</span>
+                        <svg class="co-card-icon" viewBox="0 0 40 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="40" height="28" rx="4" fill="#1a1f71"/>
+                            <rect x="0" y="8" width="40" height="6" fill="#f7a600"/>
+                            <rect x="4" y="18" width="10" height="4" rx="1" fill="#fff" opacity=".8"/>
+                        </svg>
+                        <div class="co-add-card-text">
+                            <span class="co-add-label">Agregar una tarjeta de crÃ©dito o dÃ©bito</span>
+                            <span class="co-add-hint">Smucky's acepta Visa y Mastercard</span>
+                        </div>
+                        <span class="co-row-arrow">â€º</span>
+                    </button>
+
+                    <!-- Mercado Pago option -->
+                    <label class="co-mp-row">
+                        <input type="radio" name="coPayment" value="Mercado Pago" id="coPayMP">
+                        <span class="co-mp-label">
+                            <img src="https://http2.mlstatic.com/frontend-assets/mp-web-navigation/ui-navigation/5.21.22/mercadopago/logo__large@2x.png"
+                                 alt="Mercado Pago"
+                                 class="co-mp-logo-img"
+                                 onerror="this.style.display='none'">
+                            <span>Mercado Pago</span>
+                        </span>
+                    </label>
+
+                    <!-- Formulario Mercado Pago (se expande al seleccionar) -->
+                    <div id="coMpForm" class="co-mp-form" style="display:none;">
+                        <p class="co-mp-form-title">Ingresa tu informaciÃ³n de Mercado Pago</p>
+                        <div class="co-field-group">
+                            <label for="mpEmail">Correo de Mercado Pago <span class="co-required">*</span></label>
+                            <input id="mpEmail" type="email" placeholder="tucuenta@ejemplo.com" autocomplete="email" required>
+                        </div>
+                        <div class="co-field-group">
+                            <label for="mpName">Nombre completo <span class="co-required">*</span></label>
+                            <input id="mpName" type="text" placeholder="Como aparece en tu cuenta" autocomplete="name" required>
+                        </div>
+                        <div class="co-mp-form-row">
+                            <div class="co-field-group">
+                                <label for="mpPhone">TelÃ©fono (10 dÃ­gitos) <span class="co-required">*</span></label>
+                                <input id="mpPhone" type="tel" inputmode="numeric" maxlength="10" placeholder="5512345678" required>
+                            </div>
+                            <div class="co-field-group">
+                                <label for="mpAlias">Alias o CVU <span class="co-required">*</span></label>
+                                <input id="mpAlias" type="text" placeholder="ejm: juan.perez123" required>
+                            </div>
+                        </div>
+                        <p id="mpFormError" class="co-form-error" style="display:none;"></p>
+                    </div>
+                </div>
+
+                <hr class="co-divider">
+
+                <!-- BotÃ³n principal CTA -->
+                <button id="coConfirmBtn" class="co-confirm-btn">Realiza tu pedido y paga</button>
+                <p class="co-terms">
+                    Al realizar tu pedido, aceptas nuestra
+                    <a href="../ayuda/seguridad.html">polÃ­tica de privacidad</a>
+                    y los <a href="#">tÃ©rminos de uso</a>.
+                </p>
+
+            </div><!-- /co-left -->
+
+            <!-- â•â•â•â• BARRA LATERAL DERECHA â•â•â•â• -->
+            <aside class="co-sidebar">
+                <button id="coConfirmBtnSide" class="co-confirm-btn">Realiza tu pedido y paga</button>
+                <p class="co-terms small">
+                    Al realizar tu pedido, aceptas nuestra
+                    <a href="../ayuda/seguridad.html">polÃ­tica de privacidad</a>
+                    y los <a href="#">tÃ©rminos de uso</a>.
+                </p>
+
+                <hr class="co-divider">
+
+                <div class="co-summary">
+                    <div class="co-summary-row">
+                        <span>Productos:</span>
+                        <span id="coSubtotal">$0.00</span>
+                    </div>
+                    <div class="co-summary-row">
+                        <span>EnvÃ­o:</span>
+                        <span class="co-free">$0.00 GRATIS</span>
+                    </div>
+                    <hr class="co-divider">
+                    <div class="co-summary-row co-total-row">
+                        <span>Total <small>(IVA incluido, en caso de ser aplicable)</small>:</span>
+                        <span id="coTotal" class="co-total-amount">$0.00</span>
+                    </div>
+                </div>
+            </aside>
+
+        </div><!-- /co-layout -->
+    </main>
+
+    <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+         MODAL: Agregar tarjeta
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+    <div id="cardModal" class="co-modal" role="dialog" aria-modal="true" aria-labelledby="cardModalTitle">
+        <div class="co-modal-box">
+            <div class="co-modal-header">
+                <h2 id="cardModalTitle">Agregar una tarjeta de crÃ©dito o dÃ©bito</h2>
+                <button id="cardModalClose" class="co-modal-close" aria-label="Cerrar">&times;</button>
+            </div>
+
+            <div class="co-modal-body">
+                <!-- Columna formulario -->
+                <form id="cardForm" class="co-card-form" novalidate>
+
+                    <div class="co-field-group">
+                        <label for="cfNumber">NÃºmero de tarjeta <span class="co-required">*</span></label>
+                        <input id="cfNumber" type="text" inputmode="numeric" maxlength="19"
+                               placeholder="0000 0000 0000 0000" autocomplete="cc-number" required>
+                        <span id="cfBrandBadge" class="cf-brand-badge"></span>
+                    </div>
+
+                    <div class="co-field-group">
+                        <label for="cfName">Nombre del titular <span class="co-required">*</span></label>
+                        <input id="cfName" type="text" placeholder="Como aparece en la tarjeta"
+                               autocomplete="cc-name" required>
+                    </div>
+
+                    <div class="co-expiry-row">
+                        <div class="co-field-group">
+                            <label for="cfMonth">Fecha de vencimiento</label>
+                            <div class="co-expiry-selects">
+                                <select id="cfMonth" autocomplete="cc-exp-month">
+                                    <option value="">Mes</option>
+                                    <option value="01">01 - Enero</option>
+                                    <option value="02">02 - Febrero</option>
+                                    <option value="03">03 - Marzo</option>
+                                    <option value="04">04 - Abril</option>
+                                    <option value="05">05 - Mayo</option>
+                                    <option value="06">06 - Junio</option>
+                                    <option value="07">07 - Julio</option>
+                                    <option value="08">08 - Agosto</option>
+                                    <option value="09">09 - Septiembre</option>
+                                    <option value="10">10 - Octubre</option>
+                                    <option value="11">11 - Noviembre</option>
+                                    <option value="12">12 - Diciembre</option>
+                                </select>
+                                <select id="cfYear" autocomplete="cc-exp-year">
+                                    <option value="">AÃ±o</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="co-field-group">
+                            <label for="cfCvv">CÃ³digo de seguridad <span class="co-required">*</span></label>
+                            <input id="cfCvv" type="text" inputmode="numeric" maxlength="4"
+                                   placeholder="CVV" autocomplete="cc-csc" required>
+                            <small class="co-cvv-hint">3 dÃ­gitos al reverso (4 si es Mastercard dÃ©bito)</small>
+                        </div>
+                    </div>
+
+                    <label class="co-default-check">
+                        <input type="checkbox" id="cfDefault">
+                        Usar como mÃ©todo de pago predeterminado
+                    </label>
+
+                    <p id="cardFormError" class="co-form-error" style="display:none;"></p>
+
+                    <div class="co-modal-footer">
+                        <button type="button" id="cardModalCancel" class="co-btn-secondary">Cancelar</button>
+                        <button type="submit" id="cardFormSubmit" class="co-btn-primary">Agregar tarjeta</button>
+                    </div>
+                </form>
+
+                <!-- Panel lateral marcas -->
+                <div class="co-brand-panel">
+                    <p class="co-brand-title">Aceptamos</p>
+                    <div class="co-brand-badges">
+                        <div class="co-brand-badge visa">
+                            <svg viewBox="0 0 60 20" xmlns="http://www.w3.org/2000/svg">
+                                <text x="2" y="16" font-family="Arial" font-size="16" font-weight="900" font-style="italic" fill="#fff" letter-spacing="-1">VISA</text>
+                            </svg>
+                        </div>
+                        <div class="co-brand-badge mc">
+                            <svg viewBox="0 0 44 28" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="16" cy="14" r="12" fill="#eb001b"/>
+                                <circle cx="28" cy="14" r="12" fill="#f79e1b"/>
+                                <path d="M22 7a12 12 0 0 1 0 14 12 12 0 0 1 0-14z" fill="#ff5f00"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <p class="co-brand-note">No aceptamos American Express ni Carnet.</p>
+                    <div class="co-secure-note">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                        </svg>
+                        Tus datos estÃ¡n cifrados y protegidos.
+                    </div>
+                </div>
+            </div><!-- /co-modal-body -->
+        </div>
+    </div><!-- /cardModal -->
+
+        <div id="coNoticeModal" class="co-notice-modal" role="dialog" aria-modal="true" aria-labelledby="coNoticeTitle" hidden>
+            <div class="co-notice-card">
+                <button id="coNoticeClose" class="co-notice-close" aria-label="Cerrar">&times;</button>
+                <p id="coNoticeKicker" class="co-notice-kicker">Smucky Checkout</p>
+                <h2 id="coNoticeTitle" class="co-notice-title">Notificación</h2>
+                <p id="coNoticeMessage" class="co-notice-message"></p>
+
+                <div id="coNoticeInputWrap" class="co-notice-input-wrap" hidden>
+                    <input id="coNoticeInput" class="co-notice-input" type="text" inputmode="text" autocomplete="off" placeholder="">
+                    <p id="coNoticeHint" class="co-notice-hint"></p>
+                    <p id="coNoticeError" class="co-notice-error" hidden></p>
+                </div>
+
+                <div class="co-notice-actions">
+                    <button id="coNoticeCancel" type="button" class="co-notice-btn co-notice-btn-cancel">Cancelar</button>
+                    <button id="coNoticeAccept" type="button" class="co-notice-btn co-notice-btn-accept">Aceptar</button>
+                </div>
+            </div>
+        </div>
+
+    <!-- â•â•â• Scripts â•â•â• -->
+    <!-- 1. Auth (script tradicional) -->
+    
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section footer-links-grid" id="contacto">
+                <div>
+                    <h4>AYUDA</h4>
+                    <ul>
+                        <li><a href="../ayuda/entregas.html">Informacion De Entrega</a></li>
+                        <li><a href="../ayuda/devoluciones.html">Politica De Devoluciones</a></li>
+                        <li><a href="../ayuda/pedidos.html">Pedidos</a></li>
+                        <li><a href="../soporte/index.html">Soporte</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>SMUCKY'S BY CHAVARIN</h4>
+                    <ul>
+                        <li><a href="../informacion/sobre-mi.html">Sobre Nosotros</a></li>
+                        <li><a href="#contacto">Contacto</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Síguenos</h4>
+                <div class="social-and-logo">
+                    <div class="social-links">
+                        <a class="social-facebook" href="https://www.facebook.com/profile.php?id=61584479614840" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-brand-facebook"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3" /></svg> Facebook</a>
+                        <a class="social-instagram" href="https://www.instagram.com/smucky.by_chavamon/?hl=es-la" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-brand-instagram"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 8a4 4 0 0 1 4 -4h8a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-8a4 4 0 0 1 -4 -4z" /><path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" /><path d="M16.5 7.5v.01" /></svg> Instagram</a>
+                        <a class="social-x" href="https://x.com" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-brand-x"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 4l11.733 16h4.267l-11.733 -16z" /><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772" /></svg> X</a>
+                        <a class="social-tiktok" href="https://www.tiktok.com/@smuckys_by.chavamon" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-brand-tiktok"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M21 7.917v4.034a9.948 9.948 0 0 1 -5 -1.951v4.5a6.5 6.5 0 1 1 -8 -6.326v4.326a2.5 2.5 0 1 0 4 2v-11.5h4.083a6.005 6.005 0 0 0 4.917 4.917z" /></svg> Tik Tok</a>
+                        <a class="social-youtube" href="https://www.youtube.com/channel/UCcLRrl9z42RhSXBd7Mlbwwg" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-brand-youtube"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 5m0 4a4 4 0 0 1 4 -4h10a4 4 0 0 1 4 4v6a4 4 0 0 1 -4 4h-10a4 4 0 0 1 -4 -4z" /><path d="M10 9l5 3l-5 3z" /></svg> Youtube</a>
+                        <p class="footer-phone">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.86 19.86 0 0 1 11.19 19a19.5 19.5 0 0 1-6-6 19.86 19.86 0 0 1-2.92-8.67A2 2 0 0 1 4.27 2h3a2 2 0 0 1 2 1.72c.12.9.33 1.77.62 2.61a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.47-1.35a2 2 0 0 1 2.11-.45c.84.29 1.71.5 2.61.62A2 2 0 0 1 22 16.92z"/></svg>
+                            <span>Tel: +52 (777) 520 6401</span>
+                        </p>
+                    </div>
+                    <div class="footer-logo-card">
+                        <img src="../LOGO DE LA EMPRESA/LOGO.jpeg" alt="Logo SMUCKY'S BY CHAVARIN">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 SMUCKY'S BY CHAVARIN. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+    <script src="../servicios/auth.js"></script>
+    <!-- 2. Stripe -->
+    
+    
+    <script src="https://js.stripe.com/v3/"></script>
+    
+    
+    <script src="../servicios/stripe-pago.js"></script>
+    <!-- 3. MÃ³dulos Firebase que exponen window globals -->
+    
+    
+    <script type="module" src="../servicios/firebase-compras.js"></script>
+    
+    
+    <script type="module" src="../servicios/metodos-pago.js"></script>
+    <!-- 4. Notificaciones email -->
+    
+    
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    
+    
+    <script type="module" src="../servicios/emailjs-notificaciones.js"></script>
+    <!-- 5. LÃ³gica de la pÃ¡gina -->
+    
+    
+    <script type="module" src="../scripts/pages/checkout.js"></script>
+
+
+    
+    
+    <script src="../scripts/pages/menu-global.js"></script>
+</body>
+</html>
+
+
+
+
+
+

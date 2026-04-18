@@ -1,0 +1,209 @@
+/* ES: Comentarios base para mantenimiento. EN: Baseline comments for maintenance. */
+body.page-devoluciones {
+    font-family: "Montserrat", "Segoe UI", sans-serif;
+    background:
+        radial-gradient(circle at 12% 11%, rgba(153, 27, 27, 0.22) 0, transparent 34%),
+        radial-gradient(circle at 88% 9%, rgba(71, 85, 105, 0.3) 0, transparent 38%),
+        linear-gradient(158deg, #090b13 0%, #141925 45%, #1b1f2b 100%);
+    color: #ecf1f8;
+}
+
+.page-devoluciones .page {
+    position: relative;
+    isolation: isolate;
+    max-width: 1200px;
+    padding-top: 18px;
+    padding-bottom: 54px;
+}
+
+.page-devoluciones .page::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("../LOGO DE LA EMPRESA/La-pura-letra-logo.png");
+    background-repeat: repeat;
+    background-size: 170px;
+    opacity: 0.045;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.page-devoluciones .page > * {
+    position: relative;
+    z-index: 1;
+}
+
+.page-devoluciones .hero-devoluciones {
+    background: linear-gradient(118deg, rgba(11, 11, 17, 0.92) 0%, rgba(27, 23, 36, 0.94) 52%, rgba(39, 29, 35, 0.94) 100%);
+    border: 1px solid rgba(148, 163, 184, 0.24);
+    border-radius: 28px;
+    padding: clamp(24px, 4vw, 42px);
+    box-shadow: 0 24px 48px rgba(2, 6, 23, 0.45);
+    margin-bottom: 28px;
+    text-align: center;
+}
+
+.page-devoluciones .hero-devoluciones::after {
+    width: 360px;
+    height: 360px;
+    right: -145px;
+    top: -120px;
+    background: radial-gradient(circle, rgba(248, 113, 113, 0.36) 0%, rgba(248, 113, 113, 0.03) 74%);
+}
+
+.page-devoluciones .hero-main-icon {
+    width: 68px;
+    height: 68px;
+    border-radius: 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+    color: #fecaca;
+    background: linear-gradient(140deg, rgba(127, 29, 29, 0.45), rgba(251, 113, 133, 0.2));
+    border: 1px solid rgba(252, 165, 165, 0.45);
+    box-shadow: 0 10px 20px rgba(251, 113, 133, 0.22);
+}
+
+.page-devoluciones .hero-main-icon svg {
+    width: 36px;
+    height: 36px;
+}
+
+.page-devoluciones .hero-kicker {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #d4d4e4;
+    margin-bottom: 8px;
+}
+
+.page-devoluciones .hero h1 {
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 800;
+    margin-bottom: 8px;
+    color: #faf7f9;
+}
+
+.page-devoluciones .hero-divider {
+    display: block;
+    max-width: 600px;
+    width: 100%;
+    height: 4px;
+    border-radius: 99px;
+    margin: 2px auto 12px;
+    background: linear-gradient(90deg, #fda4af 0%, #fb7185 100%);
+}
+
+.page-devoluciones .hero p {
+    color: #ddd8e5;
+    font-size: 1.04rem;
+    line-height: 1.75;
+    max-width: 760px;
+    margin: 0 auto;
+}
+
+.page-devoluciones .devoluciones-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.page-devoluciones .devolucion-card {
+    background: linear-gradient(142deg, rgba(17, 16, 24, 0.9) 0%, rgba(28, 28, 41, 0.94) 100%);
+    border: 1px solid rgba(148, 163, 184, 0.28);
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 14px 32px rgba(2, 6, 23, 0.36);
+    transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.page-devoluciones .card-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+    color: #fda4af;
+    background: linear-gradient(135deg, rgba(127, 29, 29, 0.34), rgba(251, 113, 133, 0.18));
+    border: 1px solid rgba(253, 164, 175, 0.36);
+}
+
+.page-devoluciones .card-icon svg {
+    width: 22px;
+    height: 22px;
+}
+
+.page-devoluciones .devolucion-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(130deg, transparent 0%, rgba(251, 113, 133, 0.1) 100%);
+    pointer-events: none;
+}
+
+.page-devoluciones .devolucion-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 22px 42px rgba(2, 6, 23, 0.52);
+    border-color: rgba(251, 113, 133, 0.5);
+}
+
+.page-devoluciones .devolucion-card h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #fff7fa;
+}
+
+.page-devoluciones .devolucion-card p {
+    color: #d4cfdd;
+    line-height: 1.72;
+    font-size: 0.98rem;
+}
+
+.page-devoluciones .btn-detalles {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 16px;
+    background: linear-gradient(135deg, #9f1239 0%, #be123c 100%);
+    border: 1px solid rgba(253, 164, 175, 0.5);
+    border-radius: 999px;
+    padding: 11px 18px;
+    font-size: 0.9rem;
+    letter-spacing: 0.02em;
+    transition: transform 0.22s ease, box-shadow 0.22s ease, filter 0.22s ease;
+}
+
+.page-devoluciones .btn-detalles:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(190, 18, 60, 0.38);
+    filter: brightness(1.08);
+}
+
+@media (max-width: 800px) {
+    .page-devoluciones .page {
+        padding-top: 10px;
+        padding-bottom: 36px;
+    }
+
+    .page-devoluciones .hero-devoluciones {
+        border-radius: 22px;
+        margin-bottom: 20px;
+    }
+
+    .page-devoluciones .devoluciones-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .page-devoluciones .devolucion-card {
+        border-radius: 16px;
+        padding: 20px;
+    }
+}

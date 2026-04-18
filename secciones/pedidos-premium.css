@@ -1,0 +1,205 @@
+﻿/* ES: Comentarios base para mantenimiento. EN: Baseline comments for maintenance. */
+body.page-pedidos {
+    font-family: "Montserrat", "Segoe UI", sans-serif;
+    background:
+        radial-gradient(circle at 12% 10%, rgba(59, 130, 246, 0.2) 0, transparent 34%),
+        radial-gradient(circle at 88% 8%, rgba(71, 85, 105, 0.28) 0, transparent 40%),
+        linear-gradient(160deg, #080b12 0%, #101827 46%, #151d2b 100%);
+    color: #e9eef7;
+}
+
+.page-pedidos .page {
+    position: relative;
+    isolation: isolate;
+    max-width: 1200px;
+    padding-top: 24px;
+    padding-bottom: 64px;
+}
+
+.page-pedidos .hero-pedidos {
+    /* Contenedor principal del encabezado de Pedidos (centrado). */
+    background: linear-gradient(116deg, rgba(7, 13, 24, 0.92) 0%, rgba(17, 31, 48, 0.94) 54%, rgba(20, 34, 52, 0.95) 100%);
+    border: 1px solid rgba(148, 163, 184, 0.16);
+    border-radius: 24px;
+    padding: clamp(28px, 4vw, 46px);
+    box-shadow: 0 14px 34px rgba(2, 6, 23, 0.34);
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.page-pedidos .hero-pedidos::after {
+    width: 360px;
+    height: 360px;
+    right: -146px;
+    top: -120px;
+    background: radial-gradient(circle, rgba(96, 165, 250, 0.36) 0%, rgba(96, 165, 250, 0.03) 74%);
+}
+
+.page-pedidos .hero-main-icon {
+    /* TamaÃ±o del cuadro del cubo del header. */
+    width: 102px;
+    height: 102px;
+    border-radius: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+    color: #bfdbfe;
+    background: linear-gradient(140deg, rgba(30, 64, 175, 0.44), rgba(59, 130, 246, 0.2));
+    border: 1px solid rgba(147, 197, 253, 0.45);
+    box-shadow: 0 10px 22px rgba(59, 130, 246, 0.2);
+}
+
+.page-pedidos .hero-main-icon svg {
+    /* TamaÃ±o del icono (cubo) dentro del cuadro. */
+    width: 56px;
+    height: 56px;
+}
+
+.page-pedidos .hero-kicker {
+    /* Texto secundario "Seguimiento ..." debajo del titulo. */
+    display: inline-flex;
+    align-items: center;
+    color: #d3dded;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.11em;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.page-pedidos .hero h1 {
+    /* Titulo principal: "Pedidos". */
+    font-size: clamp(1.9rem, 4vw, 2.6rem);
+    color: #f8fafc;
+    margin-bottom: 8px;
+}
+
+.page-pedidos .hero-divider {
+    /* Linea decorativa: largo y posicion horizontal debajo del titulo. */
+    display: block;
+    width: 246px;
+    height: 4px;
+    border-radius: 99px;
+    margin: 2px auto 12px;
+    transform: translateX(0);
+    background: linear-gradient(90deg, #93c5fd 0%, #3b82f6 100%);
+}
+
+.page-pedidos .hero p {
+    /* Subtitulo: "Consulta el estado de tu pedido". */
+    color: #cfdbec;
+    line-height: 1.74;
+    max-width: 620px;
+    margin: 0 auto;
+}
+
+.page-pedidos .pedido-buscador {
+    /* Caja central del buscador de orden. */
+    background: linear-gradient(145deg, rgba(13, 20, 31, 0.92) 0%, rgba(22, 32, 48, 0.96) 100%);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    border-radius: 20px;
+    padding: 28px;
+    box-shadow: 0 10px 24px rgba(2, 6, 23, 0.28);
+    max-width: 660px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.page-pedidos .pedido-buscador h2 {
+    font-size: 1.35rem;
+    margin-bottom: 14px;
+    color: #f8fafc;
+}
+
+.page-pedidos .pedido-buscador-row {
+    margin-top: 2px;
+    display: flex;
+    gap: 12px;
+}
+
+.page-pedidos .pedido-buscador-row input {
+    flex: 1;
+    background: rgba(10, 14, 22, 0.9);
+    border: 1px solid rgba(148, 163, 184, 0.36);
+    color: #e8eef8;
+    border-radius: 12px;
+    padding: 13px 14px;
+    margin: 0;
+}
+
+.page-pedidos .pedido-buscador-row input::placeholder {
+    color: #9db0c9;
+}
+
+.page-pedidos .pedido-buscador-row input:focus {
+    outline: none;
+    border-color: rgba(147, 197, 253, 0.7);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.page-pedidos .pedido-buscador-row button {
+    /* Boton moderno de "Buscar". */
+    border-radius: 12px;
+    padding: 13px 20px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    border: 1px solid rgba(147, 197, 253, 0.5);
+    background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%);
+    transition: transform 0.34s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.34s cubic-bezier(0.22, 1, 0.36, 1), filter 0.34s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.page-pedidos .pedido-buscador-row button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 20px rgba(37, 99, 235, 0.28);
+    filter: brightness(1.06);
+}
+
+.page-pedidos .pedido-note {
+    margin-top: 12px;
+    font-size: 0.93rem;
+    color: #9eb3cb;
+}
+
+@media (max-width: 800px) {
+    .page-pedidos .page {
+        padding-top: 10px;
+        padding-bottom: 40px;
+    }
+
+    .page-pedidos .hero-pedidos {
+        margin-bottom: 22px;
+        border-radius: 20px;
+    }
+
+    .page-pedidos .hero-main-icon {
+        /* Escala del cuadro del cubo en movil. */
+        width: 84px;
+        height: 84px;
+        border-radius: 20px;
+    }
+
+    .page-pedidos .hero-main-icon svg {
+        /* Escala del cubo en movil. */
+        width: 46px;
+        height: 46px;
+    }
+
+    .page-pedidos .hero-divider {
+        /* Ajuste horizontal de la linea decorativa en movil. */
+        transform: translateX(0);
+    }
+
+    .page-pedidos .pedido-buscador {
+        padding: 20px;
+    }
+
+    .page-pedidos .pedido-buscador-row {
+        flex-direction: column;
+    }
+
+    .page-pedidos .pedido-buscador-row button {
+        width: 100%;
+    }
+}
+

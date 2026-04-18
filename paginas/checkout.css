@@ -1,0 +1,1315 @@
+﻿/* ES: Comentarios base para mantenimiento. EN: Baseline comments for maintenance. */
+/* =====================================================
+   checkout.css
+   PÃ¡gina de finalizar compra â€“ estilo Amazon
+===================================================== */
+
+:root {
+    --co-brand-green: #188c4a;
+    --co-brand-green-dark: #0f6d39;
+    --co-brand-red: #d63a34;
+    --co-brand-red-dark: #b72c27;
+    --co-brand-soft: #f3fbf5;
+    --co-brand-border: #cfe8d7;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    background:
+        radial-gradient(circle at top left, rgba(24,140,74,.10), transparent 28%),
+        radial-gradient(circle at top right, rgba(214,58,52,.10), transparent 24%),
+        #eaeded;
+    color: #0f1111;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* â”€â”€ HEADER â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.co-header {
+    background:
+        radial-gradient(circle at 12% 22%, rgba(96, 255, 76, 0.42) 0%, rgba(96, 255, 76, 0.16) 16%, rgba(96, 255, 76, 0) 34%),
+        radial-gradient(circle at 50% 20%, rgba(255, 204, 82, 0.28) 0%, rgba(255, 204, 82, 0.12) 18%, rgba(255, 204, 82, 0) 34%),
+        radial-gradient(circle at 88% 18%, rgba(255, 82, 118, 0.34) 0%, rgba(255, 82, 118, 0.14) 18%, rgba(255, 82, 118, 0) 36%),
+        linear-gradient(90deg, rgba(220, 255, 228, 0.98) 0%, rgba(255, 255, 255, 0.92) 22%, rgba(255, 249, 228, 0.96) 50%, rgba(255, 239, 244, 0.96) 78%, rgba(255, 225, 234, 0.98) 100%),
+        linear-gradient(135deg, #dcffe4 0%, #fffdf5 38%, #fff4f7 72%, #ffe6ee 100%);
+    border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 8px 16px;
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+}
+
+.co-header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.co-logo-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: #0f1111;
+}
+
+.co-logo-img {
+    height: 34px;
+    width: auto;
+    object-fit: contain;
+}
+
+.co-logo-text {
+    font-size: 0.95rem;
+    font-weight: 900;
+    letter-spacing: 0.02em;
+    color: #0f1111;
+}
+
+.co-header-secure {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8rem;
+    color: #6b7280;
+    font-weight: 500;
+}
+
+/* â”€â”€ LAYOUT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.co-main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 24px 16px;
+    width: min(1100px, 100%);
+}
+
+.co-layout {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 20px;
+    align-items: start;
+}
+
+/* â”€â”€ COLUMNA IZQUIERDA â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.co-left {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+/* Delivery banner */
+.co-delivery-banner {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px 8px 0 0;
+    padding: 16px 20px 14px;
+    border-bottom: none;
+}
+
+.co-arrives {
+    font-size: 1.1rem;
+    color: #0f1111;
+}
+
+.co-arrives strong {
+    color: var(--co-brand-green);
+}
+
+.co-urgency {
+    font-size: 0.82rem;
+    color: var(--co-brand-red);
+    margin-top: 2px;
+}
+
+/* Producto */
+.co-items-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.co-order-item {
+    background: #fff;
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+}
+
+.co-empty-order {
+    background: #fff;
+    border: 1px solid #ddd;
+    padding: 22px 20px;
+    color: #565959;
+}
+
+.co-product-card {
+    display: flex;
+    gap: 16px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-bottom: none;
+    padding: 16px 20px;
+}
+
+.co-product-thumb {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    border-radius: 6px;
+    background: #f5f5f5;
+    flex-shrink: 0;
+}
+
+.co-product-body {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.co-prod-name {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #0f1111;
+    line-height: 1.4;
+}
+
+.co-prod-price {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #0f1111;
+}
+
+.co-prod-shipping {
+    font-size: 0.85rem;
+    color: #565959;
+}
+
+.co-prod-seller {
+    font-size: 0.82rem;
+    color: #565959;
+}
+
+.co-free {
+    color: var(--co-brand-green);
+}
+
+/* Controles cantidad */
+.co-qty-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-bottom: none;
+    padding: 12px 20px;
+}
+
+.co-item-line-total {
+    margin-left: auto;
+    font-size: 1rem;
+    font-weight: 800;
+    color: #0f1111;
+}
+
+.co-qty-del {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border: 1.5px solid #ddd;
+    border-radius: 8px;
+    background: #fff;
+    cursor: pointer;
+    color: #0f1111;
+    transition: background .15s, border-color .15s;
+}
+
+.co-qty-del svg { width: 18px; height: 18px; }
+
+.co-qty-del:hover {
+    background: #fef2f2;
+    border-color: #f87171;
+    color: #dc2626;
+}
+
+.co-qty-controls {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    border: 1.5px solid var(--co-brand-green);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.co-qty-btn {
+    width: 36px;
+    height: 36px;
+    background: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #0f1111;
+    transition: background .15s;
+    line-height: 1;
+}
+
+.co-qty-btn:hover { background: #effaf3; }
+.co-qty-btn:disabled { color: #aaa; cursor: not-allowed; }
+
+.co-qty-num {
+    display: inline-block;
+    min-width: 36px;
+    text-align: center;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-left: 1.5px solid var(--co-brand-green);
+    border-right: 1.5px solid var(--co-brand-green);
+    padding: 0 6px;
+    line-height: 36px;
+}
+
+/* Gift + divider */
+.co-gift-link {
+    display: block;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-bottom: none;
+    padding: 10px 20px;
+    font-size: 0.85rem;
+    color: #007185;
+    text-decoration: none;
+}
+
+.co-gift-link:hover { text-decoration: underline; }
+
+.co-divider {
+    border: none;
+    border-top: 1px solid #ddd;
+    margin: 0;
+}
+
+/* â”€â”€ SECCIÃ“N DE PAGO â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.co-payment-section {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-top: none;
+    border-bottom: none;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.co-section-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #0f1111;
+}
+
+/* Lista de tarjetas guardadas */
+.co-saved-card-area {
+    background: #fff;
+    border: 1px solid #d5d9d9;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.co-saved-cards-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.co-card-option {
+    display: grid;
+    grid-template-columns: 26px 42px 1fr auto;
+    gap: 12px;
+    align-items: start;
+    padding: 16px 18px;
+    border-top: 1px solid #eaeded;
+    cursor: pointer;
+    transition: background .15s ease, border-color .15s ease;
+}
+
+.co-card-option:first-child {
+    border-top: none;
+}
+
+.co-card-option:hover {
+    background: #f9fbfb;
+}
+
+.co-card-option.is-selected {
+    background: #f0f9ff;
+    box-shadow: inset 0 0 0 1.5px #0ea5e9;
+}
+
+.co-card-option.is-expired {
+    background: #fff7ed;
+}
+
+.co-card-select {
+    display: flex;
+    justify-content: center;
+    padding-top: 4px;
+}
+
+.co-card-select input {
+    width: 18px;
+    height: 18px;
+    accent-color: #007185;
+    cursor: pointer;
+}
+
+.co-card-brand-art {
+    width: 42px;
+    height: 28px;
+    border-radius: 4px;
+    flex-shrink: 0;
+}
+
+.co-card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+}
+
+.co-card-line {
+    font-size: 0.95rem;
+    line-height: 1.45;
+    color: #0f1111;
+}
+
+.co-card-brand {
+    font-weight: 800;
+}
+
+.co-card-holder,
+.co-card-note,
+.co-card-bank-rule {
+    font-size: 0.86rem;
+    color: #565959;
+}
+
+.co-card-bank-rule {
+    color: var(--co-brand-green);
+}
+
+.co-card-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    min-width: 128px;
+}
+
+.co-card-edit {
+    background: none;
+    border: none;
+    color: #007185;
+    font-size: 0.84rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0;
+    text-decoration: underline;
+}
+
+.co-card-edit:hover {
+    color: #c7511f;
+}
+
+.co-card-expiry {
+    font-size: 0.9rem;
+    color: #0f1111;
+}
+
+.co-card-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    font-size: 0.76rem;
+    font-weight: 700;
+    padding: 4px 10px;
+}
+
+.co-card-pill.default {
+    background: #e0f2fe;
+    color: #0369a1;
+}
+
+.co-card-pill.expired {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.co-card-pill.valid {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.co-bank-note {
+    font-size: 0.82rem;
+    color: #565959;
+    line-height: 1.45;
+}
+
+.co-payment-status {
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 0.86rem;
+    line-height: 1.45;
+}
+
+.co-payment-status.error {
+    background: #fef2f2;
+    border: 1px solid #fca5a5;
+    color: #b91c1c;
+}
+
+.co-payment-status.success {
+    background: #ecfdf5;
+    border: 1px solid #86efac;
+    color: #15803d;
+}
+
+/* Fila "Agregar tarjeta" */
+.co-add-card-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    background: #fff;
+    border: 1.5px solid #ddd;
+    border-radius: 8px;
+    padding: 12px 14px;
+    cursor: pointer;
+    text-align: left;
+    transition: border-color .15s, background .15s;
+}
+
+.co-add-card-row:hover {
+    border-color: var(--co-brand-green);
+    background: var(--co-brand-soft);
+}
+
+.co-add-plus {
+    font-size: 1.4rem;
+    font-weight: 300;
+    color: var(--co-brand-green);
+    line-height: 1;
+    margin-right: 2px;
+}
+
+.co-card-icon {
+    width: 40px;
+    height: 28px;
+    border-radius: 3px;
+    flex-shrink: 0;
+}
+
+.co-add-card-text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.co-add-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #007185;
+}
+
+.co-add-hint {
+    font-size: 0.78rem;
+    color: #565959;
+}
+
+.co-row-arrow {
+    font-size: 1.3rem;
+    color: #565959;
+    line-height: 1;
+}
+
+/* Mercado Pago option */
+.co-mp-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border: 1.5px solid #ddd;
+    border-radius: 8px;
+    padding: 10px 14px;
+    cursor: pointer;
+    transition: border-color .15s;
+}
+
+.co-mp-row:hover { border-color: #009ee3; }
+
+.co-mp-row input[type="radio"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #009ee3;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+.co-mp-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.co-mp-logo {
+    width: 100px;
+    height: 34px;
+    border-radius: 5px;
+}
+
+.co-mp-label > span {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #0f1111;
+}
+
+/* â”€â”€ BOTÃ“N CTA â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.co-confirm-btn {
+    display: block;
+    width: 100%;
+    background: linear-gradient(135deg, var(--co-brand-green) 0%, var(--co-brand-green-dark) 100%);
+    border: 1px solid var(--co-brand-green-dark);
+    border-radius: 10px;
+    color: #fff;
+    font-size: 0.95rem;
+    font-weight: 800;
+    padding: 13px 14px;
+    cursor: pointer;
+    text-align: center;
+    transition: transform .15s, box-shadow .15s, filter .15s;
+    margin-top: 16px;
+    box-shadow: 0 12px 28px rgba(24, 140, 74, 0.20);
+}
+
+.co-confirm-btn:hover {
+    filter: brightness(1.03);
+    transform: translateY(-1px);
+    box-shadow: 0 14px 30px rgba(24, 140, 74, 0.28);
+}
+
+.co-confirm-btn:disabled {
+    opacity: .6;
+    cursor: not-allowed;
+}
+
+.co-terms {
+    font-size: 0.78rem;
+    color: #565959;
+    margin-top: 10px;
+    line-height: 1.5;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    padding: 12px 20px 20px;
+}
+
+.co-terms.small { font-size: 0.75rem; }
+
+.co-terms a { color: #007185; text-decoration: none; }
+.co-terms a:hover { text-decoration: underline; }
+
+/* Wrap bottom section inside a card */
+.co-left > .co-confirm-btn,
+.co-left > .co-terms {
+    border-radius: 0;
+}
+
+/* â”€â”€ SIDEBAR â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.co-sidebar {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    position: sticky;
+    top: 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.co-sidebar .co-confirm-btn {
+    margin-top: 0;
+}
+
+.co-sidebar .co-divider {
+    margin: 14px 0;
+}
+
+.co-summary {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.co-summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 0.88rem;
+    color: #0f1111;
+}
+
+.co-total-row {
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
+.co-total-row small {
+    font-size: 0.72rem;
+    font-weight: 400;
+    color: #565959;
+}
+
+.co-total-amount {
+    color: #0f1111;
+    font-size: 1.1rem;
+    font-weight: 800;
+}
+
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   MODAL â€“ Agregar tarjeta
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+.co-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.55);
+    z-index: 9000;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+}
+
+.co-modal.is-open {
+    display: flex;
+}
+
+.co-notice-modal[hidden] {
+    display: none !important;
+}
+
+.co-modal-box {
+    background: #fff;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 680px;
+    max-height: 92vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0,0,0,.3);
+}
+
+.co-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px 16px;
+    border-bottom: 1px solid #eee;
+}
+
+.co-modal-header h2 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #0f1111;
+}
+
+.co-modal-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    line-height: 1;
+    color: #565959;
+    cursor: pointer;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.co-modal-close:hover { background: #f3f3f3; color: #0f1111; }
+
+.co-modal-body {
+    display: grid;
+    grid-template-columns: 1fr 200px;
+    gap: 0;
+}
+
+/* Formulario */
+.co-card-form {
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.co-field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    position: relative;
+}
+
+.co-field-group label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #0f1111;
+}
+
+.co-field-group input,
+.co-field-group select {
+    height: 42px;
+    border: 1.5px solid #ccc;
+    border-radius: 6px;
+    padding: 0 12px;
+    font-size: 0.9rem;
+    font-family: inherit;
+    color: #0f1111;
+    background: #fff;
+    transition: border-color .15s;
+    outline: none;
+}
+
+.co-field-group input:focus,
+.co-field-group select:focus {
+    border-color: var(--co-brand-green);
+    box-shadow: 0 0 0 3px rgba(24,140,74,.12);
+}
+
+.cf-brand-badge {
+    position: absolute;
+    right: 12px;
+    top: 30px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    pointer-events: none;
+}
+
+.cf-brand-badge.visa {
+    background: #1a1f71;
+    color: #fff;
+}
+
+.cf-brand-badge.mastercard {
+    background: linear-gradient(135deg, #eb001b, #f79e1b);
+    color: #fff;
+}
+
+.co-expiry-row {
+    display: grid;
+    grid-template-columns: 1fr 130px;
+    gap: 14px;
+}
+
+.co-expiry-selects {
+    display: flex;
+    gap: 8px;
+}
+
+.co-expiry-selects select {
+    flex: 1;
+    min-width: 0;
+    padding: 0 8px;
+}
+
+.co-default-check {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: #0f1111;
+    cursor: pointer;
+}
+
+.co-default-check input {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--co-brand-green);
+    cursor: pointer;
+}
+
+.co-form-error {
+    background: #fef2f2;
+    border: 1px solid #fca5a5;
+    border-radius: 6px;
+    color: #dc2626;
+    font-size: 0.83rem;
+    padding: 10px 14px;
+}
+
+.co-modal-footer {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    padding-top: 4px;
+}
+
+.co-btn-primary {
+    background: linear-gradient(135deg, var(--co-brand-green) 0%, var(--co-brand-green-dark) 100%);
+    border: 1px solid var(--co-brand-green-dark);
+    border-radius: 8px;
+    color: #fff;
+    font-size: 0.87rem;
+    font-weight: 700;
+    padding: 10px 22px;
+    cursor: pointer;
+    transition: background .15s;
+}
+
+.co-btn-primary:hover { filter: brightness(1.03); }
+
+.co-btn-primary:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+}
+
+.co-btn-secondary {
+    background: #fff;
+    border: 1.5px solid #ccc;
+    border-radius: 8px;
+    color: #0f1111;
+    font-size: 0.87rem;
+    font-weight: 600;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background .15s, border-color .15s;
+}
+
+.co-btn-secondary:hover { background: #f5f5f5; border-color: #aaa; }
+
+.co-notice-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 9800;
+    display: grid;
+    place-items: center;
+    padding: 20px;
+    background:
+        radial-gradient(circle at top, rgba(255, 255, 255, 0.18), transparent 28%),
+        rgba(10, 16, 24, 0.62);
+    backdrop-filter: blur(8px);
+}
+
+.co-notice-card {
+    position: relative;
+    width: min(100%, 460px);
+    border-radius: 26px;
+    padding: 28px 26px 24px;
+    color: #fff7ef;
+    background:
+        radial-gradient(circle at top left, rgba(255, 255, 255, 0.16), transparent 30%),
+        radial-gradient(circle at bottom right, rgba(255, 214, 102, 0.18), transparent 28%),
+        linear-gradient(145deg, #0f1720 0%, #172434 45%, #1d1420 100%);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.36);
+    overflow: hidden;
+    animation: coNoticeReveal .22s ease-out;
+}
+
+.co-notice-card::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto auto 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, #ff5f6d 0%, #ffc371 48%, #47e391 100%);
+}
+
+.co-notice-card.is-danger::before {
+    background: linear-gradient(90deg, #ff6b6b 0%, #ff3d3d 100%);
+}
+
+.co-notice-card.is-success::before {
+    background: linear-gradient(90deg, #22c55e 0%, #86efac 100%);
+}
+
+.co-notice-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.08);
+    color: #f8fafc;
+    font-size: 1.6rem;
+    cursor: pointer;
+    transition: background .18s ease, transform .18s ease;
+}
+
+.co-notice-close:hover {
+    background: rgba(255, 255, 255, 0.16);
+    transform: scale(1.04);
+}
+
+.co-notice-kicker {
+    margin: 0 0 10px;
+    font-size: .72rem;
+    font-weight: 800;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: #fbbf24;
+}
+
+.co-notice-title {
+    margin: 0;
+    font-size: 1.65rem;
+    line-height: 1.1;
+    font-weight: 900;
+    color: #ffffff;
+}
+
+.co-notice-message {
+    margin: 14px 0 0;
+    font-size: .98rem;
+    line-height: 1.65;
+    color: rgba(255, 247, 239, 0.9);
+}
+
+.co-notice-input-wrap {
+    margin-top: 18px;
+}
+
+.co-notice-input {
+    width: 100%;
+    border: 1.5px solid rgba(255, 255, 255, 0.16);
+    border-radius: 16px;
+    padding: 14px 16px;
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    outline: none;
+    transition: border-color .18s ease, box-shadow .18s ease, background .18s ease;
+}
+
+.co-notice-input::placeholder {
+    color: rgba(255, 255, 255, 0.45);
+    letter-spacing: .12em;
+}
+
+.co-notice-input:focus {
+    border-color: rgba(110, 231, 183, 0.95);
+    box-shadow: 0 0 0 4px rgba(74, 222, 128, 0.18);
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.co-notice-hint,
+.co-notice-error {
+    margin: 10px 2px 0;
+    font-size: .84rem;
+    line-height: 1.45;
+}
+
+.co-notice-hint {
+    color: rgba(255, 247, 239, 0.72);
+}
+
+.co-notice-error {
+    color: #fca5a5;
+}
+
+.co-notice-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.co-notice-btn {
+    min-width: 132px;
+    border: none;
+    border-radius: 999px;
+    padding: 12px 18px;
+    font-size: .92rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: transform .18s ease, box-shadow .18s ease, filter .18s ease;
+}
+
+.co-notice-btn:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.03);
+}
+
+.co-notice-btn-cancel {
+    background: linear-gradient(135deg, #22c55e 0%, #15803d 100%);
+    color: #fff;
+    box-shadow: 0 12px 24px rgba(21, 128, 61, 0.24);
+}
+
+.co-notice-btn-accept {
+    background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
+    color: #fff;
+    box-shadow: 0 14px 28px rgba(185, 28, 28, 0.28);
+}
+
+.co-notice-btn:disabled {
+    opacity: .6;
+    cursor: not-allowed;
+    transform: none;
+    filter: none;
+}
+
+@keyframes coNoticeReveal {
+    from {
+        opacity: 0;
+        transform: translateY(14px) scale(.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Panel de marcas */
+.co-brand-panel {
+    background: #fafafa;
+    border-left: 1px solid #eee;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    border-radius: 0 0 12px 0;
+}
+
+.co-brand-title {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #565959;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+}
+
+.co-brand-badges {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.co-brand-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 36px;
+    border-radius: 5px;
+    padding: 6px 10px;
+}
+
+.co-brand-badge.visa {
+    background: #1a1f71;
+}
+
+.co-brand-badge.visa svg { width: 48px; height: 16px; }
+
+.co-brand-badge.mc {
+    background: #1b1b1b;
+}
+
+.co-brand-badge.mc svg { width: 40px; height: 26px; }
+
+.co-brand-note {
+    font-size: 0.75rem;
+    color: #888;
+    line-height: 1.4;
+}
+
+.co-secure-note {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.75rem;
+    color: #555;
+    margin-top: auto;
+}
+
+.co-mp-logo-img {
+    height: 32px;
+    width: auto;
+    border-radius: 4px;
+    object-fit: contain;
+    background: #FFE900;
+    padding: 2px 6px;
+}
+
+.co-required {
+    color: #dc2626;
+    font-weight: 700;
+    margin-left: 2px;
+}
+
+.co-cvv-hint {
+    font-size: 0.72rem;
+    color: #6b7280;
+    margin-top: 3px;
+    display: block;
+}
+
+/* Formulario Mercado Pago expandible */
+.co-mp-form {
+    background: #f0f9ff;
+    border: 1.5px solid #009ee3;
+    border-radius: 10px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 4px;
+}
+
+.co-mp-form-title {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #0077b6;
+}
+
+.co-mp-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+/* â”€â”€ RESPONSIVE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+@media (max-width: 768px) {
+    .co-header {
+        padding: 8px 12px;
+    }
+
+    .co-logo-text {
+        font-size: 0.84rem;
+    }
+
+    .co-layout {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .co-sidebar {
+        order: -1;
+        position: static;
+    }
+
+    .co-modal-body {
+        grid-template-columns: 1fr;
+    }
+
+    .co-notice-card {
+        padding: 24px 20px 20px;
+        border-radius: 22px;
+    }
+
+    .co-notice-title {
+        font-size: 1.4rem;
+        padding-right: 26px;
+    }
+
+    .co-notice-actions {
+        flex-direction: column-reverse;
+    }
+
+    .co-notice-btn {
+        width: 100%;
+    }
+
+    .co-brand-panel {
+        border-left: none;
+        border-top: 1px solid #eee;
+        border-radius: 0 0 12px 12px;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .co-expiry-row {
+        grid-template-columns: 1fr;
+    }
+
+    .co-card-option {
+        grid-template-columns: 24px 38px 1fr;
+    }
+
+    .co-card-meta {
+        grid-column: 2 / -1;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        min-width: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .co-header {
+        gap: 10px;
+        padding: 8px 10px;
+    }
+
+    .co-header-left {
+        gap: 10px;
+        min-width: 0;
+    }
+
+    .co-logo-img {
+        height: 28px;
+    }
+
+    .co-logo-text {
+        font-size: 0.74rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 145px;
+    }
+
+    .co-header-secure {
+        font-size: 0.72rem;
+    }
+
+    .co-product-thumb {
+        width: 72px;
+        height: 72px;
+    }
+
+    .co-qty-row {
+        flex-wrap: wrap;
+    }
+
+    .co-item-line-total {
+        width: 100%;
+        text-align: left;
+    }
+
+    .co-main {
+        padding: 16px 10px;
+    }
+
+    .co-card-option {
+        padding: 14px 12px;
+        gap: 10px;
+    }
+
+    .co-card-line {
+        font-size: 0.9rem;
+    }
+}
+

@@ -1,0 +1,439 @@
+<!-- ES: Comentarios base para mantenimiento. EN: Baseline comments for maintenance. -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Productos</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="LOGO DE LA EMPRESA/La-pura-letra-logo.png">
+    <link rel="shortcut icon" href="LOGO DE LA EMPRESA/La-pura-letra-logo.png">
+    <link rel="apple-touch-icon" href="LOGO DE LA EMPRESA/La-pura-letra-logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: "Space Grotesk", sans-serif; background: #f4f1eb; color: #1a1a2e; min-height: 100vh; }
+        header { background: #1a1a2e; color: #fff; padding: 16px 24px; display: flex; align-items: center; gap: 16px; }
+        header h1 { font-size: 20px; font-weight: 700; }
+        header span { font-size: 13px; opacity: .6; }
+        .container { max-width: 960px; margin: 0 auto; padding: 32px 16px; }
+        .tabs { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
+        .tab-btn { padding: 10px 20px; border: 1.5px solid #ddd; border-radius: 8px; background: #fff; color: #555; cursor: pointer; }
+        .tab-btn.active { background: #1a1a2e; color: #fff; border-color: #1a1a2e; }
+        .tab-panel { display: none; }
+        .tab-panel.active { display: block; }
+        .card { background: #fff; border-radius: 16px; padding: 28px; box-shadow: 0 2px 12px rgba(0,0,0,.07); margin-bottom: 24px; }
+        .card h2 { font-size: 18px; margin-bottom: 20px; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .form-group { display: flex; flex-direction: column; gap: 6px; }
+        .form-group.full { grid-column: 1 / -1; }
+        label { font-size: 13px; font-weight: 500; color: #555; }
+        input, select { padding: 10px 14px; border: 1.5px solid #ddd; border-radius: 8px; font-family: inherit; font-size: 15px; color: #1a1a2e; }
+        .img-preview-wrap { display: flex; align-items: center; gap: 16px; margin-top: 8px; }
+        .img-preview { width: 80px; height: 80px; border-radius: 10px; object-fit: cover; border: 1.5px solid #ddd; display: none; }
+        .img-url-hint { font-size: 12px; color: #888; margin-top: 4px; }
+        .btn { padding: 12px 24px; border: none; border-radius: 10px; font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer; }
+        .btn-primary { background: #1a1a2e; color: #fff; }
+        .btn-danger { background: #fee2e2; color: #b91c1c; font-size: 13px; padding: 6px 12px; }
+        .form-actions { margin-top: 24px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+        .msg { padding: 12px 16px; border-radius: 8px; font-size: 14px; display: none; margin-top: 12px; }
+        .msg.ok { background: #d1fae5; color: #065f46; display: block; }
+        .msg.err { background: #fee2e2; color: #b91c1c; display: block; }
+        .productos-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
+        .prod-card { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,.07); }
+        .prod-card img { width: 100%; height: 160px; object-fit: cover; background: #f0f0f0; }
+        .prod-card-body { padding: 12px; }
+        .prod-card-name { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+        .prod-card-meta { font-size: 12px; color: #888; }
+        .prod-card-price { font-size: 16px; font-weight: 700; color: #0f766e; margin: 6px 0; }
+        .prod-card-actions { display: flex; gap: 8px; margin-top: 8px; }
+        .loading { text-align: center; padding: 40px; color: #888; font-size: 15px; }
+        @media (max-width: 600px) { .form-grid { grid-template-columns: 1fr; } }
+    </style>
+\ \ \ \ <link\ rel="stylesheet"\ href="\.\./secciones/footer-global\.css">\r\n    <link rel="stylesheet" href="../secciones/footer-global.css">
+</head>
+<body>
+<header>
+    <div>
+        <h1>Admin | SMUCKY'S BY CHAVARIN</h1>
+        <span>Panel de gestion de productos</span>
+    </div>
+    <div style="margin-left:auto;font-size:13px;opacity:.7;">
+        <a href="index.html" style="color:#fff;text-decoration:none;">Volver a la tienda</a>
+    </div>
+</header>
+
+<div class="container">
+    <div class="tabs">
+        <button class="tab-btn active" onclick="showTab('agregar', this)">Agregar producto</button>
+        <button class="tab-btn" onclick="showTab('lista', this)">Ver productos</button>
+        <button class="tab-btn" onclick="showTab('pedidos', this)">Seguimiento pedidos</button>
+        <button class="tab-btn" onclick="showTab('excel', this)">Reporte Excel</button>
+    </div>
+
+    <div id="tab-agregar" class="tab-panel active">
+        <div class="card">
+            <h2>Agregar nuevo producto a Firestore</h2>
+            <div class="form-grid">
+                <div class="form-group full">
+                    <label>Nombre del producto *</label>
+                    <input id="f-nombre" type="text" placeholder="Ej: Playera Premium Azul Claro">
+                </div>
+                <div class="form-group">
+                    <label>Precio en MXN *</label>
+                    <input id="f-precio" type="number" min="0" step="0.01" placeholder="150">
+                </div>
+                <div class="form-group">
+                    <label>Stock inicial *</label>
+                    <input id="f-stock" type="number" min="0" placeholder="100">
+                </div>
+                <div class="form-group">
+                    <label>Categoria</label>
+                    <select id="f-categoria">
+                        <option value="playeras_hombre">Playeras Hombre</option>
+                        <option value="playeras_sin_mangas_hombre">Playeras Sin Mangas</option>
+                        <option value="calcetines">Calcetines</option>
+                        <option value="blusas_mujer">Blusas Mujer</option>
+                        <option value="short_deportivo_mujer">Short Deportivo</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>ID en index.js</label>
+                    <input id="f-id-local" type="number" placeholder="1">
+                </div>
+                <div class="form-group full">
+                    <label>URL de imagen (Firebase Storage)</label>
+                    <input id="f-imagen" type="url" placeholder="https://firebasestorage.googleapis.com/..." oninput="previewImagen(this.value)">
+                    <p class="img-url-hint">Sube la imagen a Firebase Storage y pega aqui la URL publica.</p>
+                    <div class="img-preview-wrap">
+                        <img id="imgPreview" class="img-preview" alt="Preview">
+                        <span id="imgStatus" style="font-size:13px;color:#888;"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button class="btn btn-primary" id="btnGuardar" onclick="guardarProducto()">Guardar en Firestore</button>
+                <button class="btn" style="background:#f0f0f0;" onclick="limpiarFormulario()">Limpiar</button>
+            </div>
+            <div id="msgGuardar" class="msg"></div>
+        </div>
+    </div>
+
+    <div id="tab-lista" class="tab-panel">
+        <div class="card">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;gap:12px;flex-wrap:wrap;">
+                <h2>Productos en Firestore</h2>
+                <button class="btn btn-primary" onclick="cargarListaProductos()">Recargar</button>
+            </div>
+            <div id="listaProductos" class="loading">Cargando productos...</div>
+        </div>
+    </div>
+
+    <div id="tab-pedidos" class="tab-panel">
+        <div class="card">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;gap:12px;flex-wrap:wrap;">
+                <h2>Seguimiento de pedidos</h2>
+                <button class="btn btn-primary" onclick="cargarListaPedidos()">Recargar pedidos</button>
+            </div>
+            <div id="listaPedidos" class="loading">Cargando pedidos...</div>
+        </div>
+    </div>
+
+    <div id="tab-excel" class="tab-panel">
+        <div class="card">
+            <h2>Descargar reporte de ventas</h2>
+            <div style="display:flex;gap:12px;flex-wrap:wrap;">
+                <button class="btn btn-primary" onclick="window.generarReporteExcel(2026)">Reporte 2026</button>
+                <button class="btn btn-primary" onclick="window.generarReporteExcel(2025)">Reporte 2025</button>
+                <button class="btn btn-primary" onclick="window.generarReporteExcel()">Reporte actual</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section footer-links-grid" id="contacto">
+                <div>
+                    <h4>AYUDA</h4>
+                    <ul>
+                        <li><a href="../ayuda/entregas.html">Informacion De Entrega</a></li>
+                        <li><a href="../ayuda/devoluciones.html">Politica De Devoluciones</a></li>
+                        <li><a href="../ayuda/pedidos.html">Pedidos</a></li>
+                        <li><a href="../soporte/index.html">Soporte</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>SMUCKY'S BY CHAVARIN</h4>
+                    <ul>
+                        <li><a href="../informacion/sobre-mi.html">Sobre Nosotros</a></li>
+                        <li><a href="#contacto">Contacto</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>S�guenos</h4>
+                <div class="social-and-logo">
+                    <div class="social-links">
+                        <a class="social-facebook" href="https://www.facebook.com/profile.php?id=61584479614840" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-brand-facebook"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3" /></svg> Facebook</a>
+                        <a class="social-instagram" href="https://www.instagram.com/smucky.by_chavamon/?hl=es-la" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-brand-instagram"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 8a4 4 0 0 1 4 -4h8a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-8a4 4 0 0 1 -4 -4z" /><path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" /><path d="M16.5 7.5v.01" /></svg> Instagram</a>
+                        <a class="social-x" href="https://x.com" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-brand-x"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 4l11.733 16h4.267l-11.733 -16z" /><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772" /></svg> X</a>
+                        <a class="social-tiktok" href="https://www.tiktok.com/@smuckys_by.chavamon" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-brand-tiktok"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M21 7.917v4.034a9.948 9.948 0 0 1 -5 -1.951v4.5a6.5 6.5 0 1 1 -8 -6.326v4.326a2.5 2.5 0 1 0 4 2v-11.5h4.083a6.005 6.005 0 0 0 4.917 4.917z" /></svg> Tik Tok</a>
+                        <a class="social-youtube" href="https://www.youtube.com/channel/UCcLRrl9z42RhSXBd7Mlbwwg" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-brand-youtube"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 5m0 4a4 4 0 0 1 4 -4h10a4 4 0 0 1 4 4v6a4 4 0 0 1 -4 4h-10a4 4 0 0 1 -4 -4z" /><path d="M10 9l5 3l-5 3z" /></svg> Youtube</a>
+                        <p class="footer-phone">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.86 19.86 0 0 1 11.19 19a19.5 19.5 0 0 1-6-6 19.86 19.86 0 0 1-2.92-8.67A2 2 0 0 1 4.27 2h3a2 2 0 0 1 2 1.72c.12.9.33 1.77.62 2.61a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.47-1.35a2 2 0 0 1 2.11-.45c.84.29 1.71.5 2.61.62A2 2 0 0 1 22 16.92z"/></svg>
+                            <span>Tel: +52 (777) 520 6401</span>
+                        </p>
+                    </div>
+                    <div class="footer-logo-card">
+                        <img src="../LOGO DE LA EMPRESA/LOGO.jpeg" alt="Logo SMUCKY'S BY CHAVARIN">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 SMUCKY'S BY CHAVARIN. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+    <script type="module">
+import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, collection, getDocs, doc, addDoc, deleteDoc, serverTimestamp, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyCewAiOXXWT7O1L2WCBksejOnf8sZFj2KQ",
+    authDomain: "smuckys-by-chavamon-loginregis.firebaseapp.com",
+    projectId: "smuckys-by-chavamon-loginregis",
+    storageBucket: "smuckys-by-chavamon-loginregis.firebasestorage.app",
+    messagingSenderId: "185108836763",
+    appId: "1:185108836763:web:d7b923507c3c32e28e313e"
+};
+
+const app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+window.guardarProducto = async function guardarProducto() {
+    const nombre = document.getElementById("f-nombre").value.trim();
+    const precio = parseFloat(document.getElementById("f-precio").value);
+    const stock = parseInt(document.getElementById("f-stock").value, 10);
+    const categoria = document.getElementById("f-categoria").value;
+    const imagen = document.getElementById("f-imagen").value.trim();
+    const idLocal = parseInt(document.getElementById("f-id-local").value, 10) || null;
+    const msg = document.getElementById("msgGuardar");
+
+    if (!nombre || Number.isNaN(precio) || Number.isNaN(stock)) {
+        msg.textContent = "Completa nombre, precio y stock.";
+        msg.className = "msg err";
+        return;
+    }
+
+    try {
+        await addDoc(collection(db, "productos"), {
+            nombre_prod: nombre,
+            precio,
+            stock,
+            categoria,
+            url_imagen: imagen,
+            id_local: idLocal,
+            creado: serverTimestamp()
+        });
+
+        msg.textContent = `Producto guardado: ${nombre}`;
+        msg.className = "msg ok";
+        limpiarFormulario();
+    } catch (error) {
+        msg.textContent = `Error: ${error.message}`;
+        msg.className = "msg err";
+    }
+};
+
+window.cargarListaProductos = async function cargarListaProductos() {
+    const container = document.getElementById("listaProductos");
+    container.innerHTML = '<div class="loading">Cargando...</div>';
+
+    try {
+        const snapshot = await getDocs(collection(db, "productos"));
+        const items = [];
+        snapshot.forEach((docSnap) => items.push({ id: docSnap.id, ...docSnap.data() }));
+
+        if (items.length === 0) {
+            container.innerHTML = '<p style="color:#888;text-align:center;padding:32px;">No hay productos en Firestore todavia.</p>';
+            return;
+        }
+
+        container.innerHTML = `
+            <div class="productos-grid">
+                ${items.map((item) => `
+                    <div class="prod-card">
+                        <img src="${item.url_imagen || ""}" alt="${item.nombre_prod || "Producto"}">
+                        <div class="prod-card-body">
+                            <div class="prod-card-name">${item.nombre_prod || "-"}</div>
+                            <div class="prod-card-meta">${item.categoria || "-"}</div>
+                            <div class="prod-card-price">$${(item.precio || 0).toFixed(2)} MXN</div>
+                            <div class="prod-card-actions">
+                                <button class="btn btn-danger" onclick="eliminarProducto('${item.id}', '${item.nombre_prod || "Producto"}')">Eliminar</button>
+                            </div>
+                        </div>
+                    </div>
+                `).join("")}
+            </div>
+        `;
+    } catch (error) {
+        container.innerHTML = `<p style="color:#b91c1c;">Error: ${error.message}</p>`;
+    }
+};
+
+window.eliminarProducto = async function eliminarProducto(id, nombre) {
+    if (!confirm(`Eliminar ${nombre}?`)) {
+        return;
+    }
+
+    try {
+        await deleteDoc(doc(db, "productos", id));
+        await cargarListaProductos();
+    } catch (error) {
+        alert(`Error al eliminar: ${error.message}`);
+    }
+};
+
+function estadoLabel(estado) {
+    const map = {
+        pago_verificado: "Pago verificado",
+        preparando: "Preparando",
+        enviado: "Enviado",
+        entregado: "Entregado",
+        cancelado: "Cancelado"
+    };
+    return map[estado] || estado;
+}
+
+window.cargarListaPedidos = async function cargarListaPedidos() {
+    const container = document.getElementById("listaPedidos");
+    container.innerHTML = '<div class="loading">Cargando pedidos...</div>';
+
+    try {
+        const snapshot = await getDocs(collection(db, "pedidos"));
+        const items = [];
+        snapshot.forEach((docSnap) => items.push({ id: docSnap.id, ...docSnap.data() }));
+
+        items.sort((a, b) => {
+            const aTime = a.fecha?.seconds || 0;
+            const bTime = b.fecha?.seconds || 0;
+            return bTime - aTime;
+        });
+
+        if (!items.length) {
+            container.innerHTML = '<p style="color:#888;text-align:center;padding:32px;">No hay pedidos todavia.</p>';
+            return;
+        }
+
+        container.innerHTML = `
+            <div style="display:grid;gap:12px;">
+                ${items.map((pedido) => `
+                    <article style="border:1px solid #e5e7eb;border-radius:12px;padding:12px;">
+                        <div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;">
+                            <strong>${pedido.nombre_prod || pedido.nombre || "Producto"}</strong>
+                            <span style="font-size:12px;background:#1a1a2e;color:#fff;border-radius:999px;padding:3px 10px;">${estadoLabel(pedido.estado_envio || pedido.estado || "-")}</span>
+                        </div>
+                        <p style="margin-top:8px;font-size:14px;">Cliente: ${pedido.usuario_email || "-"}</p>
+                        <p style="font-size:14px;">Total: $${Number(pedido.total || 0).toFixed(2)} MXN</p>
+                        <p style="font-size:13px;color:#6b7280;">Codigo verificado: ${pedido.codigo_verificacion_pago || "-"}</p>
+                        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;">
+                            <select id="estado-${pedido.id}" style="padding:8px;border:1px solid #ddd;border-radius:8px;">
+                                <option value="pago_verificado" ${(pedido.estado_envio || pedido.estado) === "pago_verificado" ? "selected" : ""}>Pago verificado</option>
+                                <option value="preparando" ${(pedido.estado_envio || pedido.estado) === "preparando" ? "selected" : ""}>Preparando</option>
+                                <option value="enviado" ${(pedido.estado_envio || pedido.estado) === "enviado" ? "selected" : ""}>Enviado</option>
+                                <option value="entregado" ${(pedido.estado_envio || pedido.estado) === "entregado" ? "selected" : ""}>Entregado</option>
+                                <option value="cancelado" ${(pedido.estado_envio || pedido.estado) === "cancelado" ? "selected" : ""}>Cancelado</option>
+                            </select>
+                            <button class="btn btn-primary" style="padding:8px 14px;" onclick="actualizarEstadoPedido('${pedido.id}')">Actualizar estado</button>
+                        </div>
+                    </article>
+                `).join("")}
+            </div>
+        `;
+    } catch (error) {
+        container.innerHTML = `<p style="color:#b91c1c;">Error: ${error.message}</p>`;
+    }
+};
+
+window.actualizarEstadoPedido = async function actualizarEstadoPedido(idPedido) {
+    const select = document.getElementById(`estado-${idPedido}`);
+    const nuevoEstado = select?.value;
+
+    if (!nuevoEstado) {
+        alert("Selecciona un estado valido.");
+        return;
+    }
+
+    try {
+        const pedidoRef = doc(db, "pedidos", idPedido);
+        await updateDoc(pedidoRef, {
+            estado: nuevoEstado,
+            estado_envio: nuevoEstado
+        });
+        alert("Estado actualizado correctamente.");
+        await cargarListaPedidos();
+    } catch (error) {
+        alert(`No se pudo actualizar el estado: ${error.message}`);
+    }
+};
+</script>
+
+
+    
+    <script type="module" src="servicios/reporte-excel.js"></script>
+
+    
+    <script>
+function showTab(nombre, button) {
+    document.querySelectorAll('.tab-panel').forEach((panel) => panel.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach((tabButton) => tabButton.classList.remove('active'));
+    document.getElementById(`tab-${nombre}`).classList.add('active');
+    button.classList.add('active');
+
+    if (nombre === 'lista') {
+        window.cargarListaProductos();
+    }
+    if (nombre === 'pedidos') {
+        window.cargarListaPedidos();
+    }
+}
+
+function previewImagen(url) {
+    const img = document.getElementById('imgPreview');
+    const status = document.getElementById('imgStatus');
+    if (!url) {
+        img.style.display = 'none';
+        status.textContent = '';
+        return;
+    }
+    img.src = url;
+    img.style.display = 'block';
+    img.onload = () => {
+        status.textContent = 'Imagen cargada';
+        status.style.color = '#059669';
+    };
+    img.onerror = () => {
+        status.textContent = 'URL no valida';
+        status.style.color = '#dc2626';
+    };
+}
+
+function limpiarFormulario() {
+    ['f-nombre', 'f-precio', 'f-stock', 'f-imagen', 'f-id-local'].forEach((id) => {
+        document.getElementById(id).value = '';
+    });
+    document.getElementById('imgPreview').style.display = 'none';
+    document.getElementById('imgStatus').textContent = '';
+}
+</script>
+
+    
+    
+    <script src="scripts/pages/menu-global.js"></script>
+</body>
+</html>
+
+
+
+

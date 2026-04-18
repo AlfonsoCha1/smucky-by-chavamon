@@ -1,0 +1,73 @@
+<!-- ES: Comentarios base para mantenimiento. EN: Baseline comments for maintenance. -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../LOGO DE LA EMPRESA/La-pura-letra-logo.png">
+    <link rel="shortcut icon" href="../LOGO DE LA EMPRESA/La-pura-letra-logo.png">
+    <link rel="apple-touch-icon" href="../LOGO DE LA EMPRESA/La-pura-letra-logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="login.css">
+</head>
+<body class="auth-login-page">
+    <header class="topbar">
+        <nav class="topbar-links topbar-help">
+            <a href="../index.html">Inicio</a>
+            <a href="../ayuda/centro-ayuda.html">Ayuda</a>
+        </nav>
+    </header>
+
+    <main class="page">
+        <section class="hero auth-hero">
+            <img class="auth-hero-logo" src="../LOGO DE LA EMPRESA/LOGO.jpeg" alt="Logo principal Smucky">
+            <h2 class="auth-hero-brand">SMUCKY'S BY CHAVARIN</h2>
+            <h1>Iniciar sesion</h1>
+        </section>
+
+        <section class="form-wrap">
+            <form id="loginForm">
+                <label for="email">Correo electronico</label>
+                <input id="email" type="email" placeholder="tu@email.com" autocomplete="email" required>
+
+                <label for="password">Contrasena</label>
+                <div class="password-input-wrap">
+                    <input id="password" type="password" placeholder="********" autocomplete="current-password" required>
+                    <button type="button" class="password-toggle" data-target="password" aria-label="Mostrar contrasena"></button>
+                </div>
+
+                <button type="submit">Entrar</button>
+                <button type="button" id="toggleRecovery" class="secondary-action">Recuperar cuenta</button>
+
+                <div id="recoveryPanel" class="recovery-panel" hidden>
+                    <h3>Recuperacion de cuenta</h3>
+                    <p id="recoveryNotice" class="recovery-message" aria-live="polite"></p>
+
+                    <label for="recoveryEmail">Correo de tu cuenta</label>
+                    <input id="recoveryEmail" type="email" placeholder="tu@email.com">
+
+                    <button type="button" id="sendRecoveryCode">Enviar codigo</button>
+
+                    <div id="recoveryVerifyWrap" hidden>
+                        <label for="recoveryCode">Codigo recibido</label>
+                        <input id="recoveryCode" type="text" inputmode="numeric" maxlength="6" placeholder="Ingresa el codigo de 6 digitos">
+                        <button type="button" id="verifyRecoveryCode">Validar y enviar enlace</button>
+                    </div>
+                </div>
+
+                <p class="register-inline">No tienes cuenta? <a href="registro.html">Registrate aqui</a></p>
+                <p class="note">Demo local: este formulario muestra mensaje de exito sin conectarse a base de datos.</p>
+            </form>
+        </section>
+    </main>
+    <script src="../servicios/auth.js"></script>
+    <script type="module" src="../scripts/pages/login.js"></script>
+    <script src="../scripts/pages/menu-global.js"></script>
+</body>
+</html>
+
+
+

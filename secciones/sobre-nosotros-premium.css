@@ -1,0 +1,347 @@
+/* ES: Comentarios base para mantenimiento. EN: Baseline comments for maintenance. */
+body.page-sobre-nosotros {
+    font-family: "Montserrat", "Segoe UI", sans-serif;
+    background:
+        radial-gradient(circle at 14% 8%, rgba(251, 146, 60, 0.24) 0, transparent 34%),
+        radial-gradient(circle at 90% 6%, rgba(71, 85, 105, 0.32) 0, transparent 40%),
+        linear-gradient(160deg, #080b12 0%, #111827 44%, #171d29 100%);
+    color: #eaf0f8;
+}
+
+.page-sobre-nosotros .page {
+    position: relative;
+    isolation: isolate;
+    max-width: 1200px;
+    padding-top: 18px;
+    padding-bottom: 56px;
+}
+
+.page-sobre-nosotros .page::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("../LOGO DE LA EMPRESA/La-pura-letra-logo.png");
+    background-repeat: repeat;
+    background-size: 170px;
+    opacity: 0.045;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.page-sobre-nosotros .page > * {
+    position: relative;
+    z-index: 1;
+}
+
+.page-sobre-nosotros .hero-sobre {
+    background: linear-gradient(116deg, rgba(8, 12, 20, 0.93) 0%, rgba(21, 29, 42, 0.95) 54%, rgba(40, 29, 35, 0.95) 100%);
+    border: 1px solid rgba(148, 163, 184, 0.24);
+    border-radius: 28px;
+    padding: clamp(24px, 4vw, 42px);
+    box-shadow: 0 24px 48px rgba(2, 6, 23, 0.45);
+    margin-bottom: 28px;
+    text-align: center;
+}
+
+.page-sobre-nosotros .hero-main-icon {
+    width: 68px;
+    height: 68px;
+    border-radius: 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+    color: #fde68a;
+    background: linear-gradient(140deg, rgba(120, 53, 15, 0.45), rgba(251, 146, 60, 0.2));
+    border: 1px solid rgba(251, 146, 60, 0.45);
+    box-shadow: 0 10px 22px rgba(251, 146, 60, 0.2);
+}
+
+.page-sobre-nosotros .hero-main-icon svg {
+    width: 36px;
+    height: 36px;
+}
+
+.page-sobre-nosotros .hero-sobre::after {
+    width: 360px;
+    height: 360px;
+    right: -146px;
+    top: -118px;
+    background: radial-gradient(circle, rgba(251, 146, 60, 0.35) 0%, rgba(251, 146, 60, 0.03) 74%);
+}
+
+.page-sobre-nosotros .hero-kicker {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(251, 146, 60, 0.5);
+    color: #fde68a;
+    background: rgba(120, 53, 15, 0.3);
+    font-size: 0.77rem;
+    font-weight: 700;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+.page-sobre-nosotros .hero h1 {
+    font-size: clamp(1.9rem, 4vw, 2.7rem);
+    font-weight: 800;
+    color: #f8fafc;
+    margin-bottom: 8px;
+}
+
+.page-sobre-nosotros .hero-divider {
+    display: block;
+    max-width: 490px;
+    width: 100%;
+    height: 4px;
+    border-radius: 99px;
+    margin: 2px auto 12px;
+    background: linear-gradient(90deg, #fb923c 0%, #f97316 100%);
+}
+
+.page-sobre-nosotros .hero p {
+    color: #d2dbe9;
+    line-height: 1.75;
+    max-width: 760px;
+    margin: 0 auto;
+}
+
+.page-sobre-nosotros .historia-section {
+    display: grid;
+    grid-template-columns: 1.02fr 1fr;
+    gap: 24px;
+    margin-bottom: 24px;
+}
+
+.page-sobre-nosotros .historia-image-wrap,
+.page-sobre-nosotros .historia-content {
+    background: linear-gradient(145deg, rgba(11, 17, 27, 0.9) 0%, rgba(19, 28, 40, 0.94) 100%);
+    border: 1px solid rgba(148, 163, 184, 0.26);
+    border-radius: 22px;
+    box-shadow: 0 14px 32px rgba(2, 6, 23, 0.35);
+}
+
+.page-sobre-nosotros .historia-image-wrap {
+    overflow: hidden;
+    min-height: 360px;
+}
+
+.page-sobre-nosotros .historia-image {
+    width: 100%;
+    height: 100%;
+    min-height: 360px;
+    object-fit: cover;
+    display: block;
+}
+
+.page-sobre-nosotros .historia-content {
+    padding: 30px 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.page-sobre-nosotros .historia-content h2 {
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    margin-bottom: 8px;
+    color: #f8fafc;
+}
+
+.page-sobre-nosotros .historia-content .historia-subtitle {
+    color: #fbbf24;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    margin-bottom: 10px;
+}
+
+.page-sobre-nosotros .historia-content p {
+    color: #cdd8e6;
+    line-height: 1.75;
+}
+
+.page-sobre-nosotros .historia-btn {
+    align-self: flex-start;
+    margin-top: 18px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #9a3412 0%, #ea580c 100%);
+    border: 1px solid rgba(251, 146, 60, 0.55);
+    transition: transform 0.24s ease, box-shadow 0.24s ease, filter 0.24s ease;
+}
+
+.page-sobre-nosotros .historia-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(234, 88, 12, 0.35);
+    filter: brightness(1.08);
+}
+
+.page-sobre-nosotros .mision-vision-section,
+.page-sobre-nosotros .valores-section {
+    background: linear-gradient(142deg, rgba(10, 15, 24, 0.9) 0%, rgba(20, 27, 40, 0.93) 100%);
+    border: 1px solid rgba(148, 163, 184, 0.26);
+    border-radius: 22px;
+    box-shadow: 0 14px 32px rgba(2, 6, 23, 0.35);
+    padding: 26px;
+    margin-bottom: 20px;
+}
+
+.page-sobre-nosotros .mision-vision-section h2,
+.page-sobre-nosotros .valores-section h2 {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    margin-bottom: 16px;
+    color: #f8fafc;
+}
+
+.page-sobre-nosotros .mv-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.page-sobre-nosotros .mv-card,
+.page-sobre-nosotros .valor-card {
+    --accent-rgb: 251, 146, 60;
+    --accent-solid: #fb923c;
+    background: linear-gradient(145deg, rgba(15, 21, 33, 0.9) 0%, rgba(24, 32, 47, 0.95) 100%);
+    border: 1px solid rgba(148, 163, 184, 0.28);
+    border-radius: 18px;
+    padding: 20px;
+    transition: transform 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease, background 0.28s ease;
+}
+
+.page-sobre-nosotros .mv-card:hover,
+.page-sobre-nosotros .valor-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(var(--accent-rgb), 0.62);
+    box-shadow: 0 18px 34px rgba(2, 6, 23, 0.48), 0 0 0 1px rgba(var(--accent-rgb), 0.22) inset;
+    background: linear-gradient(145deg, rgba(15, 21, 33, 0.94) 0%, rgba(27, 36, 53, 0.98) 100%);
+}
+
+.page-sobre-nosotros .mv-icon,
+.page-sobre-nosotros .valor-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent-solid);
+    background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.24), rgba(var(--accent-rgb), 0.12));
+    border: 1px solid rgba(var(--accent-rgb), 0.55);
+    margin-bottom: 12px;
+    transition: transform 0.26s ease, box-shadow 0.26s ease, background 0.26s ease, border-color 0.26s ease;
+}
+
+.page-sobre-nosotros .mv-icon svg,
+.page-sobre-nosotros .valor-icon svg {
+    width: 22px;
+    height: 22px;
+    transition: transform 0.26s ease;
+}
+
+.page-sobre-nosotros .mv-card:hover .mv-icon,
+.page-sobre-nosotros .valor-card:hover .valor-icon {
+    transform: translateY(-2px) scale(1.08);
+    background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.34), rgba(var(--accent-rgb), 0.2));
+    border-color: rgba(var(--accent-rgb), 0.82);
+    box-shadow: 0 10px 22px rgba(var(--accent-rgb), 0.24);
+}
+
+.page-sobre-nosotros .mv-card:hover .mv-icon svg,
+.page-sobre-nosotros .valor-card:hover .valor-icon svg {
+    transform: scale(1.08);
+}
+
+.page-sobre-nosotros .mv-card-mision {
+    --accent-rgb: 239, 68, 68;
+    --accent-solid: #ef4444;
+}
+
+.page-sobre-nosotros .mv-card-vision {
+    --accent-rgb: 56, 189, 248;
+    --accent-solid: #38bdf8;
+}
+
+.page-sobre-nosotros .valor-disciplina {
+    --accent-rgb: 249, 115, 22;
+    --accent-solid: #f97316;
+}
+
+.page-sobre-nosotros .valor-pasion {
+    --accent-rgb: 250, 204, 21;
+    --accent-solid: #facc15;
+}
+
+.page-sobre-nosotros .valor-calidad {
+    --accent-rgb: 56, 189, 248;
+    --accent-solid: #38bdf8;
+}
+
+.page-sobre-nosotros .valor-comunidad {
+    --accent-rgb: 244, 114, 182;
+    --accent-solid: #f472b6;
+}
+
+.page-sobre-nosotros .mv-card h3,
+.page-sobre-nosotros .valor-card h3 {
+    font-size: 1.15rem;
+    margin-bottom: 8px;
+    color: #f8fafc;
+}
+
+.page-sobre-nosotros .mv-card p,
+.page-sobre-nosotros .valor-card p {
+    color: #cdd7e6;
+    line-height: 1.7;
+    font-size: 0.96rem;
+}
+
+.page-sobre-nosotros .valores-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+}
+
+@media (max-width: 980px) {
+    .page-sobre-nosotros .historia-section {
+        grid-template-columns: 1fr;
+    }
+
+    .page-sobre-nosotros .historia-image-wrap,
+    .page-sobre-nosotros .historia-image {
+        min-height: 300px;
+    }
+
+    .page-sobre-nosotros .mv-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .page-sobre-nosotros .valores-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 800px) {
+    .page-sobre-nosotros .page {
+        padding-top: 10px;
+        padding-bottom: 36px;
+    }
+
+    .page-sobre-nosotros .hero-sobre {
+        border-radius: 22px;
+        margin-bottom: 20px;
+    }
+
+    .page-sobre-nosotros .historia-content,
+    .page-sobre-nosotros .mision-vision-section,
+    .page-sobre-nosotros .valores-section {
+        padding: 20px;
+    }
+
+    .page-sobre-nosotros .valores-grid {
+        grid-template-columns: 1fr;
+    }
+}

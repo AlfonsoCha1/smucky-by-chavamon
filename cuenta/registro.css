@@ -1,0 +1,87 @@
+/* ES: Comentarios base para mantenimiento. EN: Baseline comments for maintenance. */
+@import url("../secciones/estilos-secciones.css");
+
+#registerForm button[type="submit"] {
+    width: 100%;
+}
+
+#registerForm input {
+    background: #fcfdfd;
+}
+
+#registerForm .password-input-wrap {
+    position: relative;
+}
+
+#registerForm .password-input-wrap input {
+    padding-right: 44px;
+}
+
+#registerForm .password-toggle {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 26px;
+    height: 26px;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    padding: 0;
+}
+
+#registerForm .password-toggle::before {
+    content: "";
+    display: block;
+    width: 18px;
+    height: 10px;
+    margin: 0 auto;
+    border: 2px solid #5f6f89;
+    border-radius: 12px / 8px;
+}
+
+#registerForm .password-toggle::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #5f6f89;
+}
+
+#registerForm .password-toggle.is-visible::before {
+    border-color: #0f7663;
+}
+
+#registerForm .password-toggle.is-visible::after {
+    background: #0f7663;
+}
+
+#registerForm .register-message {
+    display: none;
+    margin: 4px 0 10px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    font-size: 0.92rem;
+    font-weight: 600;
+}
+
+#registerForm .register-message-error {
+    color: #7b1322;
+    background: #fdecef;
+    border: 1px solid #f1b6bf;
+}
+
+#registerForm .register-message-ok {
+    color: #0d5747;
+    background: #e8faf5;
+    border: 1px solid #a6e4d2;
+}
+
+#registerForm .verification-wrap {
+    margin-top: 8px;
+}
+
