@@ -6,7 +6,7 @@
 // ============================================================
 
 // ── Credenciales EmailJS (cuenta Gmail — verificación) ───────
-const EMAILJS_PUBLIC_KEY  = "FbiFKliqS9841M71D";    // Public Key de la cuenta Gmail
+const EMAILJS_PUBLIC_KEY = "FbiFKIiqS9841M71D"; // ← I mayúscula, no l minúscula
 const EMAILJS_SERVICE_ID  = "smuckyschavamon_gmail"; // Servicio Gmail en EmailJS
 const EMAILJS_TEMPLATE_VERIFICACION = "template_fey9ch4";  // Template: código de verificación
 const EMAILJS_TEMPLATE_RECUPERACION = "template_rkr5dld";  // Template: recuperar contraseña
