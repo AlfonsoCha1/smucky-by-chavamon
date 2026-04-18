@@ -39,12 +39,17 @@ export async function enviarCodigoRegistro(nombre, email, codigo) {
     try {
         await cargarEmailJS();
 
-        await window.emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_VERIFICACION, {
-            user_name:          nombre,  // nombre del usuario
-            email:              email,   // correo destino
-            verification_code:  codigo,  // código de 6 dígitos
-            expiration_minutes: "10"     // minutos de validez
-        });
+        await window.emailjs.send(
+            EMAILJS_SERVICE_ID,
+            EMAILJS_TEMPLATE_VERIFICACION,
+            {
+                user_name:          nombre,
+                email:              email,
+                verification_code:  codigo,
+                expiration_minutes: "10"
+            },
+            { publicKey: EMAILJS_PUBLIC_KEY } // ← key de Gmail directo en el send
+        );
 
         console.log("✅ Código de verificación enviado a:", email);
         return { ok: true };
