@@ -27,10 +27,10 @@ const app  = getApps().find(a => a.name === "auth-app") || initializeApp(firebas
 const auth = getAuth(app);
 const db   = getFirestore(app);
 
-// ── Configuración EmailJS (Gmail) para códigos de verificación ──
-const EMAILJS_PUBLIC_KEY  = ["I7Z9IQ", "aIfsl", "pauQQn"].join(""); // Public Key dividida por seguridad
-const EMAILJS_PUBLIC_KEY  = "FbiFKIiqS9841M71D"; // ✅ Gmail
-const EMAILJS_TEMPLATE_ID = "template_fey9ch4";                      // Template: verification code
+// ── Configuración EmailJS (cuenta Gmail — verificación) ──────
+const EMAILJS_PUBLIC_KEY  = "FbiFKIiqS9841M71D";     // ← Public Key de la cuenta Gmail
+const EMAILJS_SERVICE_ID  = "smuckyschavamon_gmail";  // ← Servicio Gmail en EmailJS
+const EMAILJS_TEMPLATE_ID = "template_fey9ch4";       // ← Template: código de verificación
 
 // ── Estado temporal del registro pendiente ───────────────────
 let datosPendientes  = null; // guarda datos del formulario hasta verificar
@@ -45,7 +45,6 @@ function cargarEmailJS() {
         const s    = document.createElement("script");
         s.src      = "https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js";
         s.onload   = () => {
-            window.emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY }); // inicializa con tu key
             _ejsListo = true;
             resolve();
         };
@@ -59,24 +58,28 @@ function generarCodigo6() {
     return String(Math.floor(100000 + Math.random() * 900000)); // ej: "483920"
 }
 
-// ── Envía el código de verificación por EmailJS ──────────────
-await window.emailjs.send(
-    EMAILJS_SERVICE_ID,
-    EMAILJS_TEMPLATE_ID,
-    {
-        email:              email,
-        user_name:          nombre,
-        verification_code:  codigo,
-        expiration_minutes: "10"
-    },
-    { publicKey: EMAILJS_PUBLIC_KEY } // ← agrega esta línea
-);
+// ── Envía el código de verificación por EmailJS (Gmail) ──────
+async function enviarCodigoVerificacion(nombre, email, codigo) {
+    await cargarEmailJS(); // asegura que EmailJS esté listo
+
+    await window.emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+            email:              email,   // correo destino del usuario
+            user_name:          nombre,  // nombre del usuario
+            verification_code:  codigo,  // código de 6 dígitos
+            expiration_minutes: "10"     // minutos de validez
+        },
+        { publicKey: EMAILJS_PUBLIC_KEY } // ← key de Gmail directo aquí
+    );
+}
 
 // ── Muestra/oculta el campo del código de verificación ───────
 function mostrarCampoCodigo(mostrar = true) {
     const wrap = document.getElementById("verificationWrap");
     if (!wrap) return;
-    wrap.hidden = !mostrar; // true = oculto, false = visible
+    wrap.hidden = !mostrar;
 }
 
 // ── Muestra mensaje de error ─────────────────────────────────
@@ -121,7 +124,6 @@ async function hashPassword(password) {
 }
 
 // ── Valida reglas de contraseña ──────────────────────────────
-// Devuelve lista de errores. Si está vacía, la contraseña es válida.
 function validarContrasena(password) {
     const errores = [];
     if (password.length < 8)                                     errores.push("Mínimo 8 caracteres");
@@ -144,7 +146,7 @@ function mensajeError(code) {
 
 // ════════════════════════════════════════════════════════════
 //  SUBMIT DEL FORMULARIO — dos pasos:
-//  Paso 1: validar → enviar código por EmailJS
+//  Paso 1: validar → enviar código por EmailJS (Gmail)
 //  Paso 2: verificar código → registrar en Firebase
 // ════════════════════════════════════════════════════════════
 document.getElementById("registerForm")?.addEventListener("submit", async (e) => {
@@ -152,7 +154,6 @@ document.getElementById("registerForm")?.addEventListener("submit", async (e) =>
     mostrarError("");
     mostrarAviso("");
 
-    // Leer campos del formulario
     const name            = document.getElementById("name")?.value.trim()     || "";
     const email           = document.getElementById("newEmail")?.value.trim() || "";
     const password        = document.getElementById("newPassword")?.value     || "";
@@ -168,18 +169,15 @@ document.getElementById("registerForm")?.addEventListener("submit", async (e) =>
     const esNuevoEnvio = !datosPendientes || datosPendientes.email !== email;
     if (esNuevoEnvio) {
 
-        // Validar campos vacíos
         if (!name || !email || !password || !city) {
             mostrarError("Por favor completa todos los campos."); return;
         }
 
-        // Validar contraseña segura
         const erroresPass = validarContrasena(password);
         if (erroresPass.length > 0) {
             mostrarError("Contraseña insegura: " + erroresPass.join(", ")); return;
         }
 
-        // Confirmar que las contraseñas coinciden
         if (password !== confirm) {
             mostrarError("Las contraseñas no coinciden."); return;
         }
@@ -187,18 +185,14 @@ document.getElementById("registerForm")?.addEventListener("submit", async (e) =>
         if (btn) { btn.textContent = "Enviando código..."; btn.disabled = true; }
 
         try {
-            // Generar código y guardarlo en memoria con expiración de 10 minutos
             codigoPendiente  = generarCodigo6();
-            codigoExpira     = Date.now() + 10 * 60 * 1000; // 10 minutos en ms
+            codigoExpira     = Date.now() + 10 * 60 * 1000; // 10 minutos
             datosPendientes  = { name, email, password, city, phone };
 
-            // Enviar código por EmailJS (Gmail)
             await enviarCodigoVerificacion(name, email, codigoPendiente);
 
-            // Mostrar campo para ingresar el código
             mostrarCampoCodigo(true);
             mostrarAviso(`Te enviamos un código a ${email}. Escríbelo abajo para completar tu registro.`);
-
             if (btn) { btn.textContent = "Verificar código y crear cuenta"; btn.disabled = false; }
             return;
 
@@ -210,14 +204,13 @@ document.getElementById("registerForm")?.addEventListener("submit", async (e) =>
         }
     }
 
-    // ── PASO 2: Verificar código e registrar en Firebase ─────
+    // ── PASO 2: Verificar código y registrar en Firebase ─────
     if (!codigoIngresado) {
         mostrarError("Escribe el código que recibiste en tu correo.");
         if (btn) { btn.textContent = "Verificar código y crear cuenta"; btn.disabled = false; }
         return;
     }
 
-    // Verificar que el código no haya expirado
     if (Date.now() > codigoExpira) {
         mostrarError("El código venció. Intenta registrarte de nuevo.");
         datosPendientes = null;
@@ -227,7 +220,6 @@ document.getElementById("registerForm")?.addEventListener("submit", async (e) =>
         return;
     }
 
-    // Verificar que el código sea correcto
     if (codigoIngresado !== codigoPendiente) {
         mostrarError("Código incorrecto. Intenta de nuevo.");
         if (btn) { btn.textContent = "Verificar código y crear cuenta"; btn.disabled = false; }
@@ -237,15 +229,12 @@ document.getElementById("registerForm")?.addEventListener("submit", async (e) =>
     if (btn) { btn.textContent = "Creando cuenta..."; btn.disabled = true; }
 
     try {
-        // Hash de la contraseña (nunca se guarda en texto plano)
         const hashPass = await hashPassword(datosPendientes.password);
         const ahora    = new Date().toISOString();
 
-        // Crear usuario en Firebase Auth
         const userCredential = await createUserWithEmailAndPassword(auth, datosPendientes.email, datosPendientes.password);
         const user           = userCredential.user;
 
-        // Guardar datos del usuario en Firestore
         await setDoc(doc(db, "usuarios", user.uid), {
             nombre:   datosPendientes.name,
             email:    user.email,
@@ -256,10 +245,9 @@ document.getElementById("registerForm")?.addEventListener("submit", async (e) =>
             email_verificado_por_codigo:    true,
             fecha_verificacion_codigo:      serverTimestamp(),
             fecha_registro:                 serverTimestamp(),
-            historial_contrasenas: [{ hash: hashPass, fecha: ahora }] // historial de contraseñas
+            historial_contrasenas: [{ hash: hashPass, fecha: ahora }]
         });
 
-        // Guardar sesión local con SmuckyAuth
         if (window.SmuckyAuth) {
             window.SmuckyAuth.saveUser({
                 uid:    user.uid,
@@ -271,14 +259,12 @@ document.getElementById("registerForm")?.addEventListener("submit", async (e) =>
             });
         }
 
-        // Limpiar estado temporal
         mostrarAviso("¡Cuenta creada y verificada! Redirigiendo a inicio de sesión...");
         datosPendientes = null;
         codigoPendiente = null;
         mostrarCampoCodigo(false);
-
-        await signOut(auth); // cerrar sesión temporal para que el usuario haga login
-        window.location.href = "login.html"; // redirigir al login
+        await signOut(auth);
+        window.location.href = "login.html";
 
     } catch (error) {
         console.error("Error al registrar:", error.code, error.message);
