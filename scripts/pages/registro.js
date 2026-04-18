@@ -29,7 +29,7 @@ const db   = getFirestore(app);
 
 // ── Configuración EmailJS (Gmail) para códigos de verificación ──
 const EMAILJS_PUBLIC_KEY  = ["I7Z9IQ", "aIfsl", "pauQQn"].join(""); // Public Key dividida por seguridad
-const EMAILJS_SERVICE_ID  = "smuckyschavamon_gmail";                 // Servicio Gmail en EmailJS
+const EMAILJS_PUBLIC_KEY  = "FbiFKIiqS9841M71D"; // ✅ Gmail
 const EMAILJS_TEMPLATE_ID = "template_fey9ch4";                      // Template: verification code
 
 // ── Estado temporal del registro pendiente ───────────────────
@@ -60,16 +60,17 @@ function generarCodigo6() {
 }
 
 // ── Envía el código de verificación por EmailJS ──────────────
-async function enviarCodigoVerificacion(nombre, email, codigo) {
-    await cargarEmailJS(); // asegura que EmailJS esté listo
-
-    await window.emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-        email:              email,       // correo destino del usuario
-        user_name:          nombre,      // nombre del usuario
-        verification_code:  codigo,      // código de 6 dígitos
-        expiration_minutes: "10"         // minutos de validez del código
-    });
-}
+await window.emailjs.send(
+    EMAILJS_SERVICE_ID,
+    EMAILJS_TEMPLATE_ID,
+    {
+        email:              email,
+        user_name:          nombre,
+        verification_code:  codigo,
+        expiration_minutes: "10"
+    },
+    { publicKey: EMAILJS_PUBLIC_KEY } // ← agrega esta línea
+);
 
 // ── Muestra/oculta el campo del código de verificación ───────
 function mostrarCampoCodigo(mostrar = true) {
