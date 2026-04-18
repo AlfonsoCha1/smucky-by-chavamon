@@ -1,33 +1,31 @@
 ﻿/* ES: Comentarios base para mantenimiento. EN: Baseline comments for maintenance. */
 // ============================================================
-//  servicios/emailjs-notificaciones.js  — SMUCKY'S BY CHAVARIN
+//  servicios/emailjs-notificaciones.js  — SMUCKY'S BY CHAVAMON
 //
-//  PLANTILLAS EMAILJS (solo 2, solo para compras):
-//    template_4rnpwe4  → confirmación de compra al CLIENTE
-//    template_afr597h  → aviso de venta al VENDEDOR (tú)
+//  PLANTILLAS EMAILJS (Hotmail — solo para compras):
+//    template_wpjwmxb  → confirmación de compra al CLIENTE
+//    template_z1ddwme  → aviso de venta al VENDEDOR (tú)
 //
 //  CÓDIGOS de verificación (registro + recuperar contraseña):
-//    Se generan en JS y se muestran con prompt() por ahora.
-//    Cuando tengas más plantillas disponibles en EmailJS,
-//    solo descomentas las líneas de envío de correo.
+//    Manejados en correo-codigo.js con Gmail
 // ============================================================
 
+// ── Credenciales EmailJS (Hotmail — compras) ─────────────────
+const EMAILJS_PUBLIC_KEY = ["I7Z9IQ", "aIfsl", "pauQQn"].join(""); // Public Key dividida por seguridad
+const EMAILJS_SERVICE_ID = "SMUCKYs-CHAVAMON_EMAIL";                // Servicio Hotmail en EmailJS
+const TPL_CLIENTE        = "template_wpjwmxb";                      // Template: confirmación al cliente
+const TPL_VENDEDOR       = "template_z1ddwme";                      // Template: aviso al vendedor
+const OWNER_EMAIL        = "soushmuck.chavamon@hotmail.com";         // Correo donde llegan las ventas
 
-const EMAILJS_PUBLIC_KEY = ["I7Z9IQ", "aIfsl", "pauQQn"].join("");  // Clave pública dividida para mayor seguridad
-const EMAILJS_SERVICE_ID = "SMUCKYs-CHAVAMON_EMAIL";                // Servicio de Outlook conectado en EmailJS
-const TPL_CLIENTE        = "template_wpjwmxb";                      // Template: confirmación de compra al cliente
-const TPL_VENDEDOR       = "template_z1ddwme";                      // Template: notificación de nueva venta al vendedor
-const OWNER_EMAIL        = "soushmuck.chavamon@hotmail.com";        // Correo donde llegan las notificaciones de ventas                   // ← el correo donde recibes notificaciones
-
-// ── Cargar EmailJS ───────────────────────────────────────────
+// ── Carga EmailJS una sola vez ───────────────────────────────
 let _ejsListo = false;
 function cargarEmailJS() {
     return new Promise((resolve, reject) => {
-        if (_ejsListo && window.emailjs) { resolve(); return; }
+        if (_ejsListo && window.emailjs) { resolve(); return; } // ya está cargado, no lo repite
         const s  = document.createElement("script");
         s.src    = "https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js";
         s.onload = () => {
-            window.emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+            window.emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY }); // inicializa con tu key
             _ejsListo = true;
             resolve();
         };
@@ -36,17 +34,21 @@ function cargarEmailJS() {
     });
 }
 
-// ── Helpers ──────────────────────────────────────────────────
-function generarCodigo6() {
-    return String(Math.floor(100000 + Math.random() * 900000));
+// ── Genera ID de orden único tipo SMK-123456 ─────────────────
+function generarOrdenId() {
+    return "SMK-" + Date.now().toString().slice(-6); // ej: SMK-483920
 }
+
+// ── Fecha y hora en español ───────────────────────────────────
 function fechaHoraES() {
     const n = new Date();
     return {
-        fecha: n.toLocaleDateString("es-MX", { weekday:"long", year:"numeric", month:"long", day:"numeric" }),
-        hora:  n.toLocaleTimeString("es-MX", { hour:"2-digit", minute:"2-digit" })
+        fecha: n.toLocaleDateString("es-MX", { weekday: "long", year: "numeric", month: "long", day: "numeric" }),
+        hora:  n.toLocaleTimeString("es-MX", { hour: "2-digit", minute: "2-digit" })
     };
 }
+
+// ── Saludo según hora del día ─────────────────────────────────
 function saludoPorHora() {
     const h = new Date().getHours();
     if (h >= 6  && h < 12) return "¡Buenos días";
@@ -55,161 +57,186 @@ function saludoPorHora() {
 }
 
 // ============================================================
-//  CÓDIGOS DE VERIFICACIÓN
-//  Por ahora se generan en JS y se piden con prompt().
-//  El usuario ve el código en pantalla para ingresarlo.
-//  (Cuando tengas más plantillas EmailJS, aquí mandamos el correo)
+//  COMPRA: correo de confirmación al CLIENTE
+//  Template: template_wpjwmxb
 // ============================================================
-
-// Registro: envia código real por correo usando la plantilla existente
-async function enviarBienvenidaRegistro(emailCliente, nombreCliente, codigoExterno = "") {
+async function enviarCorreoCompraCliente({ emailCliente, nombreCliente, producto, talla = "", color = "", cantidad, precioUnitario, total }) {
     try {
-        await cargarEmailJS();
+        await cargarEmailJS(); // asegura que EmailJS esté listo
 
-        const codigo = String(codigoExterno || generarCodigo6());
         const { fecha, hora } = fechaHoraES();
-        const mensaje =
-            `Tu codigo de verificacion para crear tu cuenta es: ${codigo}\n\n` +
-            `Este codigo vence en 10 minutos.\n` +
-            `Fecha: ${fecha}\nHora: ${hora}\n\n` +
-            `Si tu no solicitaste este registro, ignora este correo.`;
+        const ordenId = generarOrdenId(); // genera número de orden único
 
-        await window.emailjs.send(EMAILJS_SERVICE_ID, TPL_VENDEDOR, {
-            to_email: emailCliente,
-            title: "Codigo de verificacion de registro",
-            name: nombreCliente || "Cliente",
-            message: mensaje
-        });
-
-        return { ok: true, codigo };
-    } catch (err) {
-        console.error("❌ Error envio codigo registro:", err);
-        return { ok: false, codigo: null };
-    }
-}
-
-// Recuperar contraseña: genera código y lo retorna para el modal
-async function enviarCodigoRecuperacion(contacto, metodo = "email", via = "sms") {
-    const codigo = generarCodigo6();
-
-    // TODO: cuando tengas plantilla extra en EmailJS, descomentar:
-    // await window.emailjs.send(EMAILJS_SERVICE_ID, "template_recuperar", {
-    //     to_email: contacto, codigo: codigo,
-    //     via: metodo === "phone" ? (via === "call" ? "llamada" : "SMS") : "correo",
-    //     ...fechaHoraES()
-    // });
-
-    alert(
-        `Se generó tu código de recuperación.\n\n` +
-        `Código: ${codigo}\n\n` +
-        `(Próximamente este código llegará a tu ${metodo === "phone" ? "teléfono" : "correo"})`
-    );
-
-    return { ok: true, codigo };
-}
-
-// ============================================================
-//  COMPRA: correo al cliente  →  template_4rnpwe4
-// ============================================================
-async function enviarCorreoCompraCliente({ emailCliente, nombreCliente, producto, talla = "", cantidad, precioUnitario, total, shipping = 0 }) {
-    try {
-        await cargarEmailJS();
-        const { fecha, hora } = fechaHoraES();
-        const ordenId = "SMK-" + Date.now().toString().slice(-6);
+        // Valida datos mínimos antes de enviar
+        if (!emailCliente || !nombreCliente || !producto) {
+            throw new Error("Faltan datos del cliente o producto.");
+        }
 
         await window.emailjs.send(EMAILJS_SERVICE_ID, TPL_CLIENTE, {
-            to_email:        emailCliente,
-            to_name:         nombreCliente || "Cliente",
-            orden_id:        ordenId,
-            producto:        producto,
-            talla:           talla || "Única",
-            cantidad:        String(cantidad),
-            precio_unitario: `$${Number(precioUnitario).toFixed(2)} MXN`,
-            total:           `$${Number(total).toFixed(2)} MXN`,
-            shipping:        shipping > 0 ? `$${Number(shipping).toFixed(2)} MXN` : "Gratis",
-            fecha:           fecha,
-            hora:            hora,
-            saludo:          saludoPorHora(),
-            // Compatibilidad con la plantilla actual
-            name:            nombreCliente || "Cliente",
-            "cost.total":    `$${Number(total).toFixed(2)} MXN`,
-            "cost.shipping": shipping > 0 ? `$${Number(shipping).toFixed(2)} MXN` : "$0.00",
-            "cost.tax":      "$0.00",
-            orders: [{ name: producto, units: cantidad, price: `$${Number(precioUnitario).toFixed(2)} MXN` }]
+            customer_name:  nombreCliente || "Cliente",   // nombre del comprador
+            customer_email: emailCliente,                  // correo del comprador
+            product_name:   producto,                      // nombre del producto
+            size:           talla  || "Única",             // talla seleccionada
+            color:          color  || "—",                 // color seleccionado
+            quantity:       String(cantidad),              // cantidad comprada
+            order_date:     fecha,                         // fecha en español
+            order_time:     hora,                          // hora de la compra
+            order_id:       ordenId,                       // número de orden
+            price:          `$${Number(total).toFixed(2)} MXN` // precio total
         });
 
         console.log("✅ Confirmación de compra enviada al cliente:", emailCliente);
-        return { ok: true, ordenId };
+        return { ok: true, ordenId }; // retorna el ordenId para usarlo en el correo del vendedor
+
     } catch (err) {
-        console.error("❌ Error compra cliente:", err);
+        console.error("❌ Error al enviar correo al cliente:", err);
         return { ok: false, ordenId: null };
     }
 }
 
 // ============================================================
-//  COMPRA: aviso al vendedor  →  template_afr597h
+//  COMPRA: aviso de nueva venta al VENDEDOR (tú)
+//  Template: template_z1ddwme
 // ============================================================
-async function enviarNotificacionVendedor({ nombreCliente, emailCliente, telefono = "", direccion = "", ciudad = "", producto, talla = "", cantidad, precioUnitario, total, ordenId }) {
+async function enviarNotificacionVendedor({ nombreCliente, emailCliente, producto, talla = "", color = "", cantidad, precioUnitario, total, ordenId }) {
     try {
-        await cargarEmailJS();
+        await cargarEmailJS(); // asegura que EmailJS esté listo
+
         const { fecha, hora } = fechaHoraES();
 
+        // Arma el mensaje con todos los detalles de la venta
         const mensaje =
             `━━━━━━━━━━━━━━━━━━━━━━━━\n` +
-            `🛍 NUEVA VENTA — SMUCKY'S\n` +
+            `🛍 NUEVA VENTA — SMUCKY'S BY CHAVAMON\n` +
             `━━━━━━━━━━━━━━━━━━━━━━━━\n\n` +
             `CLIENTE\n` +
-            `  Nombre:    ${nombreCliente}\n` +
-            `  Correo:    ${emailCliente}\n` +
-            `  Teléfono:  ${telefono  || "No proporcionado"}\n` +
-            `  Dirección: ${direccion || "No proporcionada"}\n` +
-            `  Ciudad:    ${ciudad    || "No proporcionada"}\n\n` +
+            `  Nombre:   ${nombreCliente}\n` +
+            `  Correo:   ${emailCliente}\n\n` +
             `PEDIDO\n` +
-            `  Producto:  ${producto}\n` +
-            `  Talla:     ${talla || "Única"}\n` +
-            `  Cantidad:  ${cantidad} unidad(es)\n` +
-            `  Precio:    $${Number(precioUnitario).toFixed(2)} MXN c/u\n` +
-            `  Total:     $${Number(total).toFixed(2)} MXN\n\n` +
+            `  Producto: ${producto}\n` +
+            `  Talla:    ${talla  || "Única"}\n` +
+            `  Color:    ${color  || "—"}\n` +
+            `  Cantidad: ${cantidad} unidad(es)\n` +
+            `  Precio:   $${Number(precioUnitario).toFixed(2)} MXN c/u\n` +
+            `  Total:    $${Number(total).toFixed(2)} MXN\n\n` +
             `ORDEN\n` +
-            `  # Orden:   ${ordenId}\n` +
-            `  Fecha:     ${fecha}\n` +
-            `  Hora:      ${hora}\n` +
+            `  # Orden:  ${ordenId}\n` +
+            `  Fecha:    ${fecha}\n` +
+            `  Hora:     ${hora}\n` +
             `━━━━━━━━━━━━━━━━━━━━━━━━`;
 
         await window.emailjs.send(EMAILJS_SERVICE_ID, TPL_VENDEDOR, {
-            to_email: OWNER_EMAIL,
-            title:    `Nueva venta — ${producto} · ${ordenId}`,
-            name:     `${nombreCliente} (${emailCliente})`,
-            message:  mensaje
+            to_email:       OWNER_EMAIL,                    // tu correo Hotmail
+            customer_name:  nombreCliente,                  // nombre del cliente
+            customer_email: emailCliente,                   // correo del cliente
+            product_name:   producto,                       // producto vendido
+            size:           talla  || "Única",              // talla
+            color:          color  || "—",                  // color
+            quantity:       String(cantidad),               // cantidad
+            order_date:     fecha,                          // fecha
+            order_time:     hora,                           // hora
+            order_id:       ordenId,                        // número de orden
+            price:          `$${Number(total).toFixed(2)} MXN` // total
         });
 
         console.log("✅ Aviso de venta enviado al vendedor:", OWNER_EMAIL);
         return true;
+
     } catch (err) {
-        console.error("❌ Error notificación vendedor:", err);
+        console.error("❌ Error al enviar notificación al vendedor:", err);
         return false;
     }
 }
 
-// ── Función combinada: llama a las 2 juntas ──────────────────
-async function procesarCorreosCompra(datos) {
-    const r       = await enviarCorreoCompraCliente(datos);
-    const ordenId = r.ordenId || ("SMK-" + Date.now().toString().slice(-6));
-    await enviarNotificacionVendedor({ ...datos, ordenId });
-    return { ok: r.ok, ordenId };
+// ============================================================
+//  handlePurchase() — función principal de compra
+//  Guarda en Firebase + envía los 2 correos
+//  Llámala desde el botón "Comprar"
+// ============================================================
+async function handlePurchase({ emailCliente, nombreCliente, producto, talla = "", color = "", cantidad, precioUnitario, total }) {
+
+    // ── Validar datos antes de procesar ──────────────────────
+    if (!emailCliente || !nombreCliente || !producto || !cantidad || !total) {
+        console.error("❌ handlePurchase: Faltan datos requeridos.");
+        return { ok: false, ordenId: null };
+    }
+
+    const { fecha, hora } = fechaHoraES();
+    const ordenId = generarOrdenId(); // ID único para esta compra
+
+    // ── Guardar compra en Firebase Firestore ─────────────────
+    try {
+        const [{ initializeApp, getApps }, { getFirestore, collection, addDoc, serverTimestamp }] = await Promise.all([
+            import("https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"),
+            import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js")
+        ]);
+
+        const firebaseConfig = {
+            apiKey:            "AIzaSyCewAiOXXWT7O1L2WCBksejOnf8sZFj2KQ",
+            authDomain:        "smuckys-by-chavamon-loginregis.firebaseapp.com",
+            projectId:         "smuckys-by-chavamon-loginregis",
+            storageBucket:     "smuckys-by-chavamon-loginregis.firebasestorage.app",
+            messagingSenderId: "185108836763",
+            appId:             "1:185108836763:web:d7b923507c3c32e28e313e"
+        };
+
+        const fbApp = getApps().find(a => a.name === "auth-app") || initializeApp(firebaseConfig, "auth-app");
+        const db    = getFirestore(fbApp);
+
+        // Guarda todos los datos de la compra en la colección "ventas"
+        await addDoc(collection(db, "ventas"), {
+            orden_id:        ordenId,          // número de orden único
+            nombre_cliente:  nombreCliente,    // nombre del comprador
+            email_cliente:   emailCliente,     // correo del comprador
+            producto:        producto,          // nombre del producto
+            talla:           talla  || "Única", // talla seleccionada
+            color:           color  || "—",     // color seleccionado
+            cantidad:        Number(cantidad),  // cantidad comprada
+            precio_unitario: Number(precioUnitario), // precio por unidad
+            total:           Number(total),     // total pagado
+            fecha:           fecha,             // fecha en español
+            hora:            hora,              // hora de la compra
+            fecha_servidor:  serverTimestamp()  // timestamp del servidor Firebase
+        });
+
+        console.log("✅ Compra guardada en Firebase:", ordenId);
+
+    } catch (fbError) {
+        console.error("❌ Error al guardar en Firebase:", fbError);
+        // No detenemos el flujo — los correos se envían igual
+    }
+
+    // ── Enviar correo al cliente ──────────────────────────────
+    const resultCliente = await enviarCorreoCompraCliente({
+        emailCliente, nombreCliente, producto,
+        talla, color, cantidad, precioUnitario, total
+    });
+
+    // ── Enviar correo al vendedor (tú) ────────────────────────
+    await enviarNotificacionVendedor({
+        nombreCliente, emailCliente, producto,
+        talla, color, cantidad, precioUnitario, total,
+        ordenId: resultCliente.ordenId || ordenId // usa el mismo ID en ambos correos
+    });
+
+    return { ok: resultCliente.ok, ordenId };
 }
 
-// ── Exponer globalmente ──────────────────────────────────────
-window.enviarBienvenidaRegistro  = enviarBienvenidaRegistro;
-window.enviarCodigoRecuperacion  = enviarCodigoRecuperacion;
-window.enviarCorreoCompraCliente = enviarCorreoCompraCliente;
-window.enviarNotificacionVendedor = enviarNotificacionVendedor;
-window.procesarCorreosCompra     = procesarCorreosCompra;
+// ── Exponer funciones globalmente ────────────────────────────
+window.handlePurchase             = handlePurchase;              // función principal — úsala en el botón Comprar
+window.enviarCorreoCompraCliente  = enviarCorreoCompraCliente;   // solo correo al cliente
+window.enviarNotificacionVendedor = enviarNotificacionVendedor;  // solo correo al vendedor
+window.procesarCorreosCompra      = handlePurchase;              // alias para compatibilidad
 
-// Compatibilidad con código anterior
-window.enviarCodigoRegistro = (email, nombre, codigo) => enviarBienvenidaRegistro(email, nombre, codigo);
-window.enviarCorreosVenta   = (email, nombre, prod, cant, precio, tot) =>
-    procesarCorreosCompra({ emailCliente: email, nombreCliente: nombre, producto: prod,
-                            cantidad: cant, precioUnitario: precio, total: tot });
-window.SMUCKY_OWNER_EMAIL = OWNER_EMAIL;
+// ── Compatibilidad con código anterior ───────────────────────
+window.enviarCorreosVenta = (email, nombre, prod, cant, precio, tot) =>
+    handlePurchase({
+        emailCliente:    email,
+        nombreCliente:   nombre,
+        producto:        prod,
+        cantidad:        cant,
+        precioUnitario:  precio,
+        total:           tot
+    });
 
+window.SMUCKY_OWNER_EMAIL = OWNER_EMAIL; // correo del dueño accesible globalmente

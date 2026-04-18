@@ -14,13 +14,14 @@
 //    await enviarCodigoRecuperacion("Juan", "juan@correo.com", "654321");
 // ============================================================
 
-const EMAILJS_PUBLIC_KEY = "FbiFKIiqS9841M71D";
-const EMAILJS_SERVICE_ID = "smuckyschavamon_gmail";
-const EMAILJS_TEMPLATE   = "template_4rnpwe4";
+const EMAILJS_PUBLIC_KEY = "FbiFKIiqS9841M71D"; // ← Public Key original
+const EMAILJS_SERVICE_ID = "soushmuck.chavamon@hotmail.com"; // ← Service ID original de Gmail
+const EMAILJS_TEMPLATE   = "template_4rnpwe4"; // ← Template original
 
 // Ruta relativa a la plantilla HTML (desde la raiz del sitio)
 const TEMPLATE_PATH = "/Plantilla_Para_Correo/correo-codigo.html";
 
+// Bandera para no cargar EmailJS dos veces
 let _ejsListo = false;
 
 function cargarEmailJS() {
@@ -81,14 +82,12 @@ async function _enviar(nombre, email, codigo, tipo, motivo) {
         "cost.total":    codigo,
         "cost.shipping": "—",
         "cost.tax":      "0",
-        // Campo "message" por si la plantilla lo usa como fallback de texto plano
         message: `Hola ${nombre}, tu codigo generado es: ${codigo}. Vence en 10 minutos.`,
         orders: [{
             name:  `Tu codigo de ${tipo.toLowerCase()} es: ${codigo}`,
             units: 1,
             price: "Vence en 10 min"
         }],
-        // HTML completo de la presentacion (si la plantilla EmailJS tiene un campo free)
         email_html: htmlFinal
     });
 
@@ -117,5 +116,3 @@ export async function enviarCodigoRecuperacion(nombre, email, codigo) {
 
 // Exponer globalmente por si se carga sin module
 window.CorreoCodigo = { enviarCodigoRegistro, enviarCodigoRecuperacion };
-
-

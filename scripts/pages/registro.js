@@ -1,18 +1,18 @@
 ﻿/* ES: Comentarios base para mantenimiento. EN: Baseline comments for maintenance. */
 // ============================================================
-//  scripts/pages/registro.js  — SMUCKY'S BY CHAVARIN
+//  scripts/pages/registro.js  — SMUCKY'S BY CHAVAMON
 //
-//  Incluye:
-//    ✅ Validación de contraseña (8 car., 1 mayús., 2 núm., 1 símbolo)
-//    ✅ Código de verificación por correo (plantilla de bienvenida)
-//    ✅ Guarda hash SHA-256 de la contraseña en Firestore
-//    ✅ Impide reutilizar contraseñas usadas en el último mes
+//  ✅ Validación de contraseña (8 car., 1 mayús., 2 núm., 1 símbolo)
+//  ✅ Código de verificación enviado por EmailJS (Gmail) — SIN backend
+//  ✅ Guarda hash SHA-256 de la contraseña en Firestore
+//  ✅ Registro en Firebase Auth + Firestore
 // ============================================================
 
 import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { getFirestore, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
+// ── Configuración Firebase ───────────────────────────────────
 const firebaseConfig = {
     apiKey:            "AIzaSyCewAiOXXWT7O1L2WCBksejOnf8sZFj2KQ",
     authDomain:        "smuckys-by-chavamon-loginregis.firebaseapp.com",
@@ -26,113 +26,67 @@ const firebaseConfig = {
 const app  = getApps().find(a => a.name === "auth-app") || initializeApp(firebaseConfig, "auth-app");
 const auth = getAuth(app);
 const db   = getFirestore(app);
-let datosPendientes = null;
 
-function obtenerAuthApiBase() {
-    const globalBase = (window.SMUCKY_AUTH_API_BASE || "").trim();
-    if (globalBase) return globalBase.replace(/\/+$/, "");
-    if (["localhost", "127.0.0.1"].includes(window.location.hostname)) {
-        return "http://127.0.0.1:8000";
-    }
-    return "";
-}
+// ── Configuración EmailJS (Gmail) para códigos de verificación ──
+const EMAILJS_PUBLIC_KEY  = ["I7Z9IQ", "aIfsl", "pauQQn"].join(""); // Public Key dividida por seguridad
+const EMAILJS_SERVICE_ID  = "smuckyschavamon_gmail";                 // Servicio Gmail en EmailJS
+const EMAILJS_TEMPLATE_ID = "template_fey9ch4";                      // Template: verification code
 
-async function enviarCodigoRegistroBackend(nombre, email) {
-    const payload = { nombre, email };
-    const base = obtenerAuthApiBase();
-    const url = `${base}/auth/registro/enviar-codigo`;
+// ── Estado temporal del registro pendiente ───────────────────
+let datosPendientes  = null; // guarda datos del formulario hasta verificar
+let codigoPendiente  = null; // guarda el código generado
+let codigoExpira     = null; // timestamp de expiración (10 minutos)
 
-    console.info("[registro][frontend->backend][enviar-codigo]", { url, payload });
-
-    const response = await fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-    });
-
-    const data = await response.json().catch(() => ({}));
-    if (!response.ok) {
-        throw new Error(data?.detail || "No se pudo enviar el codigo desde el backend.");
-    }
-    return data;
-}
-
-async function verificarCodigoRegistroBackend(email, codigo) {
-    const payload = { email, codigo };
-    const base = obtenerAuthApiBase();
-    const url = `${base}/auth/registro/verificar-codigo`;
-
-    console.info("[registro][frontend->backend][verificar-codigo]", { url, payload });
-
-    const response = await fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-    });
-
-    const data = await response.json().catch(() => ({}));
-    if (!response.ok) {
-        throw new Error(data?.detail || "No se pudo verificar el codigo.");
-    }
-    return data;
-}
-
-function inicializarOjoContrasena() {
-    document.querySelectorAll(".password-toggle").forEach((toggle) => {
-        toggle.addEventListener("click", () => {
-            const targetId = toggle.getAttribute("data-target");
-            if (!targetId) return;
-
-            const input = document.getElementById(targetId);
-            if (!input) return;
-
-            const visible = input.type === "text";
-            input.type = visible ? "password" : "text";
-            toggle.classList.toggle("is-visible", !visible);
-            toggle.setAttribute("aria-label", visible ? "Mostrar contrasena" : "Ocultar contrasena");
-        });
+// ── Carga EmailJS una sola vez ───────────────────────────────
+let _ejsListo = false;
+function cargarEmailJS() {
+    return new Promise((resolve, reject) => {
+        if (_ejsListo && window.emailjs) { resolve(); return; }
+        const s    = document.createElement("script");
+        s.src      = "https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js";
+        s.onload   = () => {
+            window.emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY }); // inicializa con tu key
+            _ejsListo = true;
+            resolve();
+        };
+        s.onerror  = reject;
+        document.head.appendChild(s);
     });
 }
 
-inicializarOjoContrasena();
-
-// ── Generar hash SHA-256 de la contraseña (nunca se guarda en texto plano) ──
-async function hashPassword(password) {
-    const encoder = new TextEncoder();
-    const data    = encoder.encode(password);
-    const hashBuf = await crypto.subtle.digest("SHA-256", data);
-    return Array.from(new Uint8Array(hashBuf)).map(b => b.toString(16).padStart(2, "0")).join("");
+// ── Genera un código numérico de 6 dígitos ───────────────────
+function generarCodigo6() {
+    return String(Math.floor(100000 + Math.random() * 900000)); // ej: "483920"
 }
 
-// ── Reglas de contraseña ─────────────────────────────────────
-// Devuelve lista de errores. Si está vacía, la contraseña es válida.
-function validarContrasena(password) {
-    const errores = [];
-    if (password.length < 8)                                        errores.push("Mínimo 8 caracteres");
-    if (!/[A-ZÁÉÍÓÚÜÑ]/.test(password))                            errores.push("Al menos 1 letra mayúscula");
-    if ((password.match(/[0-9]/g) || []).length < 2)               errores.push("Al menos 2 números");
-    if (!/[^a-zA-Z0-9áéíóúüñÁÉÍÓÚÜÑ]/.test(password))            errores.push("Al menos 1 símbolo (!@#$%...)");
-    if (!/[a-záéíóúüñ]/.test(password))                            errores.push("Al menos 1 letra minúscula");
-    return errores;
+// ── Envía el código de verificación por EmailJS ──────────────
+async function enviarCodigoVerificacion(nombre, email, codigo) {
+    await cargarEmailJS(); // asegura que EmailJS esté listo
+
+    await window.emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+        email:              email,       // correo destino del usuario
+        user_name:          nombre,      // nombre del usuario
+        verification_code:  codigo,      // código de 6 dígitos
+        expiration_minutes: "10"         // minutos de validez del código
+    });
 }
 
-// ── Mensajes de error de Firebase ───────────────────────────
-function mensajeError(code) {
-    return {
-        "auth/email-already-in-use":    "Ese correo ya está registrado. Inicia sesión o usa otro.",
-        "auth/invalid-email":           "El correo no tiene un formato válido.",
-        "auth/weak-password":           "La contraseña es demasiado débil.",
-        "auth/network-request-failed":  "Sin conexión a internet. Revisa tu red."
-    }[code] || "No se pudo crear la cuenta. Intenta de nuevo.";
+// ── Muestra/oculta el campo del código de verificación ───────
+function mostrarCampoCodigo(mostrar = true) {
+    const wrap = document.getElementById("verificationWrap");
+    if (!wrap) return;
+    wrap.hidden = !mostrar; // true = oculto, false = visible
 }
 
+// ── Muestra mensaje de error ─────────────────────────────────
 function mostrarError(msg) {
     const el = document.getElementById("regError");
     if (!el) return;
-    el.textContent    = msg;
-    el.style.display  = msg ? "block" : "none";
+    el.textContent   = msg;
+    el.style.display = msg ? "block" : "none";
 }
 
+// ── Muestra mensaje de aviso/éxito ───────────────────────────
 function mostrarAviso(msg) {
     const el = document.getElementById("regNotice");
     if (!el) return;
@@ -140,129 +94,190 @@ function mostrarAviso(msg) {
     el.style.display = msg ? "block" : "none";
 }
 
-function mostrarCampoCodigo(mostrar = true) {
-    const wrap = document.getElementById("verificationWrap");
-    if (!wrap) return;
-    wrap.hidden = !mostrar;
+// ── Botón para mostrar/ocultar contraseña ────────────────────
+function inicializarOjoContrasena() {
+    document.querySelectorAll(".password-toggle").forEach((toggle) => {
+        toggle.addEventListener("click", () => {
+            const targetId = toggle.getAttribute("data-target");
+            if (!targetId) return;
+            const input   = document.getElementById(targetId);
+            if (!input) return;
+            const visible = input.type === "text";
+            input.type    = visible ? "password" : "text";
+            toggle.classList.toggle("is-visible", !visible);
+            toggle.setAttribute("aria-label", visible ? "Mostrar contrasena" : "Ocultar contrasena");
+        });
+    });
+}
+inicializarOjoContrasena();
+
+// ── Genera hash SHA-256 de la contraseña (nunca texto plano) ─
+async function hashPassword(password) {
+    const encoder = new TextEncoder();
+    const data    = encoder.encode(password);
+    const hashBuf = await crypto.subtle.digest("SHA-256", data);
+    return Array.from(new Uint8Array(hashBuf)).map(b => b.toString(16).padStart(2, "0")).join("");
+}
+
+// ── Valida reglas de contraseña ──────────────────────────────
+// Devuelve lista de errores. Si está vacía, la contraseña es válida.
+function validarContrasena(password) {
+    const errores = [];
+    if (password.length < 8)                                     errores.push("Mínimo 8 caracteres");
+    if (!/[A-ZÁÉÍÓÚÜÑ]/.test(password))                         errores.push("Al menos 1 letra mayúscula");
+    if ((password.match(/[0-9]/g) || []).length < 2)             errores.push("Al menos 2 números");
+    if (!/[^a-zA-Z0-9áéíóúüñÁÉÍÓÚÜÑ]/.test(password))          errores.push("Al menos 1 símbolo (!@#$%...)");
+    if (!/[a-záéíóúüñ]/.test(password))                         errores.push("Al menos 1 letra minúscula");
+    return errores;
+}
+
+// ── Mensajes de error de Firebase ───────────────────────────
+function mensajeError(code) {
+    return {
+        "auth/email-already-in-use":   "Ese correo ya está registrado. Inicia sesión o usa otro.",
+        "auth/invalid-email":          "El correo no tiene un formato válido.",
+        "auth/weak-password":          "La contraseña es demasiado débil.",
+        "auth/network-request-failed": "Sin conexión a internet. Revisa tu red."
+    }[code] || "No se pudo crear la cuenta. Intenta de nuevo.";
 }
 
 // ════════════════════════════════════════════════════════════
-//  SUBMIT DEL FORMULARIO
+//  SUBMIT DEL FORMULARIO — dos pasos:
+//  Paso 1: validar → enviar código por EmailJS
+//  Paso 2: verificar código → registrar en Firebase
 // ════════════════════════════════════════════════════════════
 document.getElementById("registerForm")?.addEventListener("submit", async (e) => {
     e.preventDefault();
     mostrarError("");
     mostrarAviso("");
 
-    const name     = document.getElementById("name")?.value.trim()     || "";
-    const email    = document.getElementById("newEmail")?.value.trim() || "";
-    const password = document.getElementById("newPassword")?.value     || "";
-    const confirmEl = document.getElementById("confirmPassword");
-    const confirm  = confirmEl ? confirmEl.value : password;
-    const city     = document.getElementById("city")?.value.trim()     || "";
-    const phone    = document.getElementById("phone")?.value?.trim()   || "";
+    // Leer campos del formulario
+    const name            = document.getElementById("name")?.value.trim()     || "";
+    const email           = document.getElementById("newEmail")?.value.trim() || "";
+    const password        = document.getElementById("newPassword")?.value     || "";
+    const confirmEl       = document.getElementById("confirmPassword");
+    const confirm         = confirmEl ? confirmEl.value : password;
+    const city            = document.getElementById("city")?.value.trim()     || "";
+    const phone           = document.getElementById("phone")?.value?.trim()   || "";
     const codigoIngresado = document.getElementById("verificationCode")?.value.trim() || "";
 
-    // Validar campos vacíos
-    if (!name || !email || !password || !city) {
-        mostrarError("Por favor completa todos los campos."); return;
-    }
-
-    // Validar contraseña
-    const erroresPass = validarContrasena(password);
-    if (erroresPass.length > 0) {
-        mostrarError("Contraseña insegura: " + erroresPass.join(", ")); return;
-    }
-
-    // Confirmar que coincide
-    if (password !== confirm) {
-        mostrarError("Las contraseñas no coinciden."); return;
-    }
-
     const btn = e.target.querySelector("button[type='submit']");
-    if (btn) {
-        btn.textContent = "Procesando...";
-        btn.disabled = true;
-    }
 
+    // ── PASO 1: Validar y enviar código ──────────────────────
     const esNuevoEnvio = !datosPendientes || datosPendientes.email !== email;
     if (esNuevoEnvio) {
+
+        // Validar campos vacíos
+        if (!name || !email || !password || !city) {
+            mostrarError("Por favor completa todos los campos."); return;
+        }
+
+        // Validar contraseña segura
+        const erroresPass = validarContrasena(password);
+        if (erroresPass.length > 0) {
+            mostrarError("Contraseña insegura: " + erroresPass.join(", ")); return;
+        }
+
+        // Confirmar que las contraseñas coinciden
+        if (password !== confirm) {
+            mostrarError("Las contraseñas no coinciden."); return;
+        }
+
+        if (btn) { btn.textContent = "Enviando código..."; btn.disabled = true; }
+
         try {
-            datosPendientes = { name, email, password, city, phone };
-            await enviarCodigoRegistroBackend(name, email);
+            // Generar código y guardarlo en memoria con expiración de 10 minutos
+            codigoPendiente  = generarCodigo6();
+            codigoExpira     = Date.now() + 10 * 60 * 1000; // 10 minutos en ms
+            datosPendientes  = { name, email, password, city, phone };
+
+            // Enviar código por EmailJS (Gmail)
+            await enviarCodigoVerificacion(name, email, codigoPendiente);
+
+            // Mostrar campo para ingresar el código
             mostrarCampoCodigo(true);
-            mostrarAviso(`Te enviamos un codigo a ${email}. Escribelo abajo para completar tu registro.`);
+            mostrarAviso(`Te enviamos un código a ${email}. Escríbelo abajo para completar tu registro.`);
 
-            if (btn) {
-                btn.textContent = "Verificar codigo y crear cuenta";
-                btn.disabled = false;
-            }
+            if (btn) { btn.textContent = "Verificar código y crear cuenta"; btn.disabled = false; }
             return;
+
         } catch (mailError) {
-            console.error("No se pudo enviar el correo de codigo:", mailError);
-            mostrarError("No se pudo enviar el codigo. Revisa tu correo e intenta de nuevo. (Error: " + (mailError?.text || mailError?.message || "desconocido") + ")");
-            if (btn) {
-                btn.textContent = "Crear cuenta";
-                btn.disabled = false;
-            }
+            console.error("No se pudo enviar el correo:", mailError);
+            mostrarError("No se pudo enviar el código. Verifica tu correo e intenta de nuevo. (Error: " + (mailError?.text || mailError?.message || "desconocido") + ")");
+            if (btn) { btn.textContent = "Crear cuenta"; btn.disabled = false; }
             return;
         }
     }
 
+    // ── PASO 2: Verificar código e registrar en Firebase ─────
     if (!codigoIngresado) {
-        mostrarError("Escribe el codigo que recibiste en tu correo.");
-        if (btn) {
-            btn.textContent = "Verificar codigo y crear cuenta";
-            btn.disabled = false;
-        }
+        mostrarError("Escribe el código que recibiste en tu correo.");
+        if (btn) { btn.textContent = "Verificar código y crear cuenta"; btn.disabled = false; }
         return;
     }
 
-    try {
-        await verificarCodigoRegistroBackend(email, codigoIngresado);
-    } catch (verifyError) {
-        mostrarError(verifyError?.message || "Codigo incorrecto o expirado.");
-        if (btn) {
-            btn.textContent = "Verificar codigo y crear cuenta";
-            btn.disabled = false;
-        }
+    // Verificar que el código no haya expirado
+    if (Date.now() > codigoExpira) {
+        mostrarError("El código venció. Intenta registrarte de nuevo.");
+        datosPendientes = null;
+        codigoPendiente = null;
+        mostrarCampoCodigo(false);
+        if (btn) { btn.textContent = "Crear cuenta"; btn.disabled = false; }
         return;
     }
 
+    // Verificar que el código sea correcto
+    if (codigoIngresado !== codigoPendiente) {
+        mostrarError("Código incorrecto. Intenta de nuevo.");
+        if (btn) { btn.textContent = "Verificar código y crear cuenta"; btn.disabled = false; }
+        return;
+    }
+
+    if (btn) { btn.textContent = "Creando cuenta..."; btn.disabled = true; }
+
     try {
-        // Hash de la contraseña para guardar el historial (nunca texto plano)
+        // Hash de la contraseña (nunca se guarda en texto plano)
         const hashPass = await hashPassword(datosPendientes.password);
         const ahora    = new Date().toISOString();
 
+        // Crear usuario en Firebase Auth
         const userCredential = await createUserWithEmailAndPassword(auth, datosPendientes.email, datosPendientes.password);
         const user           = userCredential.user;
 
+        // Guardar datos del usuario en Firestore
         await setDoc(doc(db, "usuarios", user.uid), {
             nombre:   datosPendientes.name,
             email:    user.email,
             ciudad:   datosPendientes.city,
             telefono: datosPendientes.phone,
             rol:      "cliente",
-            codigo_verificacion_registro: codigoIngresado,
-            email_verificado_por_codigo: true,
-            fecha_verificacion_codigo: serverTimestamp(),
-            fecha_registro: serverTimestamp(),
-            // Historial de contraseñas: máx 5 entradas, con fecha
-            historial_contrasenas: [{ hash: hashPass, fecha: ahora }]
+            codigo_verificacion_registro:   codigoIngresado,
+            email_verificado_por_codigo:    true,
+            fecha_verificacion_codigo:      serverTimestamp(),
+            fecha_registro:                 serverTimestamp(),
+            historial_contrasenas: [{ hash: hashPass, fecha: ahora }] // historial de contraseñas
         });
 
+        // Guardar sesión local con SmuckyAuth
         if (window.SmuckyAuth) {
             window.SmuckyAuth.saveUser({
-                uid: user.uid, nombre: datosPendientes.name, email: user.email,
-                ciudad: datosPendientes.city, rol: "cliente", createdAt: ahora
+                uid:    user.uid,
+                nombre: datosPendientes.name,
+                email:  user.email,
+                ciudad: datosPendientes.city,
+                rol:    "cliente",
+                createdAt: ahora
             });
         }
 
-        mostrarAviso("Cuenta creada y verificada por codigo. Redirigiendo a inicio de sesion...");
+        // Limpiar estado temporal
+        mostrarAviso("¡Cuenta creada y verificada! Redirigiendo a inicio de sesión...");
         datosPendientes = null;
+        codigoPendiente = null;
         mostrarCampoCodigo(false);
-        await signOut(auth);
-        window.location.href = "login.html";
+
+        await signOut(auth); // cerrar sesión temporal para que el usuario haga login
+        window.location.href = "login.html"; // redirigir al login
 
     } catch (error) {
         console.error("Error al registrar:", error.code, error.message);
@@ -270,4 +285,3 @@ document.getElementById("registerForm")?.addEventListener("submit", async (e) =>
         if (btn) { btn.textContent = "Crear cuenta"; btn.disabled = false; }
     }
 });
-

@@ -1,0 +1,19 @@
+{
+  "workbench.iconTheme": "material-icon-theme",
+  "material-icon-theme.folders.theme": "specific",
+  "material-icon-theme.folders.color": "#42A5F5",
+  "material-icon-theme.folders.associations": {
+    "backend": "server",
+    "servicios": "services",
+    "scripts": "scripts",
+    "paginas": "src",
+    "secciones": "css",
+    "ayuda": "docs",
+    "cuenta": "auth",
+    "informacion": "docs",
+    "soporte": "src",
+    "Imagenes de ropa": "images",
+    "LOGO DE LA EMPRESA": "images",
+    "Plantilla_Para_Correo": "docs"
+  }
+}
