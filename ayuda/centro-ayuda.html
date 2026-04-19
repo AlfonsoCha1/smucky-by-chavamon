@@ -12,9 +12,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../secciones/estilos-secciones.css">
-\ \ \ \ <link\ rel="stylesheet"\ href="\.\./secciones/footer-global\.css">\r\n    <link rel="stylesheet" href="../secciones/footer-global.css">
+    <link rel="stylesheet" href="../secciones/footer-global.css">
 </head>
-<body>
+<body class="help-center-page">
     <header class="topbar">
         <a class="brand" href="../index.html">SMUCKY´s By CHAVAMON</a>
         <nav class="topbar-links">
@@ -25,20 +25,58 @@
     </header>
 
     <main class="page">
-        <section class="hero">
+        <section class="hero help-center-hero">
+            <span class="help-center-kicker">Asistencia SMUCKY</span>
             <h1>Centro de ayuda</h1>
             <p>Aqui encuentras respuestas rapidas sobre envios, devoluciones, pedidos y seguridad. Selecciona el tema que necesites.</p>
+            <div class="help-center-summary" aria-hidden="true">
+                <span>Respuesta clara</span>
+                <span>Soporte directo</span>
+                <span>Proceso simple</span>
+            </div>
         </section>
 
-        <section class="card card-full">
-            <h2>Accesos rapidos</h2>
+        <section class="card card-full help-center-card">
+            <div class="help-center-card-head">
+                <span class="help-center-card-kicker">Navegacion rapida</span>
+                <h2>Accesos rapidos</h2>
+                <p>Elige el tema y entra directo al apartado correcto sin perder tiempo.</p>
+            </div>
             <div class="quick-links">
                 <!-- <a href="faq.html">FAQ</a> -->
-                <a href="entregas.html">Informacion de entrega</a>
-                <a href="devoluciones.html">Politica de devoluciones</a>
-                <a href="pedidos.html">Pedidos</a>
+                <a href="entregas.html">
+                    <span class="quick-link-index">01</span>
+                    <span class="quick-link-copy">
+                        <strong>Informacion de entrega</strong>
+                        <small>Fechas, cobertura y tiempos de envio.</small>
+                    </span>
+                    <span class="quick-link-arrow" aria-hidden="true">↗</span>
+                </a>
+                <a href="devoluciones.html">
+                    <span class="quick-link-index">02</span>
+                    <span class="quick-link-copy">
+                        <strong>Politica de devoluciones</strong>
+                        <small>Cambios, condiciones y proceso de revision.</small>
+                    </span>
+                    <span class="quick-link-arrow" aria-hidden="true">↗</span>
+                </a>
+                <a href="pedidos.html">
+                    <span class="quick-link-index">03</span>
+                    <span class="quick-link-copy">
+                        <strong>Pedidos</strong>
+                        <small>Seguimiento, estatus y dudas sobre compra.</small>
+                    </span>
+                    <span class="quick-link-arrow" aria-hidden="true">↗</span>
+                </a>
                 <!-- <a href="seguridad.html">Denunciar una pagina falsa</a> -->
-                <a href="../soporte/index.html">Soporte</a>
+                <a href="../soporte/index.html">
+                    <span class="quick-link-index">04</span>
+                    <span class="quick-link-copy">
+                        <strong>Soporte</strong>
+                        <small>Atencion directa para casos que requieren ayuda.</small>
+                    </span>
+                    <span class="quick-link-arrow" aria-hidden="true">↗</span>
+                </a>
             </div>
         </section>
     </main>

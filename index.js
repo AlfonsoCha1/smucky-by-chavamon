@@ -337,10 +337,10 @@ function showToast({ titulo, mensaje, tipo = "success", duracion = 3500 }) {
     // Mapa de iconos segÃºn el tipo de toast
     // Icon map based on toast type
     const iconos = {
-        success: "ðŸ›’",
-        error:   "âŒ",
-        info:    "â„¹ï¸",
-        fav:     "â¤ï¸"
+        success: "✅",
+        error:   "❌",
+        info:    "♡", // Corazón vacío para quitar de favoritos
+        fav:     "❤️"  // Corazón lleno para agregar a favoritos
     };
 
     const toast = document.createElement("div");
@@ -1127,7 +1127,7 @@ function renderProducts(sectionId) {
                 ${product.subtitle ? `<p class="product-subtitle">${product.subtitle}</p>` : ""}
                 <p class="product-price">$${product.price.toFixed(2)}</p>
                 <div class="product-actions">
-                    <button type="button" class="favorite-btn ${favorites.includes(product.id) ? "active" : ""}" data-product-id="${product.id}" title="Guardar en favoritos">â¤</button>
+                    <button type="button" class="favorite-btn ${favorites.includes(product.id) ? "active" : ""}" data-product-id="${product.id}" title="Guardar en favoritos">${favorites.includes(product.id) ? "❤️" : "♡"}</button>
                     <button type="button" class="add-cart-btn" data-product-id="${product.id}">Agregar al carrito</button>
                 </div>
                 <button type="button" class="buy-now-btn buy-product-btn" data-product-id="${product.id}">Comprar Ahora</button>

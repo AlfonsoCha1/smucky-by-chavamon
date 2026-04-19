@@ -174,7 +174,7 @@
 		</div>
 		<nav class="smucky-menu-links">
 			<a href="${base}index.html">Inicio</a>
-			<a href="${base}cuenta/login.html" id="smuckyMenuLoginLink" class="guest-link">Iniciar sesiÃ³n</a>
+			<a href="${base}cuenta/login.html" id="smuckyMenuLoginLink" class="guest-link">Iniciar sesión</a>
 			<a href="${base}cuenta/registro.html" id="smuckyMenuRegisterLink" class="guest-link">Registrarse</a>
 			<a href="${base}cuenta/perfil.html" id="smuckyMenuProfileLink">Mi perfil</a>
 			<a href="${base}cuenta/pedidos.html" id="smuckyMenuOrdersLink">Mis pedidos</a>
@@ -182,7 +182,7 @@
 			<a href="${base}ayuda/centro-ayuda.html">Centro de ayuda</a>
 			<a href="${base}soporte/index.html">Soporte</a>
 			<a href="${base}informacion/sobre-mi.html">Sobre nosotros</a>
-			<button type="button" id="smuckyMenuLogoutBtn">Cerrar sesiÃ³n</button>
+			<button type="button" id="smuckyMenuLogoutBtn">Cerrar sesión</button>
 		</nav>
 		<div class="smucky-menu-foot">Ropa deportiva y casual con estilo propio.</div>
 	`;
@@ -210,7 +210,7 @@
 				await window.firebase.auth().signOut();
 				return;
 			} catch (error) {
-				console.warn("No se pudo cerrar sesiÃ³n con Firebase compat:", error);
+				console.warn("No se pudo cerrar sesión con Firebase compat:", error);
 			}
 		}
 
@@ -225,7 +225,7 @@
 			const auth = getAuth(app);
 			await signOut(auth);
 		} catch (error) {
-			console.warn("No se pudo cerrar sesiÃ³n con Firebase modular:", error);
+			console.warn("No se pudo cerrar sesión con Firebase modular:", error);
 		}
 	}
 

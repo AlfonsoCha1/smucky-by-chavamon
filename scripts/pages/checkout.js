@@ -165,8 +165,10 @@ function renderCheckoutItems() {
 
     if (!checkoutItems.length) {
         coItemsSection.innerHTML = `
-            <div class="co-empty-order">
-                <p>No hay productos en este pedido.</p>
+            <div class="co-empty-order" style="text-align:center;">
+                <div style="font-size:2.5rem; margin-bottom:0.5rem;">🛒</div>
+                <strong>Tu carrito está vacío</strong>
+                <div style="color:#888; font-size:1rem;">Agrega productos para verlos aquí.</div>
             </div>
         `;
         updateTotals();
@@ -193,7 +195,7 @@ function renderCheckoutItems() {
                         </svg>
                     </button>
                     <div class="co-qty-controls">
-                        <button class="co-qty-btn co-item-minus" data-index="${index}" ${item.qty <= 1 ? "disabled" : ""} aria-label="Menos">−</button>
+                        <button class="co-qty-btn co-item-minus" data-index="${index}" ${item.qty <= 1 ? "disabled" : ""} aria-label="Menos">&minus;</button>
                         <span class="co-qty-num">${item.qty}</span>
                         <button class="co-qty-btn co-item-plus" data-index="${index}" ${item.qty >= (item.stock || 99) ? "disabled" : ""} aria-label="Más">+</button>
                     </div>
@@ -923,7 +925,11 @@ window.addEventListener("DOMContentLoaded", () => {
             showPaymentStatus(editingCardId ? "Tarjeta actualizada correctamente." : "Tarjeta agregada correctamente.", "success");
             closeCardModal();
         } catch (err) {
-            showFormError(err.message || "Error al guardar la tarjeta.");
+            let msg = err.message || "Error al guardar la tarjeta.";
+            if (msg.toLowerCase().includes("número") || msg.toLowerCase().includes("numero") || msg.toLowerCase().includes("invalid")) {
+                msg = "Número de tarjeta inválida.";
+            }
+            showFormError(msg);
         } finally {
             cardFormSubmit.disabled = false;
             cardFormSubmit.textContent = editingCardId ? "Guardar cambios" : "Agregar tarjeta";

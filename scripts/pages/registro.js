@@ -37,6 +37,30 @@ let datosPendientes  = null; // guarda datos del formulario hasta verificar
 let codigoPendiente  = null; // guarda el código generado
 let codigoExpira     = null; // timestamp de expiración (10 minutos)
 
+const PHONE_COUNTRIES = [
+    { iso: "MX", code: "+52", name: "Mexico", flag: "🇲🇽" },
+    { iso: "US", code: "+1", name: "Estados Unidos", flag: "🇺🇸" },
+    { iso: "CA", code: "+1", name: "Canada", flag: "🇨🇦" },
+    { iso: "AR", code: "+54", name: "Argentina", flag: "🇦🇷" },
+    { iso: "BO", code: "+591", name: "Bolivia", flag: "🇧🇴" },
+    { iso: "BR", code: "+55", name: "Brasil", flag: "🇧🇷" },
+    { iso: "CL", code: "+56", name: "Chile", flag: "🇨🇱" },
+    { iso: "CO", code: "+57", name: "Colombia", flag: "🇨🇴" },
+    { iso: "CR", code: "+506", name: "Costa Rica", flag: "🇨🇷" },
+    { iso: "EC", code: "+593", name: "Ecuador", flag: "🇪🇨" },
+    { iso: "SV", code: "+503", name: "El Salvador", flag: "🇸🇻" },
+    { iso: "ES", code: "+34", name: "España", flag: "🇪🇸" },
+    { iso: "GT", code: "+502", name: "Guatemala", flag: "🇬🇹" },
+    { iso: "HN", code: "+504", name: "Honduras", flag: "🇭🇳" },
+    { iso: "NI", code: "+505", name: "Nicaragua", flag: "🇳🇮" },
+    { iso: "PA", code: "+507", name: "Panama", flag: "🇵🇦" },
+    { iso: "PY", code: "+595", name: "Paraguay", flag: "🇵🇾" },
+    { iso: "PE", code: "+51", name: "Peru", flag: "🇵🇪" },
+    { iso: "DO", code: "+1", name: "Republica Dominicana", flag: "🇩🇴" },
+    { iso: "UY", code: "+598", name: "Uruguay", flag: "🇺🇾" },
+    { iso: "VE", code: "+58", name: "Venezuela", flag: "🇻🇪" }
+];
+
 // ── Carga EmailJS una sola vez ───────────────────────────────
 let _ejsListo = false;
 function cargarEmailJS() {
@@ -123,6 +147,160 @@ async function hashPassword(password) {
     return Array.from(new Uint8Array(hashBuf)).map(b => b.toString(16).padStart(2, "0")).join("");
 }
 
+function getPhoneCountryByIso(iso) {
+    return PHONE_COUNTRIES.find((item) => item.iso === String(iso || "").toUpperCase()) || PHONE_COUNTRIES[0];
+}
+
+function getFlagUrlByIso(iso) {
+    return `https://flagcdn.com/w40/${String(iso || "mx").toLowerCase()}.png`;
+}
+
+function syncRegisterPhoneFlag(iso) {
+    const select = document.getElementById("phoneCountry");
+    if (!select) return;
+    const wrap = select.closest(".phone-country-wrap");
+    const country = getPhoneCountryByIso(iso);
+    const countryName = country.name || country.iso;
+    if (wrap) {
+        wrap.setAttribute("data-code", country.code);
+        wrap.setAttribute("data-flag", country.flag || "🏳️");
+        wrap.setAttribute("data-country", countryName);
+    }
+    select.setAttribute("aria-label", `Pais del telefono: ${countryName}`);
+}
+
+function initCustomPhoneCountryPicker() {
+    const select = document.getElementById("phoneCountry");
+    if (!select || select.dataset.enhancedCountryPicker === "1") return;
+
+    const wrap = select.closest(".phone-country-wrap");
+    if (!wrap) return;
+
+    select.dataset.enhancedCountryPicker = "1";
+    wrap.classList.add("has-custom-country-picker");
+
+    const trigger = document.createElement("button");
+    trigger.type = "button";
+    trigger.className = "country-picker-trigger";
+    trigger.setAttribute("aria-haspopup", "listbox");
+    trigger.setAttribute("aria-expanded", "false");
+
+    const menu = document.createElement("ul");
+    menu.className = "country-picker-menu";
+    menu.setAttribute("role", "listbox");
+    menu.hidden = true;
+
+    PHONE_COUNTRIES.forEach((country) => {
+        const item = document.createElement("li");
+        item.setAttribute("role", "presentation");
+
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "country-picker-option";
+        btn.setAttribute("role", "option");
+        btn.dataset.iso = country.iso;
+
+        const flag = document.createElement("span");
+        flag.className = "country-picker-flag";
+        flag.style.backgroundImage = `url('${getFlagUrlByIso(country.iso)}')`;
+
+        const label = document.createElement("span");
+        label.className = "country-picker-label";
+        label.textContent = `${country.name} (${country.code})`;
+
+        btn.appendChild(flag);
+        btn.appendChild(label);
+        item.appendChild(btn);
+        menu.appendChild(item);
+
+        btn.addEventListener("click", () => {
+            select.value = country.iso;
+            syncRegisterPhoneFlag(country.iso);
+            updateSelected();
+            closeMenu();
+            select.dispatchEvent(new Event("change", { bubbles: true }));
+        });
+    });
+
+    wrap.appendChild(trigger);
+    wrap.appendChild(menu);
+
+    function closeMenu() {
+        menu.hidden = true;
+        trigger.setAttribute("aria-expanded", "false");
+        wrap.classList.remove("is-open");
+    }
+
+    function openMenu() {
+        menu.hidden = false;
+        trigger.setAttribute("aria-expanded", "true");
+        wrap.classList.add("is-open");
+    }
+
+    function updateSelected() {
+        const country = getPhoneCountryByIso(select.value || "MX");
+        trigger.innerHTML = `<span class="country-picker-flag" style="background-image:url('${getFlagUrlByIso(country.iso)}')"></span><span class="country-picker-code">${country.code}</span>`;
+        menu.querySelectorAll(".country-picker-option").forEach((option) => {
+            const selected = option.dataset.iso === country.iso;
+            option.classList.toggle("is-selected", selected);
+            option.setAttribute("aria-selected", selected ? "true" : "false");
+        });
+    }
+
+    trigger.addEventListener("click", () => {
+        if (menu.hidden) {
+            openMenu();
+        } else {
+            closeMenu();
+        }
+    });
+
+    document.addEventListener("click", (event) => {
+        if (!wrap.contains(event.target)) {
+            closeMenu();
+        }
+    });
+
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+            closeMenu();
+        }
+    });
+
+    select.addEventListener("change", () => {
+        syncRegisterPhoneFlag(select.value);
+        updateSelected();
+    });
+
+    syncRegisterPhoneFlag(select.value || "MX");
+    updateSelected();
+}
+
+function formatBirthdateTyping(rawDate) {
+    const digits = String(rawDate || "").replace(/\D/g, "").slice(0, 8);
+    if (!digits) return "";
+    if (digits.length <= 2) return digits;
+    if (digits.length <= 4) return `${digits.slice(0, 2)}/${digits.slice(2)}`;
+    return `${digits.slice(0, 2)}/${digits.slice(2, 4)}/${digits.slice(4)}`;
+}
+
+function normalizeBirthdate(rawDate) {
+    const value = String(rawDate || "").trim();
+    if (!value) return "";
+    const digits = value.replace(/\D/g, "").slice(0, 8);
+    if (digits.length !== 8) return value;
+    return `${digits.slice(0, 2)}/${digits.slice(2, 4)}/${digits.slice(4, 8)}`;
+}
+
+const phoneCountrySelect = document.getElementById("phoneCountry");
+initCustomPhoneCountryPicker();
+syncRegisterPhoneFlag(phoneCountrySelect?.value || "MX");
+
+const birthdateInput = document.getElementById("birthdate");
+birthdateInput?.addEventListener("input", () => {
+    birthdateInput.value = formatBirthdateTyping(birthdateInput.value);
+});
+
 // ── Valida reglas de contraseña ──────────────────────────────
 function validarContrasena(password) {
     const errores = [];
@@ -160,7 +338,15 @@ document.getElementById("registerForm")?.addEventListener("submit", async (e) =>
     const confirmEl       = document.getElementById("confirmPassword");
     const confirm         = confirmEl ? confirmEl.value : password;
     const city            = document.getElementById("city")?.value.trim()     || "";
-    const phone           = document.getElementById("phone")?.value?.trim()   || "";
+    const phoneCountryIso = document.getElementById("phoneCountry")?.value || "MX";
+    const phoneCountry    = getPhoneCountryByIso(phoneCountryIso);
+    const phoneNumber     = document.getElementById("phone")?.value?.trim() || "";
+    const phone           = phoneNumber ? `${phoneCountry.code} ${phoneNumber}` : "";
+    const birthdate       = normalizeBirthdate(document.getElementById("birthdate")?.value || "");
+    const street          = document.getElementById("street")?.value.trim() || "";
+    const colonia         = document.getElementById("colonia")?.value.trim() || "";
+    const state           = document.getElementById("state")?.value.trim() || "";
+    const zip             = document.getElementById("zip")?.value.trim() || "";
     const codigoIngresado = document.getElementById("verificationCode")?.value.trim() || "";
 
     const btn = e.target.querySelector("button[type='submit']");
@@ -169,7 +355,7 @@ document.getElementById("registerForm")?.addEventListener("submit", async (e) =>
     const esNuevoEnvio = !datosPendientes || datosPendientes.email !== email;
     if (esNuevoEnvio) {
 
-        if (!name || !email || !password || !city) {
+        if (!name || !email || !password || !city || !birthdate || !phoneNumber || !street || !colonia || !state || !zip) {
             mostrarError("Por favor completa todos los campos."); return;
         }
 
@@ -187,7 +373,21 @@ document.getElementById("registerForm")?.addEventListener("submit", async (e) =>
         try {
             codigoPendiente  = generarCodigo6();
             codigoExpira     = Date.now() + 10 * 60 * 1000; // 10 minutos
-            datosPendientes  = { name, email, password, city, phone };
+            datosPendientes  = {
+                name,
+                email,
+                password,
+                city,
+                birthdate,
+                phone,
+                phoneNumber,
+                phoneCode: phoneCountry.code,
+                phoneCountry: phoneCountry.iso,
+                street,
+                colonia,
+                state,
+                zip
+            };
 
             await enviarCodigoVerificacion(name, email, codigoPendiente);
 
@@ -239,7 +439,16 @@ document.getElementById("registerForm")?.addEventListener("submit", async (e) =>
             nombre:   datosPendientes.name,
             email:    user.email,
             ciudad:   datosPendientes.city,
+            fecha_cumpleanos: datosPendientes.birthdate,
+            fecha_nacimiento: datosPendientes.birthdate,
             telefono: datosPendientes.phone,
+            telefono_numero: datosPendientes.phoneNumber,
+            telefono_codigo: datosPendientes.phoneCode,
+            telefono_pais: datosPendientes.phoneCountry,
+            calle:    datosPendientes.street,
+            colonia:  datosPendientes.colonia,
+            estado:   datosPendientes.state,
+            cp:       datosPendientes.zip,
             rol:      "cliente",
             codigo_verificacion_registro:   codigoIngresado,
             email_verificado_por_codigo:    true,
@@ -254,6 +463,16 @@ document.getElementById("registerForm")?.addEventListener("submit", async (e) =>
                 nombre: datosPendientes.name,
                 email:  user.email,
                 ciudad: datosPendientes.city,
+                fecha_cumpleanos: datosPendientes.birthdate,
+                fecha_nacimiento: datosPendientes.birthdate,
+                telefono: datosPendientes.phone,
+                telefono_numero: datosPendientes.phoneNumber,
+                telefono_codigo: datosPendientes.phoneCode,
+                telefono_pais: datosPendientes.phoneCountry,
+                calle: datosPendientes.street,
+                colonia: datosPendientes.colonia,
+                estado: datosPendientes.state,
+                cp: datosPendientes.zip,
                 rol:    "cliente",
                 createdAt: ahora
             });

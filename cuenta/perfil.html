@@ -19,20 +19,26 @@
         <div class="profile-shell-bar">
             <a class="profile-brand" href="../index.html">
                 <img class="profile-brand-logo" src="../LOGO DE LA EMPRESA/La-pura-letra-logo.png" alt="Logo Smucky">
-                <span class="profile-brand-text">SMUCKY´s By CHAVAMON</span>
+                <span class="profile-brand-text">SMUCKY's By CHAVAMON</span>
             </a>
-            <h1 id="profilePageTitle" class="profile-page-title">Mi Cuenta</h1>
+            <h1 id="profilePageTitle" class="profile-page-title">Zona personal</h1>
         </div>
     </header>
 
     <main class="profile-main">
         <section class="profile-hero-card">
-            <p class="profile-hero-kicker">Zona personal</p>
+            <p class="profile-hero-kicker">Mi cuenta</p>
             <h2 id="profileGreetingTitle">Bienvenido a tu cuenta</h2>
             <p class="profile-hero-copy">Un espacio limpio para gestionar tu cuenta, tus pedidos y descubrir prendas deportivas con estilo casual.</p>
             <div class="profile-pills">
                 <span id="profileEmailPill">Correo: --</span>
                 <span id="profileCityPill">Ciudad: --</span>
+                <span id="profileBirthdatePill">Cumplea&ntilde;os: --</span>
+                <span id="profilePhonePill">Telefono: --</span>
+                <span id="profileStreetPill">Calle: --</span>
+                <span id="profileColoniaPill">Colonia: --</span>
+                <span id="profileStatePill">Estado: --</span>
+                <span id="profileZipPill">CP: --</span>
                 <span id="profileStatsPill">Favoritos 0 | Carrito 0</span>
             </div>
         </section>
@@ -74,8 +80,51 @@
                         <label for="profileCity">Ciudad</label>
                         <input id="profileCity" type="text" placeholder="Tu ciudad" autocomplete="address-level2">
 
+                        <label for="profileBirthdate">Fecha de cumplea&ntilde;os</label>
+                        <div class="birthday-field-row">
+                            <span class="birthday-icon" aria-hidden="true">&#127874;</span>
+                            <input id="profileBirthdate" type="text" placeholder="Tu fecha de cumplea&ntilde;os (24/11/1999)" autocomplete="bday" inputmode="numeric" maxlength="10">
+                        </div>
+
                         <label for="profilePhone">Telefono</label>
-                        <input id="profilePhone" type="tel" placeholder="Tu telefono" autocomplete="tel">
+                        <div class="phone-field-row">
+                            <div class="phone-country-wrap">
+                                <div class="phone-country-picker">
+                                    <button type="button" id="profilePhoneCountryButton" class="phone-country-trigger" aria-haspopup="listbox" aria-expanded="false" aria-controls="profilePhoneCountryList" aria-label="Seleccionar pais del telefono">
+                                        <span id="profilePhoneFlag" class="phone-country-flag" aria-hidden="true">🇲🇽</span>
+                                        <span id="profilePhoneCodeLabel" class="phone-country-code">+52</span>
+                                        <span class="phone-country-caret" aria-hidden="true">▾</span>
+                                    </button>
+                                    <div id="profilePhoneCountryMenu" class="phone-country-menu" hidden>
+                                        <div id="profilePhoneCountryList" class="phone-country-list" role="listbox" aria-label="Lista de paises telefonicos"></div>
+                                    </div>
+                                </div>
+                                <select id="profilePhoneCountry" class="phone-country-select" aria-label="Pais del telefono" autocomplete="country-name" tabindex="-1">
+                                    <option value="MX" data-code="+52">+52</option>
+                                    <option value="US" data-code="+1">+1</option>
+                                    <option value="CA" data-code="+1">+1</option>
+                                    <option value="AR" data-code="+54">+54</option>
+                                    <option value="BO" data-code="+591">+591</option>
+                                    <option value="BR" data-code="+55">+55</option>
+                                    <option value="CL" data-code="+56">+56</option>
+                                    <option value="CO" data-code="+57">+57</option>
+                                    <option value="CR" data-code="+506">+506</option>
+                                    <option value="EC" data-code="+593">+593</option>
+                                    <option value="SV" data-code="+503">+503</option>
+                                    <option value="ES" data-code="+34">+34</option>
+                                    <option value="GT" data-code="+502">+502</option>
+                                    <option value="HN" data-code="+504">+504</option>
+                                    <option value="NI" data-code="+505">+505</option>
+                                    <option value="PA" data-code="+507">+507</option>
+                                    <option value="PY" data-code="+595">+595</option>
+                                    <option value="PE" data-code="+51">+51</option>
+                                    <option value="DO" data-code="+1">+1</option>
+                                    <option value="UY" data-code="+598">+598</option>
+                                    <option value="VE" data-code="+58">+58</option>
+                                </select>
+                            </div>
+                            <input id="profilePhone" type="tel" placeholder="Numero de telefono" autocomplete="tel-national">
+                        </div>
 
                         <label for="profileStreet">Calle y numero</label>
                         <input id="profileStreet" type="text" placeholder="Calle y numero" autocomplete="address-line1">
@@ -116,8 +165,8 @@
 
     <div id="profileConfirmModal" class="profile-confirm-modal" hidden aria-hidden="true">
         <div class="profile-confirm-card" role="dialog" aria-modal="true" aria-labelledby="profileConfirmTitle" aria-describedby="profileConfirmMessage">
-            <p id="profileConfirmKicker" class="profile-confirm-kicker">Confirmacion de perfil</p>
-            <h3 id="profileConfirmTitle">Confirmar accion</h3>
+            <p id="profileConfirmKicker" class="profile-confirm-kicker">Confirmaci&oacute;n de perfil</p>
+            <h3 id="profileConfirmTitle">Confirmar acci&oacute;n</h3>
             <p id="profileConfirmMessage">Deseas continuar?</p>
             <div id="profileConfirmInputWrap" class="profile-confirm-input-wrap" hidden>
                 <label for="profileConfirmInput">Escriba "Eliminar" para eliminar su cuenta</label>
@@ -133,11 +182,12 @@
 
     <div id="profileSavedModal" class="profile-saved-modal" hidden aria-hidden="true">
         <div class="profile-saved-card" role="dialog" aria-modal="true" aria-labelledby="profileSavedTitle" aria-describedby="profileSavedMessage">
-            <p class="profile-saved-kicker">SMUCKY´s By CHAVAMON</p>
+            <p class="profile-saved-kicker">SMUCKY's By CHAVAMON</p>
             <h3 id="profileSavedTitle">Perfil actualizado</h3>
             <p id="profileSavedMessage">Perfil actualizado correctamente.</p>
             <div class="profile-saved-actions">
                 <button type="button" id="profileSavedAccept" class="profile-saved-accept">Aceptar</button>
+                <button type="button" id="profileSavedCancel" class="profile-saved-cancel" hidden>Cancelar</button>
             </div>
         </div>
     </div>
@@ -158,7 +208,7 @@
                     </ul>
                 </div>
                 <div>
-                    <h4>SMUCKY´s By CHAVAMON</h4>
+                    <h4>SMUCKY's By CHAVAMON</h4>
                     <ul>
                         <li><a href="../informacion/sobre-mi.html">Sobre Nosotros</a></li>
                         <li><a href="#contacto">Contacto</a></li>
@@ -180,13 +230,13 @@
                         </p>
                     </div>
                     <div class="footer-logo-card">
-                        <img src="../LOGO DE LA EMPRESA/LOGO.jpeg" alt="Logo SMUCKY´s By CHAVAMON">
+                        <img src="../LOGO DE LA EMPRESA/LOGO.jpeg" alt="Logo SMUCKY's By CHAVAMON">
                     </div>
                 </div>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 SMUCKY´s By CHAVAMON. Todos los derechos reservados.</p>
+            <p>&copy; 2026 SMUCKY's By CHAVAMON. Todos los derechos reservados.</p>
         </div>
     </footer>
     <script src="../servicios/auth.js"></script>

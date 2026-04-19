@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Opciones de Regalo</title>
+    <link rel="stylesheet" href="../checkout.css">
+    <style>
+        .regalo-modal {
+            max-width: 400px;
+            margin: 40px auto;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0,0,0,.18);
+            padding: 32px 24px;
+            font-family: 'Inter', sans-serif;
+        }
+        .regalo-modal h2 {
+            font-size: 1.4rem;
+            margin-bottom: 18px;
+        }
+        .regalo-list {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 24px;
+        }
+        .regalo-list li {
+            margin-bottom: 12px;
+        }
+        .regalo-list label {
+            cursor: pointer;
+        }
+        .regalo-acciones {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+        .regalo-btn {
+            padding: 8px 18px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        .regalo-btn.aceptar { background: #16a34a; color: #fff; }
+        .regalo-btn.cancelar { background: #e5e7eb; color: #222; }
+    </style>
+</head>
+<body>
+    <div class="regalo-modal">
+        <h2>Selecciona una opción de regalo</h2>
+        <form id="formRegalo">
+            <ul class="regalo-list">
+                <li><label><input type="radio" name="opcionRegalo" value="Envoltura especial"> Envoltura especial</label></li>
+                <li><label><input type="radio" name="opcionRegalo" value="Tarjeta dedicatoria"> Tarjeta dedicatoria</label></li>
+                <li><label><input type="radio" name="opcionRegalo" value="Sin regalo" checked> Sin regalo</label></li>
+            </ul>
+            <div class="regalo-acciones">
+                <button type="button" class="regalo-btn cancelar" onclick="window.close()">Cancelar</button>
+                <button type="submit" class="regalo-btn aceptar">Aceptar</button>
+            </div>
+        </form>
+    </div>
+    <script>
+        document.getElementById('formRegalo').onsubmit = function(e) {
+            e.preventDefault();
+            const opcion = document.querySelector('input[name=opcionRegalo]:checked').value;
+            localStorage.setItem('opcionRegalo', opcion);
+            window.location.href = '../checkout.html?regalo=1';
+        };
+    </script>
+</body>
+</html>

@@ -1,68 +1,84 @@
-<!-- ES: Comentarios base para mantenimiento. EN: Baseline comments for maintenance. -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Iniciar sesión | SMUCKY'S BY CHAVAMON</title>
     <link rel="icon" type="image/png" sizes="32x32" href="../LOGO DE LA EMPRESA/La-pura-letra-logo.png">
     <link rel="shortcut icon" href="../LOGO DE LA EMPRESA/La-pura-letra-logo.png">
     <link rel="apple-touch-icon" href="../LOGO DE LA EMPRESA/La-pura-letra-logo.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="login.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="auth.css">
 </head>
-<body class="auth-login-page">
-    <header class="topbar">
-        <nav class="topbar-links topbar-help">
-            <a href="../index.html">Inicio</a>
-            <a href="../ayuda/centro-ayuda.html">Ayuda</a>
-        </nav>
-    </header>
+<body>
+    <main class="auth-page">
+        <div class="bg-light bg-light-1"></div>
+        <div class="bg-light bg-light-2"></div>
+        <div class="bg-light bg-light-3"></div>
 
-    <main class="page">
-        <section class="hero auth-hero">
-            <img class="auth-hero-logo" src="../LOGO DE LA EMPRESA/LOGO.jpeg" alt="Logo principal Smucky">
-            <h2 class="auth-hero-brand">SMUCKY´s By CHAVAMON</h2>
-            <h1>Iniciar sesion</h1>
-        </section>
+        <section class="auth-card auth-card-login">
+            <div class="brand-area">
+                <img src="../LOGO DE LA EMPRESA/La-pura-letra-logo.png" alt="Logo SMUCKY'S BY CHAVAMON" class="brand-logo">
+                <p class="brand-name">SMUCKY'S BY CHAVAMON</p>
+            </div>
 
-        <section class="form-wrap">
-            <form id="loginForm">
-                <label for="email">Correo electronico</label>
-                <input id="email" type="email" placeholder="tu@email.com" autocomplete="email" required>
+            <div class="title-area">
+                <h1>Iniciar sesión</h1>
+                <p>Accede a tu cuenta para continuar con tu experiencia.</p>
+            </div>
 
-                <label for="password">Contrasena</label>
-                <div class="password-input-wrap">
-                    <input id="password" type="password" placeholder="********" autocomplete="current-password" required>
-                    <button type="button" class="password-toggle" data-target="password" aria-label="Mostrar contrasena"></button>
+            <form id="loginForm" class="auth-form">
+                <div class="input-group">
+                    <label for="email">Correo electronico</label>
+                    <input id="email" type="email" name="email" placeholder="Correo electrónico" autocomplete="email" required>
                 </div>
 
-                <button type="submit">Entrar</button>
-                <button type="button" id="toggleRecovery" class="secondary-action">Recuperar cuenta</button>
+                <div class="input-group">
+                    <label for="password">Contrasena</label>
+                    <div class="password-input-wrap">
+                        <input id="password" type="password" name="password" placeholder="Contraseña" autocomplete="current-password" required>
+                        <button type="button" class="password-toggle" data-target="password" aria-label="Mostrar contrasena"></button>
+                    </div>
+                </div>
+
+                <div class="options-row">
+                    <label class="checkbox-wrap">
+                        <input type="checkbox">
+                        <span>Recordarme</span>
+                    </label>
+                </div>
+
+                <button type="submit" class="main-btn">Entrar</button>
+                <button type="button" id="toggleRecovery" class="secondary-action recovery-toggle-btn">Recuperar cuenta</button>
 
                 <div id="recoveryPanel" class="recovery-panel" hidden>
                     <h3>Recuperacion de cuenta</h3>
                     <p id="recoveryNotice" class="recovery-message" aria-live="polite"></p>
 
-                    <label for="recoveryEmail">Correo de tu cuenta</label>
-                    <input id="recoveryEmail" type="email" placeholder="tu@email.com">
+                    <div class="input-group">
+                        <label for="recoveryEmail">Correo de tu cuenta</label>
+                        <input id="recoveryEmail" type="email" placeholder="tu@email.com" autocomplete="email">
+                    </div>
 
-                    <button type="button" id="sendRecoveryCode">Enviar codigo</button>
+                    <button type="button" id="sendRecoveryCode" class="secondary-action">Enviar codigo</button>
 
                     <div id="recoveryVerifyWrap" hidden>
-                        <label for="recoveryCode">Codigo recibido</label>
-                        <input id="recoveryCode" type="text" inputmode="numeric" maxlength="6" placeholder="Ingresa el codigo de 6 digitos">
-                        <button type="button" id="verifyRecoveryCode">Validar y enviar enlace</button>
+                        <div class="input-group">
+                            <label for="recoveryCode">Codigo recibido</label>
+                            <input id="recoveryCode" type="text" inputmode="numeric" maxlength="6" placeholder="Ingresa el codigo de 6 digitos">
+                        </div>
+                        <button type="button" id="verifyRecoveryCode" class="secondary-action">Validar y enviar enlace</button>
                     </div>
                 </div>
 
-                <p class="register-inline">No tienes cuenta? <a href="registro.html">Registrate aqui</a></p>
+                <p class="bottom-text">No tienes cuenta? <a href="register.html" class="auth-link strong-link">Crear cuenta</a></p>
                 <p class="note">Demo local: este formulario muestra mensaje de exito sin conectarse a base de datos.</p>
             </form>
         </section>
     </main>
+
     <script src="../servicios/auth.js"></script>
     <script type="module" src="../scripts/pages/login.js"></script>
     <script src="../scripts/pages/menu-global.js"></script>
