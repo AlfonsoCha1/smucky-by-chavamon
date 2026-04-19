@@ -1,4 +1,4 @@
-﻿/* ES: Comentarios base para mantenimiento. EN: Baseline comments for maintenance. */
+/* ES: Comentarios base para mantenimiento. EN: Baseline comments for maintenance. */
 // ============================================================
 //  scripts/pages/checkout.js
 //  Lógica de la página de finalizar compra estilo Amazon.
@@ -183,7 +183,7 @@ function renderCheckoutItems() {
                         <p class="co-prod-name">${item.name}</p>
                         <p class="co-prod-price">$${Number(item.price).toFixed(2)}</p>
                         <p class="co-prod-shipping">Envío: <strong class="co-free">GRATIS</strong></p>
-                        <p class="co-prod-seller">Vendido por <strong>Smucky's BY CHAVARIN</strong></p>
+                        <p class="co-prod-seller">Vendido por <strong>SMUCKY´s By CHAVAMON</strong></p>
                     </div>
                 </div>
                 <div class="co-qty-row">

@@ -38,10 +38,19 @@ const profileConfirmInput = document.getElementById("profileConfirmInput");
 const profileConfirmInputHint = document.getElementById("profileConfirmInputHint");
 const profileConfirmAccept = document.getElementById("profileConfirmAccept");
 const profileConfirmCancel = document.getElementById("profileConfirmCancel");
+const profileSavedModal = document.getElementById("profileSavedModal");
+const profileSavedTitle = document.getElementById("profileSavedTitle");
+const profileSavedMessage = document.getElementById("profileSavedMessage");
+const profileSavedAccept = document.getElementById("profileSavedAccept");
 
 if (profileConfirmModal) {
     profileConfirmModal.hidden = true;
     profileConfirmModal.setAttribute("aria-hidden", "true");
+}
+
+if (profileSavedModal) {
+    profileSavedModal.hidden = true;
+    profileSavedModal.setAttribute("aria-hidden", "true");
 }
 
 const firebaseConfig = {
@@ -314,7 +323,7 @@ async function signOutFirebaseSession() {
             await window.firebase.auth().signOut();
             return;
         } catch (error) {
-            console.warn("Error al cerrar sesiÃ³n con Firebase compat:", error);
+            console.warn("Error al cerrar sesión con Firebase compat:", error);
         }
     }
 
@@ -325,7 +334,7 @@ async function signOutFirebaseSession() {
         ]);
         await signOut(auth);
     } catch (error) {
-        console.warn("Error al cerrar sesiÃ³n con Firebase modular:", error);
+        console.warn("Error al cerrar sesión con Firebase modular:", error);
     }
 }
 
@@ -364,8 +373,8 @@ function showProfileConfirmDialog({
     const profileName = normalizeProfileName(currentUser?.nombre || currentUser?.name || "");
     if (profileConfirmKicker) {
         profileConfirmKicker.textContent = profileName && profileName !== "Cliente"
-            ? `ConfirmaciÃ³n de ${profileName}`
-            : "ConfirmaciÃ³n de perfil";
+            ? `Confirmacion de ${profileName}`
+            : "Confirmacion de perfil";
     }
 
     profileConfirmTitle.textContent = title;
@@ -454,6 +463,48 @@ function showProfileConfirmDialog({
     });
 }
 
+function showProfileSavedDialog({
+    title,
+    message,
+    buttonText = "Aceptar"
+}) {
+    if (!profileSavedModal || !profileSavedAccept || !profileSavedTitle || !profileSavedMessage) {
+        alert(message || "Perfil actualizado correctamente.");
+        return Promise.resolve();
+    }
+
+    profileSavedTitle.textContent = title || "Perfil actualizado";
+    profileSavedMessage.textContent = message || "Perfil actualizado correctamente.";
+    profileSavedAccept.textContent = buttonText;
+
+    profileSavedModal.hidden = false;
+    profileSavedModal.setAttribute("aria-hidden", "false");
+
+    return new Promise((resolve) => {
+        const closeModal = () => {
+            profileSavedAccept.removeEventListener("click", onAccept);
+            profileSavedModal.removeEventListener("click", onBackdrop);
+            document.removeEventListener("keydown", onEscape);
+            profileSavedModal.hidden = true;
+            profileSavedModal.setAttribute("aria-hidden", "true");
+            resolve();
+        };
+
+        const onAccept = () => closeModal();
+        const onBackdrop = (event) => {
+            if (event.target === profileSavedModal) closeModal();
+        };
+        const onEscape = (event) => {
+            if (event.key === "Escape") closeModal();
+        };
+
+        profileSavedAccept.addEventListener("click", onAccept);
+        profileSavedModal.addEventListener("click", onBackdrop);
+        document.addEventListener("keydown", onEscape);
+        profileSavedAccept.focus();
+    });
+}
+
 form?.addEventListener("submit", (event) => {
     event.preventDefault();
 
@@ -474,8 +525,12 @@ form?.addEventListener("submit", (event) => {
         });
     }
 
-    alert("Perfil actualizado correctamente.");
     hydrateProfile(window.SmuckyAuth?.getCurrentUser?.() || {});
+    showProfileSavedDialog({
+        title: "Perfil actualizado",
+        message: "Perfil actualizado correctamente.",
+        buttonText: "Aceptar"
+    });
 });
 
 deleteAccountBtn?.addEventListener("click", async () => {
@@ -491,7 +546,7 @@ deleteAccountBtn?.addEventListener("click", async () => {
     }
 
     const confirmedByText = await showProfileConfirmDialog({
-        title: "ConfirmaciÃ³n final",
+        title: "Confirmacion final",
         message: "Escriba \"Eliminar\" para eliminar su cuenta.",
         acceptText: "Eliminar",
         cancelText: "Cancelar",
@@ -531,7 +586,7 @@ logoutBtn?.addEventListener("click", async () => {
     await signOutFirebaseSession();
     clearSmuckyData();
 
-    alert("SesiÃ³n cerrada correctamente.");
+    alert("Sesión cerrada correctamente.");
     window.location.href = "../index.html";
 });
 

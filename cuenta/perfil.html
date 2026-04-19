@@ -12,14 +12,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="perfil.css">
-\ \ \ \ <link\ rel="stylesheet"\ href="\.\./secciones/footer-global\.css">\r\n    <link rel="stylesheet" href="../secciones/footer-global.css">
+    <link rel="stylesheet" href="../secciones/footer-global.css">
 </head>
 <body class="profile-page">
     <header class="profile-header">
         <div class="profile-shell-bar">
             <a class="profile-brand" href="../index.html">
                 <img class="profile-brand-logo" src="../LOGO DE LA EMPRESA/La-pura-letra-logo.png" alt="Logo Smucky">
-                <span class="profile-brand-text">SMUCKY'S BY CHAVARIN</span>
+                <span class="profile-brand-text">SMUCKY´s By CHAVAMON</span>
             </a>
             <h1 id="profilePageTitle" class="profile-page-title">Mi Cuenta</h1>
         </div>
@@ -92,7 +92,7 @@
                         <button type="submit">Guardar cambios</button>
                         <div class="register-inline profile-actions" role="group" aria-label="Acciones de cuenta">
                             <button type="button" id="deleteAccountBtn" class="profile-danger-action">Eliminar cuenta</button>
-                            <button type="button" id="logoutBtn" class="profile-muted-action">Cerrar sesi�n</button>
+                            <button type="button" id="logoutBtn" class="profile-muted-action">Cerrar sesión</button>
                         </div>
                     </form>
                 </section>
@@ -116,9 +116,9 @@
 
     <div id="profileConfirmModal" class="profile-confirm-modal" hidden aria-hidden="true">
         <div class="profile-confirm-card" role="dialog" aria-modal="true" aria-labelledby="profileConfirmTitle" aria-describedby="profileConfirmMessage">
-            <p id="profileConfirmKicker" class="profile-confirm-kicker">Confirmaci�n de perfil</p>
-            <h3 id="profileConfirmTitle">Confirmar acci�n</h3>
-            <p id="profileConfirmMessage">�Deseas continuar?</p>
+            <p id="profileConfirmKicker" class="profile-confirm-kicker">Confirmacion de perfil</p>
+            <h3 id="profileConfirmTitle">Confirmar accion</h3>
+            <p id="profileConfirmMessage">Deseas continuar?</p>
             <div id="profileConfirmInputWrap" class="profile-confirm-input-wrap" hidden>
                 <label for="profileConfirmInput">Escriba "Eliminar" para eliminar su cuenta</label>
                 <input id="profileConfirmInput" type="text" autocomplete="off" placeholder="Eliminar">
@@ -127,6 +127,17 @@
             <div class="profile-confirm-actions">
                 <button type="button" id="profileConfirmAccept" class="profile-confirm-accept">Aceptar</button>
                 <button type="button" id="profileConfirmCancel" class="profile-confirm-cancel">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="profileSavedModal" class="profile-saved-modal" hidden aria-hidden="true">
+        <div class="profile-saved-card" role="dialog" aria-modal="true" aria-labelledby="profileSavedTitle" aria-describedby="profileSavedMessage">
+            <p class="profile-saved-kicker">SMUCKY´s By CHAVAMON</p>
+            <h3 id="profileSavedTitle">Perfil actualizado</h3>
+            <p id="profileSavedMessage">Perfil actualizado correctamente.</p>
+            <div class="profile-saved-actions">
+                <button type="button" id="profileSavedAccept" class="profile-saved-accept">Aceptar</button>
             </div>
         </div>
     </div>
@@ -147,7 +158,7 @@
                     </ul>
                 </div>
                 <div>
-                    <h4>SMUCKY'S BY CHAVARIN</h4>
+                    <h4>SMUCKY´s By CHAVAMON</h4>
                     <ul>
                         <li><a href="../informacion/sobre-mi.html">Sobre Nosotros</a></li>
                         <li><a href="#contacto">Contacto</a></li>
@@ -155,7 +166,7 @@
                 </div>
             </div>
             <div class="footer-section">
-                <h4>S�guenos</h4>
+                <h4>Siguenos</h4>
                 <div class="social-and-logo">
                     <div class="social-links">
                         <a class="social-facebook" href="https://www.facebook.com/profile.php?id=61584479614840" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-brand-facebook"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3" /></svg> Facebook</a>
@@ -169,13 +180,13 @@
                         </p>
                     </div>
                     <div class="footer-logo-card">
-                        <img src="../LOGO DE LA EMPRESA/LOGO.jpeg" alt="Logo SMUCKY'S BY CHAVARIN">
+                        <img src="../LOGO DE LA EMPRESA/LOGO.jpeg" alt="Logo SMUCKY´s By CHAVAMON">
                     </div>
                 </div>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 SMUCKY'S BY CHAVARIN. Todos los derechos reservados.</p>
+            <p>&copy; 2026 SMUCKY´s By CHAVAMON. Todos los derechos reservados.</p>
         </div>
     </footer>
     <script src="../servicios/auth.js"></script>

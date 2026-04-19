@@ -1,4 +1,4 @@
-﻿/* ES: Comentarios base para mantenimiento. EN: Baseline comments for maintenance. */
+/* ES: Comentarios base para mantenimiento. EN: Baseline comments for maintenance. */
 // ====== DATOS DE PRODUCTOS ======
 const products = [
     // PLAYERAS PREMIUM HOMBRE
@@ -1823,7 +1823,7 @@ if (profileLogoutBtn) {
         window.SmuckyAuth.clearUser();
         syncProfileMenu();
         profileMenu.classList.remove("active");
-        alert("Sesion cerrada correctamente.");
+        alert("Sesión cerrada correctamente.");
     });
 }
 

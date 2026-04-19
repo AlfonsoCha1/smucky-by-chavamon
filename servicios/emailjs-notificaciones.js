@@ -1,6 +1,6 @@
-﻿/* ES: Comentarios base para mantenimiento. EN: Baseline comments for maintenance. */
+/* ES: Comentarios base para mantenimiento. EN: Baseline comments for maintenance. */
 // ============================================================
-//  servicios/emailjs-notificaciones.js  — SMUCKY'S BY CHAVAMON
+//  servicios/emailjs-notificaciones.js  — SMUCKY´s By CHAVAMON
 //
 //  PLANTILLAS EMAILJS (Hotmail — solo para compras):
 //    template_wpjwmxb  → confirmación de compra al CLIENTE
@@ -107,7 +107,7 @@ async function enviarNotificacionVendedor({ nombreCliente, emailCliente, product
         // Arma el mensaje con todos los detalles de la venta
         const mensaje =
             `━━━━━━━━━━━━━━━━━━━━━━━━\n` +
-            `🛍 NUEVA VENTA — SMUCKY'S BY CHAVAMON\n` +
+            `🛍 NUEVA VENTA — SMUCKY´s By CHAVAMON\n` +
             `━━━━━━━━━━━━━━━━━━━━━━━━\n\n` +
             `CLIENTE\n` +
             `  Nombre:   ${nombreCliente}\n` +

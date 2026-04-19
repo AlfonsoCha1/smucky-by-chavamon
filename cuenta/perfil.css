@@ -570,6 +570,85 @@ input {
     filter: brightness(1.08);
 }
 
+.profile-saved-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 170;
+    display: grid;
+    place-items: center;
+    background: rgba(2, 6, 23, 0.58);
+    backdrop-filter: blur(5px);
+    padding: 16px;
+}
+
+.profile-saved-modal[hidden] {
+    display: none !important;
+}
+
+.profile-saved-card {
+    width: min(470px, 95vw);
+    border-radius: 18px;
+    border: 1px solid rgba(148, 163, 184, 0.34);
+    padding: 20px;
+    color: #e5e7eb;
+    background:
+        radial-gradient(circle at 0% 0%, rgba(34, 197, 94, 0.16) 0, transparent 42%),
+        radial-gradient(circle at 100% 0%, rgba(245, 158, 11, 0.12) 0, transparent 36%),
+        linear-gradient(145deg, #0b1220 0%, #132238 58%, #16354a 100%);
+    box-shadow: 0 22px 44px rgba(2, 6, 23, 0.5);
+}
+
+.profile-saved-kicker {
+    display: inline-block;
+    border-radius: 999px;
+    padding: 6px 12px;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    color: #dbeafe;
+    border: 1px solid rgba(148, 163, 184, 0.46);
+    background: rgba(15, 23, 42, 0.44);
+}
+
+.profile-saved-card h3 {
+    margin-top: 10px;
+    font-family: "Archivo", "Segoe UI", sans-serif;
+    font-size: 1.42rem;
+    color: #f8fafc;
+}
+
+.profile-saved-card p {
+    margin-top: 8px;
+    line-height: 1.5;
+    color: #cbd5e1;
+}
+
+.profile-saved-actions {
+    margin-top: 16px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.profile-saved-accept {
+    border: 1px solid rgba(253, 224, 71, 0.5);
+    border-radius: 999px;
+    padding: 10px 22px;
+    font: inherit;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    color: #f8fafc;
+    background: linear-gradient(135deg, #0f766e 0%, #0e9f6e 100%);
+    box-shadow: 0 10px 20px rgba(2, 6, 23, 0.38);
+    cursor: pointer;
+    transition: transform 0.16s ease, filter 0.16s ease, box-shadow 0.16s ease;
+}
+
+.profile-saved-accept:hover {
+    filter: brightness(1.05);
+    transform: translateY(-1px);
+}
+
 @media (max-width: 1200px) {
     .profile-module-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));

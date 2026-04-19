@@ -1,6 +1,6 @@
-﻿/* ES: Comentarios base para mantenimiento. EN: Baseline comments for maintenance. */
+/* ES: Comentarios base para mantenimiento. EN: Baseline comments for maintenance. */
 // ============================================================
-//  servicios/correo-codigo.js  — SMUCKY'S BY CHAVAMON
+//  servicios/correo-codigo.js  — SMUCKY´s By CHAVAMON
 //  Envía códigos de verificación y recuperación via EmailJS (Gmail)
 //  Cuenta Gmail separada de Hotmail (compras)
 // ============================================================

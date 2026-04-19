@@ -2,7 +2,7 @@
 # EN: Baseline comments for maintenance.
 """
 backend/main.py
-Punto de entrada de la aplicación FastAPI.
+Punto de entrada de la aplicaciÃ³n FastAPI.
 Ejecutar con:  uvicorn main:app --reload --port 8000
 """
 from fastapi import FastAPI
@@ -12,8 +12,8 @@ from config import ALLOWED_ORIGINS
 from routes.auth import router as auth_router
 
 app = FastAPI(
-    title="SMUCKY'S BY CHAVARIN — Auth API",
-    description="Backend independiente para registro y recuperación de contraseña.",
+    title="SMUCKY´s By CHAVAMON â€” Auth API",
+    description="Backend independiente para registro y recuperaciÃ³n de contraseÃ±a.",
     version="1.0.0",
 )
 

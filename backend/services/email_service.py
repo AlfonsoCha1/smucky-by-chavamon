@@ -1,4 +1,4 @@
-﻿# ES: Comentarios base para mantenimiento.
+# ES: Comentarios base para mantenimiento.
 # EN: Baseline comments for maintenance.
 """
 backend/services/email_service.py
@@ -24,7 +24,7 @@ _jinja_env = Environment(
 )
 
 
-SENDER_EMAIL = "SMUCKY'S BY CHAVAMON <smuckys.chavamon@gmail.com>"
+SENDER_EMAIL = "SMUCKY´s By CHAVAMON <smuckys.chavamon@gmail.com>"
 logger = logging.getLogger(__name__)
 
 
@@ -73,8 +73,8 @@ def send_verification_email(email: str, nombre: str, tipo: str) -> None:
     )
 
     subject_map = {
-        "registro": "✅ Tu código de registro — SMUCKY'S BY CHAVARIN",
-        "recuperacion": "🔑 Recuperación de contraseña — SMUCKY'S BY CHAVARIN",
+        "registro": "✅ Tu código de registro — SMUCKY´s By CHAVAMON",
+        "recuperacion": "🔑 Recuperación de contraseña — SMUCKY´s By CHAVAMON",
     }
 
     msg = MIMEMultipart("alternative")

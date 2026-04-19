@@ -1,6 +1,6 @@
-﻿/* ES: Comentarios base para mantenimiento. EN: Baseline comments for maintenance. */
+/* ES: Comentarios base para mantenimiento. EN: Baseline comments for maintenance. */
 // ============================================================
-//  scripts/pages/registro.js  — SMUCKY'S BY CHAVAMON
+//  scripts/pages/registro.js  — SMUCKY´s By CHAVAMON
 //
 //  ✅ Validación de contraseña (8 car., 1 mayús., 2 núm., 1 símbolo)
 //  ✅ Código de verificación enviado por EmailJS (Gmail) — SIN backend
