@@ -15,6 +15,11 @@ const form = document.getElementById("profileForm");
 const nameInput = document.getElementById("profileName");
 const emailInput = document.getElementById("profileEmail");
 const cityInput = document.getElementById("profileCity");
+const phoneInput = document.getElementById("profilePhone");
+const streetInput = document.getElementById("profileStreet");
+const coloniaInput = document.getElementById("profileColonia");
+const stateInput = document.getElementById("profileState");
+const zipInput = document.getElementById("profileZip");
 const deleteAccountBtn = document.getElementById("deleteAccountBtn");
 const logoutBtn = document.getElementById("logoutBtn");
 const profilePageTitle = document.getElementById("profilePageTitle");
@@ -126,10 +131,7 @@ function buyNow(rawProduct) {
 function normalizeProfileName(rawName) {
     const cleaned = String(rawName || "").trim().replace(/\s+/g, " ");
     if (!cleaned) return "Cliente";
-
-    return cleaned
-        .replace(/\bjose\b/gi, (match) => (match === match.toUpperCase() ? "JOSÃ‰" : "JosÃ©"))
-        .replace(/\bchavamon\b/gi, (match) => (match === match.toUpperCase() ? "CHAVAMON" : "Chavamon"));
+    return cleaned; // devuelve el nombre tal cual, sin modificar nada
 }
 
 // ES: Llena los campos del perfil con datos del usuario autenticado. Muestra como
@@ -148,6 +150,11 @@ function hydrateProfile(user) {
     if (nameInput) nameInput.value = nombre;
     if (emailInput) emailInput.value = email;
     if (cityInput) cityInput.value = user.ciudad || user.city || "";
+    if (phoneInput) phoneInput.value = user.telefono || "";
+    if (streetInput) streetInput.value = user.calle || "";
+    if (coloniaInput) coloniaInput.value = user.colonia || "";
+    if (stateInput) stateInput.value = user.estado || "";
+    if (zipInput) zipInput.value = user.cp || "";
 
     if (profilePageTitle) profilePageTitle.textContent = `Mi Cuenta ${nombre}`;
     if (profileGreetingTitle) profileGreetingTitle.textContent = `${nombre}, este es tu espacio personal`;
@@ -453,12 +460,16 @@ form?.addEventListener("submit", (event) => {
     const current = window.SmuckyAuth ? window.SmuckyAuth.getCurrentUser() || {} : {};
 
     if (window.SmuckyAuth) {
-        const normalizedName = normalizeProfileName(nameInput ? nameInput.value : "");
         window.SmuckyAuth.saveUser({
             ...current,
-            nombre: normalizedName,
+            nombre: normalizeProfileName(nameInput ? nameInput.value : ""),
             email: emailInput ? emailInput.value.trim() : "",
             ciudad: cityInput ? cityInput.value.trim() : "",
+            telefono: phoneInput ? phoneInput.value.trim() : "",
+            calle: streetInput ? streetInput.value.trim() : "",
+            colonia: coloniaInput ? coloniaInput.value.trim() : "",
+            estado: stateInput ? stateInput.value.trim() : "",
+            cp: zipInput ? zipInput.value.trim() : "",
             updatedAt: new Date().toISOString()
         });
     }
