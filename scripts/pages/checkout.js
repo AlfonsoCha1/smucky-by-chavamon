@@ -165,10 +165,8 @@ function renderCheckoutItems() {
 
     if (!checkoutItems.length) {
         coItemsSection.innerHTML = `
-            <div class="co-empty-order" style="text-align:center;">
-                <div style="font-size:2.5rem; margin-bottom:0.5rem;">🛒</div>
-                <strong>Tu carrito está vacío</strong>
-                <div style="color:#888; font-size:1rem;">Agrega productos para verlos aquí.</div>
+            <div class="co-empty-order">
+                <p>No hay productos en este pedido.</p>
             </div>
         `;
         updateTotals();
@@ -195,7 +193,7 @@ function renderCheckoutItems() {
                         </svg>
                     </button>
                     <div class="co-qty-controls">
-                        <button class="co-qty-btn co-item-minus" data-index="${index}" ${item.qty <= 1 ? "disabled" : ""} aria-label="Menos">&minus;</button>
+                        <button class="co-qty-btn co-item-minus" data-index="${index}" ${item.qty <= 1 ? "disabled" : ""} aria-label="Menos">−</button>
                         <span class="co-qty-num">${item.qty}</span>
                         <button class="co-qty-btn co-item-plus" data-index="${index}" ${item.qty >= (item.stock || 99) ? "disabled" : ""} aria-label="Más">+</button>
                     </div>
