@@ -94,7 +94,7 @@ async function confirmarPedidoTrasStripe() {
     }
 
     if (typeof window.realizarPedido !== "function") {
-        console.error("Firebase no cargÃ³ a tiempo para confirmar el pedido.");
+        console.error("Firebase no cargó a tiempo para confirmar el pedido.");
         return;
     }
 
@@ -136,7 +136,7 @@ async function iniciarPagoCarrito(cartItems) {
     for (const item of cartItems) {
         const priceId = STRIPE_PRICE_IDS[String(item.id)];
         if (!priceId) {
-            alert(`El producto "${item.name}" no estÃ¡ listo para pago en lÃ­nea.\nContacta a soporte.`);
+            alert(`El producto "${item.name}" no está listo para pago en línea.\nContacta a soporte.`);
             return false;
         }
         lineItems.push({ price: priceId, quantity: item.qty });

@@ -275,9 +275,9 @@ const heroFallbackImage = "Imagenes de ropa/Ropa de Hombre/Playera Premium/Playe
 const navLinks = document.querySelectorAll(".nav-link");
 const dropdownLinks = document.querySelectorAll(".dropdown-link");
 
-// ====== NAVEGACIÃ“N PRINCIPAL ======
+// ====== NAVEGACIÓN PRINCIPAL ======
 // ES: Maneja clicks en nav-links principales (Hombre/Mujer) para hacer scroll
-//     suave a sus secciones correspondientes en la pÃ¡gina.
+//     suave a sus secciones correspondientes en la página.
 // EN: Handles clicks on main nav-links (Men/Women) to smoothly scroll
 //     to their corresponding sections on the page.
 navLinks.forEach(link => {
@@ -313,7 +313,7 @@ function applyPriceAdjustment(basePrice) {
     return numericPrice + PRICE_INCREMENT;
 }
 
-// ES: Variables globales de estado de la aplicaciÃ³n.
+// ES: Variables globales de estado de la aplicación.
 // EN: Global application state variables.
 let currentCategory = "all";
 let filteredProducts = [...products];
@@ -324,7 +324,7 @@ let buySelection = { product: null, qty: 1 };
 let detailSelection = { product: null, images: [], activeIndex: 0 };
 
 // ====== SISTEMA DE NOTIFICACIONES TOAST ======
-// ES: Muestra una notificaciÃ³n flotante animada en la esquina inferior derecha.
+// ES: Muestra una notificación flotante animada en la esquina inferior derecha.
 //     tipo: "success" (verde), "error" (rojo), "info" (naranja), "fav" (rosa).
 //     duracion: tiempo en milisegundos antes de desaparecer (por defecto 3500).
 // EN: Shows an animated floating notification in the bottom-right corner.
@@ -334,7 +334,7 @@ function showToast({ titulo, mensaje, tipo = "success", duracion = 3500 }) {
     const container = document.getElementById("toastContainer");
     if (!container) return;
 
-    // Mapa de iconos segÃºn el tipo de toast
+    // Mapa de iconos según el tipo de toast
     // Icon map based on toast type
     const iconos = {
         success: "✅",
@@ -349,15 +349,15 @@ function showToast({ titulo, mensaje, tipo = "success", duracion = 3500 }) {
     toast.setAttribute("role", "status");
 
     toast.innerHTML = `
-        <span class="toast-icon">${iconos[tipo] || "ðŸ””"}</span>
+        <span class="toast-icon">${iconos[tipo] || "🔔"}</span>
         <div class="toast-body">
             ${titulo ? `<span class="toast-title">${titulo}</span>` : ""}
             <span class="toast-msg">${mensaje}</span>
         </div>
-        <button class="toast-close" aria-label="Cerrar notificaciÃ³n">&times;</button>
+        <button class="toast-close" aria-label="Cerrar notificación">&times;</button>
     `;
 
-    // ES: Cierra el toast con animaciÃ³n al hacer clic en la X.
+    // ES: Cierra el toast con animación al hacer clic en la X.
     // EN: Closes the toast with animation on X click.
     const cerrar = () => {
         toast.classList.add("toast-out");
@@ -366,7 +366,7 @@ function showToast({ titulo, mensaje, tipo = "success", duracion = 3500 }) {
 
     toast.querySelector(".toast-close").addEventListener("click", cerrar);
 
-    // ES: Auto-cierra despuÃ©s del tiempo indicado.
+    // ES: Auto-cierra después del tiempo indicado.
     // EN: Auto-closes after the given duration.
     const timer = setTimeout(cerrar, duracion);
 
@@ -391,8 +391,8 @@ products.forEach((product) => {
     }
 });
 
-// ES: Sincroniza los precios de los artÃ­culos en el carrito con los 
-//     precios actuales del catÃ¡logo. Si hay cambios, los persiste en localStorage.
+// ES: Sincroniza los precios de los artículos en el carrito con los 
+//     precios actuales del catálogo. Si hay cambios, los persiste en localStorage.
 // EN: Synchronizes the prices of items in the cart with the current 
 //     catalog prices. If there are changes, persists them in localStorage.
 function syncCartPricesWithCatalog() {
@@ -548,8 +548,8 @@ function updateHeaderBadges() {
     }
 }
 
-// ES: Verifica si el usuario estÃ¡ autenticado; si no, lo redirige al login.
-//     Devuelve true si la sesiÃ³n es vÃ¡lida, false si fue redirigido.
+// ES: Verifica si el usuario está autenticado; si no, lo redirige al login.
+//     Devuelve true si la sesión es válida, false si fue redirigido.
 // EN: Checks whether the user is authenticated; if not, redirects to login.
 //     Returns true if the session is valid, false if redirected.
 function ensureAuthenticated() {
@@ -560,7 +560,7 @@ function ensureAuthenticated() {
     return true;
 }
 
-// ES: Muestra el nombre o email del usuario en el menÃº de perfil del encabezado.
+// ES: Muestra el nombre o email del usuario en el menú de perfil del encabezado.
 // EN: Displays the user's name or email in the header profile menu.
 function syncProfileMenu() {
     if (!profileMenuTitle) return;
@@ -594,7 +594,7 @@ function syncProfileMenu() {
 }
 
 // ES: Devuelve la URL de la imagen principal del producto.
-//     Si tiene galerÃ­a, usa la primera imagen; si no, usa la imagen directa.
+//     Si tiene galería, usa la primera imagen; si no, usa la imagen directa.
 // EN: Returns the URL of the product's primary image.
 //     If it has a gallery, uses the first image; otherwise uses the direct image.
 function getPrimaryImage(product) {
@@ -620,8 +620,8 @@ function getProductGalleryImages(product) {
     return [...new Set(baseImages.filter(Boolean))].slice(0, 6);
 }
 
-// ES: Actualiza el botÃ³n de favoritos en el modal de detalle reflejando
-//     si el producto actual estÃ¡ en la lista de favoritos.
+// ES: Actualiza el botón de favoritos en el modal de detalle reflejando
+//     si el producto actual está en la lista de favoritos.
 // EN: Updates the favorites button in the detail modal reflecting
 //     whether the current product is in the favorites list.
 function updateDetailFavoriteButton() {
@@ -650,7 +650,7 @@ function getDetailSizeLabel(product) {
 }
 
 // ES: Renderiza el contenido completo del modal de detalle del producto con
-//     galerÃ­a de imÃ¡genes, informaciÃ³n y botones de acciÃ³n.
+//     galería de imágenes, información y botones de acción.
 // EN: Renders the complete content of the product detail modal with
 //     image gallery, information, and action buttons.
 function renderProductDetailModal() {
@@ -692,7 +692,7 @@ function renderProductDetailModal() {
     updateDetailFavoriteButton();
 }
 
-// ES: Abre el modal de detalle del producto con su galerÃ­a de imÃ¡genes.
+// ES: Abre el modal de detalle del producto con su galería de imágenes.
 // EN: Opens the product detail modal with its image gallery.
 function openProductDetailModal(product) {
     if (!product || !productDetailModal) return;
@@ -715,7 +715,7 @@ function closeProductDetailModal() {
 }
 
 // ES: Rellena el modal de compra con los datos del producto seleccionado
-//     (nombre, imagen, stock, precio por unidad y total segÃºn la cantidad).
+//     (nombre, imagen, stock, precio por unidad y total según la cantidad).
 // EN: Fills the purchase modal with the selected product's data
 //     (name, image, stock, unit price, and total based on quantity).
 function renderBuyModal() {
@@ -740,17 +740,17 @@ function renderBuyModal() {
 }
 
 // ES: Abre el modal de compra directa para el producto indicado, reseteando
-//     la cantidad a 1 y marcando el mÃ©todo de pago predeterminado.
+//     la cantidad a 1 y marcando el método de pago predeterminado.
 // EN: Redirects to the Amazon-style checkout page, saving the product in
 //     sessionStorage so checkout.js can read it.
-// ES: Abre la pÃ¡gina de checkout guardando el producto en sessionStorage
-//     para que checkout.js pueda recuperarlo. Verifica autenticaciÃ³n antes.
+// ES: Abre la página de checkout guardando el producto en sessionStorage
+//     para que checkout.js pueda recuperarlo. Verifica autenticación antes.
 // EN: Opens the checkout page saving the product in sessionStorage
 //     so checkout.js can retrieve it. Verifies authentication first.
 function openBuyModal(product) {
     if (!product) return;
 
-    // Verificar sesiÃ³n antes de redirigir
+    // Verificar sesión antes de redirigir
     if (window.SmuckyAuth && !window.SmuckyAuth.isLoggedIn()) {
         window.SmuckyAuth.redirectToLogin?.();
         return;
@@ -771,8 +771,8 @@ function closeBuyModal() {
     buyModal.style.display = "none";
 }
 
-// ES: Confirma la compra: valida el mÃ©todo de pago, llama a Stripe si es con
-//     tarjeta o usa realizarPedido para otros mÃ©todos. Actualiza el stock tras
+// ES: Confirma la compra: valida el método de pago, llama a Stripe si es con
+//     tarjeta o usa realizarPedido para otros métodos. Actualiza el stock tras
 //     el pago y muestra mensajes al usuario.
 // EN: Confirms the purchase: validates the payment method, calls Stripe for
 //     card payments or uses realizarPedido for other methods. Updates stock
@@ -829,11 +829,11 @@ async function confirmBuyModal() {
         product.price
     );
 
-   if (saved) {                          // si el pedido se guardÃ³ en Firebase
+   if (saved) {                          // si el pedido se guardó en Firebase
     await syncProductsFromFirestore(); // actualiza el stock en pantalla
     closeBuyModal();                   // cierra la ventana de compra
 
-    // obtiene los datos del cliente que estÃ¡ logueado
+    // obtiene los datos del cliente que está logueado
     const usuario = window.SmuckyAuth?.getCurrentUser?.();
     const emailCliente  = usuario?.email  || "";
     const nombreCliente = usuario?.nombre || usuario?.name || "Cliente";
@@ -850,8 +850,8 @@ async function confirmBuyModal() {
         );
     }
 
-    // mensaje de confirmaciÃ³n al cliente
-    alert(`Â¡Compra confirmada! Te enviamos un correo de confirmaciÃ³n a ${emailCliente || "tu correo"}.`);
+    // mensaje de confirmación al cliente
+    alert(`¡Compra confirmada! Te enviamos un correo de confirmación a ${emailCliente || "tu correo"}.`);
 }
 }
 
@@ -864,7 +864,7 @@ heroImages.forEach((img) => {
 });
 
 // ====== HERO SLIDER ======
-// ES: Muestra el slide indicado por su Ã­ndice y actualiza los puntos de navegaciÃ³n.
+// ES: Muestra el slide indicado por su índice y actualiza los puntos de navegación.
 // EN: Shows the slide at the given index and updates the navigation dots.
 function showSlide(index) {
     heroSlides.forEach((slide, i) => {
@@ -882,14 +882,14 @@ function showSlide(index) {
     });
 }
 
-// ES: Avanza al siguiente slide de forma cÃ­clica.
+// ES: Avanza al siguiente slide de forma cíclica.
 // EN: Advances to the next slide in a cyclic manner.
 function nextSlide() {
     currentSlide = (currentSlide + 1) % heroSlides.length;
     showSlide(currentSlide);
 }
 
-// ES: Retrocede al slide anterior de forma cÃ­clica.
+// ES: Retrocede al slide anterior de forma cíclica.
 // EN: Goes back to the previous slide in a cyclic manner.
 function prevSlide() {
     currentSlide = (currentSlide - 1 + heroSlides.length) % heroSlides.length;
@@ -925,7 +925,7 @@ heroDots.forEach((dot, index) => {
     });
 });
 
-// ES: Los botones CTA del hero desplazan suavemente a la secciÃ³n de productos.
+// ES: Los botones CTA del hero desplazan suavemente a la sección de productos.
 // EN: The hero CTA buttons smoothly scroll to the products section.
 heroCtas.forEach((button) => {
     button.addEventListener("click", () => {
@@ -939,8 +939,8 @@ heroCtas.forEach((button) => {
     });
 });
 
-// ES: Genera el HTML de imagen del producto. Si tiene galerÃ­a con al menos
-//     2 imÃ¡genes, las muestra en vista dividida (frente y atrÃ¡s).
+// ES: Genera el HTML de imagen del producto. Si tiene galería con al menos
+//     2 imágenes, las muestra en vista dividida (frente y atrás).
 // EN: Generates the product image HTML. If it has a gallery with at least
 //     2 images, displays them in a split view (front and back).
 function getProductImageHTML(product) {
@@ -951,7 +951,7 @@ function getProductImageHTML(product) {
                     <img src="${product.gallery[0]}" alt="${product.name} frente">
                 </div>
                 <div class="split-item">
-                    <img src="${product.gallery[1]}" alt="${product.name} atrÃ¡s">
+                    <img src="${product.gallery[1]}" alt="${product.name} atrás">
                 </div>
             </button>
         `;
@@ -964,7 +964,7 @@ function getProductImageHTML(product) {
     `;
 }
 
-// ES: Devuelve el ID de la secciÃ³n HTML correspondiente a la categorÃ­a del producto.
+// ES: Devuelve el ID de la sección HTML correspondiente a la categoría del producto.
 // EN: Returns the HTML section ID that corresponds to the product's category.
 function getSectionIdForProduct(product) {
     if (!product || !Array.isArray(product.category)) return null;
@@ -978,7 +978,7 @@ function getSectionIdForProduct(product) {
     return null;
 }
 
-// ES: VacÃ­a y oculta el listado de sugerencias del buscador.
+// ES: Vacía y oculta el listado de sugerencias del buscador.
 // EN: Empties and hides the search suggestions list.
 function clearSearchSuggestions() {
     if (!searchSuggestions) return;
@@ -986,7 +986,7 @@ function clearSearchSuggestions() {
     searchSuggestions.classList.remove("active");
 }
 
-// ES: Hace scroll suave hasta la secciÃ³n del producto y luego resalta
+// ES: Hace scroll suave hasta la sección del producto y luego resalta
 //     visualmente la tarjeta del producto con un efecto de destello.
 // EN: Smoothly scrolls to the product's section and then visually highlights
 //     the product card with a flash effect.
@@ -1011,7 +1011,7 @@ function goToProduct(product) {
     }, 360);
 }
 
-// ES: Muestra hasta 6 sugerencias de productos que coincidan con el tÃ©rmino
+// ES: Muestra hasta 6 sugerencias de productos que coincidan con el término
 //     escrito en el buscador. Al hacer clic en una, navega a ese producto.
 // EN: Shows up to 6 product suggestions matching the text typed in the search
 //     bar. Clicking one navigates to that product.
@@ -1061,7 +1061,7 @@ function renderProducts(sectionId) {
     const section = document.getElementById(sectionId);
     if (!section) return;
 
-    // Determinar el grid container basado en el ID de la secciÃ³n
+    // Determinar el grid container basado en el ID de la sección
     let gridId = "";
     
     if (sectionId === "playeras-hombre") {
@@ -1079,7 +1079,7 @@ function renderProducts(sectionId) {
     const grid = document.getElementById(gridId);
     if (!grid) return;
 
-    // Determinar quÃ© categorÃ­a mostrar basado en el ID de la secciÃ³n
+    // Determinar qué categoría mostrar basado en el ID de la sección
     let categoriesToShow = [];
     
     if (sectionId === "playeras-hombre") {
@@ -1138,7 +1138,7 @@ function renderProducts(sectionId) {
 }
 
 function loadCategoryProducts(category) {
-    // Hacer scroll a la secciÃ³n correcta
+    // Hacer scroll a la sección correcta
     let sectionId = "";
     
     switch(category) {
@@ -1164,12 +1164,12 @@ function loadCategoryProducts(category) {
 
     const section = document.getElementById(sectionId);
     if (section) {
-        // Scroll suave a la secciÃ³n
+        // Scroll suave a la sección
         section.scrollIntoView({ behavior: "smooth", block: "start" });
     }
 }
 
-// ES: Renderiza una cuadrÃ­cula con los productos destacados (featured = true).
+// ES: Renderiza una cuadrícula con los productos destacados (featured = true).
 // EN: Renders a grid with featured products (featured = true).
 function renderFeaturedProducts() {
     const featured = products.filter(p => p.featured);
@@ -1196,7 +1196,7 @@ function renderFeaturedProducts() {
                 <h3 class="product-title">${product.name}</h3>
                 ${product.subtitle ? `<p class="product-subtitle">${product.subtitle}</p>` : ""}
                 <p class="product-price">$${product.price.toFixed(2)}</p>
-                <!-- BotÃ³n de carrito desactivado temporalmente -->
+                <!-- Botón de carrito desactivado temporalmente -->
             </div>
         `;
         featuredGrid.appendChild(card);
@@ -1216,13 +1216,13 @@ function attachAddToCartEvents() {
     });
 }
 
-// ====== FILTRAR POR CATEGORÃA ======
-// ES: FunciÃ³n mantenida por compatibilidad pero simplificada.
+// ====== FILTRAR POR CATEGORÍA ======
+// ES: Función mantenida por compatibilidad pero simplificada.
 //     El sistema actual usa loadCategoryProducts() en su lugar.
 // EN: Function kept for compatibility but simplified.
 //     The current system uses loadCategoryProducts() instead.
 function filterByCategory(category) {
-    // FunciÃ³n mantenida por compatibilidad pero simplificada
+    // Función mantenida por compatibilidad pero simplificada
     // El sistema actual usa loadCategoryProducts() en su lugar
 }
 
@@ -1244,13 +1244,13 @@ function searchProducts() {
 }
 
 // ====== ORDENAMIENTO ======
-// ES: FunciÃ³n mantenida por compatibilidad histÃ³rica.
-//     El sistema actual no utiliza ordenamiento dinÃ¡mico.
+// ES: Función mantenida por compatibilidad histórica.
+//     El sistema actual no utiliza ordenamiento dinámico.
 // EN: Function kept for historical compatibility.
 //     The current system does not use dynamic sorting.
 function applySortAndRender() {
-    // FunciÃ³n mantenida por compatibilidad
-    // El sistema actual no utiliza ordenamiento dinÃ¡mico
+    // Función mantenida por compatibilidad
+    // El sistema actual no utiliza ordenamiento dinámico
 }
 
 // ====== CARRITO ======
@@ -1315,7 +1315,7 @@ function changeCartQty(productId, delta) {
 }
 
 // ES: Renderiza el contenido del modal del carrito: listado de productos,
-//     subtotales, botÃ³n de eliminar por Ã­tem y total general.
+//     subtotales, botón de eliminar por ítem y total general.
 // EN: Renders the cart modal content: product list, subtotals,
 //     per-item remove button, and grand total.
 function updateCartUI() {
@@ -1330,13 +1330,13 @@ function updateCartUI() {
     if (cart.length === 0) {
         cartItemsContainer.innerHTML = `
             <div class="empty-cart-state">
-                <p class="empty-cart-emoji">ðŸ›’</p>
+                <p class="empty-cart-emoji"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="1.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></p>
                 <p class="empty-cart-title">Tu carrito esta vacio</p>
                 <p class="empty-cart-subtitle">Agrega productos para verlos aqui.</p>
             </div>
         `;
     } else {
-        // ES: Renderiza cada Ã­tem con imagen, nombre, precio, subtotal y controles de cantidad.
+        // ES: Renderiza cada ítem con imagen, nombre, precio, subtotal y controles de cantidad.
         // EN: Renders each item with image, name, price, subtotal, and quantity controls.
         // ES: Clea cada item del carrito con imagen, nombre, precio y controles.
         // EN: Render each cart item with image, name, price, and controls.
@@ -1360,7 +1360,7 @@ function updateCartUI() {
                         <button class="cart-qty-del" data-id="${item.id}" title="Eliminar producto">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
                         </button>
-                        <button class="cart-qty-btn cart-qty-minus" data-id="${item.id}">âˆ’</button>
+                        <button class="cart-qty-btn cart-qty-minus" data-id="${item.id}">−</button>
                         <span class="cart-qty-num">${item.qty}</span>
                         <button class="cart-qty-btn cart-qty-plus" data-id="${item.id}">+</button>
                     </div>
@@ -1369,7 +1369,7 @@ function updateCartUI() {
             cartItemsContainer.appendChild(div);
         });
 
-        // ES: Eventos para los botones de cantidad y eliminar de cada Ã­tem del carrito.
+        // ES: Eventos para los botones de cantidad y eliminar de cada ítem del carrito.
         // EN: Events for quantity and delete buttons of each cart item.
         cartItemsContainer.querySelectorAll(".cart-qty-del").forEach(btn => {
             btn.addEventListener("click", () => removeFromCart(parseInt(btn.dataset.id, 10)));
@@ -1470,7 +1470,7 @@ function renderFavoritesUI() {
     if (favoriteProducts.length === 0) {
         favoritesItemsContainer.innerHTML = `
             <div class="empty-cart-state">
-                <p class="empty-cart-emoji">â¤</p>
+                <p class="empty-cart-emoji"><svg width="40" height="40" viewBox="0 0 24 24" fill="#f87171" stroke="#f87171" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></p>
                 <p class="empty-cart-title">No tienes favoritos guardados</p>
                 <p class="empty-cart-subtitle">Marca prendas con â¤ para verlas aqui.</p>
             </div>
@@ -1565,7 +1565,7 @@ function renderFavoritesUI() {
 }
 
 // ====== EVENTOS GLOBALES ======
-// ES: Alterna la visibilidad de la barra de bÃºsqueda y enfoca el input al abrirse.
+// ES: Alterna la visibilidad de la barra de búsqueda y enfoca el input al abrirse.
 // EN: Toggles the search bar visibility and focuses the input when opened.
 if (searchToggle && searchBar && searchInput) {
     searchToggle.addEventListener("click", () => {
@@ -1576,7 +1576,7 @@ if (searchToggle && searchBar && searchInput) {
     });
 }
 
-// ES: Filtra los productos por subcategorÃ­a al hacer clic en los enlaces del dropdown.
+// ES: Filtra los productos por subcategoría al hacer clic en los enlaces del dropdown.
 // EN: Filters products by subcategory when dropdown links are clicked.
 dropdownLinks.forEach(link => {
     link.addEventListener("click", (e) => {
@@ -1588,7 +1588,7 @@ dropdownLinks.forEach(link => {
     });
 });
 
-// ES: Activa la bÃºsqueda al hacer clic en el botÃ³n de lupa.
+// ES: Activa la búsqueda al hacer clic en el botón de lupa.
 // EN: Triggers search when the magnifier button is clicked.
 if (searchBtn) {
     searchBtn.addEventListener("click", searchProducts);
@@ -1610,7 +1610,7 @@ if (searchInput) {
         }
     });
 
-    // ES: Dispara la bÃºsqueda al presionar Enter.
+    // ES: Dispara la búsqueda al presionar Enter.
     // EN: Fires the search when Enter is pressed.
     searchInput.addEventListener("keyup", (e) => {
         if (e.key === "Enter") {
@@ -1619,7 +1619,7 @@ if (searchInput) {
     });
 }
 
-// ES: Cierra las sugerencias de bÃºsqueda al hacer clic fuera del campo.
+// ES: Cierra las sugerencias de búsqueda al hacer clic fuera del campo.
 // EN: Closes search suggestions when clicking outside the search field.
 document.addEventListener("click", (event) => {
     if (!searchSuggestions || !searchInput) return;
@@ -1629,7 +1629,7 @@ document.addEventListener("click", (event) => {
     }
 });
 
-// ES: DelegaciÃ³n de eventos en el documento para tarjetas de productos.
+// ES: Delegación de eventos en el documento para tarjetas de productos.
 //     Maneja clicks en: abrir detalle, favoritos, agregar al carrito y comprar.
 // EN: Document-level event delegation for product cards.
 //     Handles clicks on: open detail, favorites, add to cart, and buy.
@@ -1671,7 +1671,7 @@ document.addEventListener("click", async (event) => {
         if (!ensureAuthenticated()) return;
         const prod = products.find(p => p.id === productId);
         addToCart(productId);
-        // ES: Muestra toast de confirmaciÃ³n al agregar al carrito.
+        // ES: Muestra toast de confirmación al agregar al carrito.
         // EN: Shows confirmation toast when adding to cart.
         showToast({
             titulo: "Agregado al carrito",
@@ -1722,7 +1722,7 @@ if (buyCloseBtn) {
     buyCloseBtn.addEventListener("click", closeBuyModal);
 }
 
-// ES: Confirma la compra al hacer clic en el botÃ³n de confirmar.
+// ES: Confirma la compra al hacer clic en el botón de confirmar.
 // EN: Confirms the purchase when the confirm button is clicked.
 if (buyConfirmBtn) {
     buyConfirmBtn.addEventListener("click", async () => {
@@ -1736,7 +1736,7 @@ if (detailCloseBtn) {
     detailCloseBtn.addEventListener("click", closeProductDetailModal);
 }
 
-// ES: Alterna favoritos desde el botÃ³n dentro del modal de detalle del producto.
+// ES: Alterna favoritos desde el botón dentro del modal de detalle del producto.
 // EN: Toggles favorites from the button inside the product detail modal.
 if (detailFavoriteBtn) {
     detailFavoriteBtn.addEventListener("click", () => {
@@ -1787,6 +1787,83 @@ if (profileBtn && profileMenu) {
     });
 }
 
+
+// ── Modal de confirmación del menú de perfil ──────────────────────────────
+function showIndexConfirmDialog({ title, message, acceptText = "Aceptar", cancelText = "Cancelar", requiredText = "" }) {
+    return new Promise((resolve) => {
+        const modal   = document.getElementById("indexConfirmModal");
+        const titleEl = document.getElementById("indexConfirmTitle");
+        const msgEl   = document.getElementById("indexConfirmMessage");
+        const acceptBtn = document.getElementById("indexConfirmAccept");
+        const cancelBtn = document.getElementById("indexConfirmCancel");
+        const inputWrap = document.getElementById("indexConfirmInputWrap");
+        const input     = document.getElementById("indexConfirmInput");
+        const hint      = document.getElementById("indexConfirmInputHint");
+        const kicker    = document.getElementById("indexConfirmKicker");
+
+        if (!modal) { resolve(confirm(message)); return; }
+
+        const user = window.SmuckyAuth?.getCurrentUser?.();
+        const nombre = user?.nombre || user?.name || "";
+        if (kicker) kicker.textContent = nombre ? `Confirmación de ${nombre}` : "SMUCKY's By CHAVAMON";
+
+        titleEl.textContent  = title;
+        msgEl.textContent    = message;
+        acceptBtn.textContent = acceptText;
+        cancelBtn.textContent = cancelText;
+
+        const required = String(requiredText || "").trim();
+        const needsText = Boolean(required);
+
+        if (inputWrap && input && hint) {
+            inputWrap.hidden = !needsText;
+            if (needsText) {
+                input.value = "";
+                input.placeholder = required;
+                hint.textContent = `Debes escribir exactamente ${required}.`;
+                acceptBtn.disabled = true;
+            } else {
+                acceptBtn.disabled = false;
+            }
+        }
+
+        modal.hidden = false;
+        modal.setAttribute("aria-hidden", "false");
+
+        const closeModal = (accepted) => {
+            modal.hidden = true;
+            modal.setAttribute("aria-hidden", "true");
+            if (input) input.value = "";
+            acceptBtn.removeEventListener("click", onAccept);
+            cancelBtn.removeEventListener("click", onCancel);
+            modal.removeEventListener("click", onBackdrop);
+            document.removeEventListener("keydown", onEscape);
+            if (input) { input.removeEventListener("input", onInput); input.removeEventListener("keydown", onInputEnter); }
+            resolve(accepted);
+        };
+
+        const onAccept = () => {
+            if (needsText && input) {
+                if (input.value.trim().toLowerCase() !== required.toLowerCase()) { input.focus(); return; }
+            }
+            closeModal(true);
+        };
+        const onCancel    = () => closeModal(false);
+        const onBackdrop  = (e) => { if (e.target === modal) closeModal(false); };
+        const onEscape    = (e) => { if (e.key === "Escape") closeModal(false); };
+        const onInput     = () => { if (needsText && input) acceptBtn.disabled = input.value.trim().toLowerCase() !== required.toLowerCase(); };
+        const onInputEnter = (e) => { if (e.key === "Enter") { e.preventDefault(); if (!acceptBtn.disabled) onAccept(); } };
+
+        acceptBtn.addEventListener("click", onAccept);
+        cancelBtn.addEventListener("click", onCancel);
+        modal.addEventListener("click", onBackdrop);
+        document.addEventListener("keydown", onEscape);
+        if (input) { input.addEventListener("input", onInput); input.addEventListener("keydown", onInputEnter); }
+
+        if (needsText && input) input.focus(); else acceptBtn.focus();
+    });
+}
+
 if (profileEditBtn) {
     profileEditBtn.addEventListener("click", () => {
         if (!ensureAuthenticated()) return;
@@ -1795,10 +1872,26 @@ if (profileEditBtn) {
 }
 
 if (profileDeleteBtn) {
-    profileDeleteBtn.addEventListener("click", () => {
+    profileDeleteBtn.addEventListener("click", async () => {
         if (!ensureAuthenticated()) return;
-        const confirmed = confirm("Â¿Seguro que quieres eliminar tu perfil local?");
+        profileMenu.classList.remove("active");
+
+        const confirmed = await showIndexConfirmDialog({
+            title: "Eliminar cuenta",
+            message: "¿Seguro que quieres eliminar tu perfil? Se borrarán tus datos guardados en este dispositivo.",
+            acceptText: "Aceptar",
+            cancelText: "Cancelar"
+        });
         if (!confirmed) return;
+
+        const typed = await showIndexConfirmDialog({
+            title: "Confirmación final",
+            message: "Escriba \"Eliminar\" para eliminar su cuenta.",
+            acceptText: "Eliminar",
+            cancelText: "Cancelar",
+            requiredText: "Eliminar"
+        });
+        if (!typed) return;
 
         if (window.SmuckyAuth) {
             window.SmuckyAuth.clearUser();
@@ -1809,21 +1902,27 @@ if (profileDeleteBtn) {
         saveFavorites();
         updateHeaderBadges();
         syncProfileMenu();
-        alert("Perfil eliminado correctamente.");
     });
 }
 
 if (profileLogoutBtn) {
-    profileLogoutBtn.addEventListener("click", () => {
+    profileLogoutBtn.addEventListener("click", async () => {
         if (!window.SmuckyAuth || !window.SmuckyAuth.isLoggedIn()) {
             window.location.href = "cuenta/login.html";
             return;
         }
+        profileMenu.classList.remove("active");
+
+        const confirmed = await showIndexConfirmDialog({
+            title: "Cerrar sesión",
+            message: "¿Deseas cerrar sesión ahora?",
+            acceptText: "Aceptar",
+            cancelText: "Cancelar"
+        });
+        if (!confirmed) return;
 
         window.SmuckyAuth.clearUser();
         syncProfileMenu();
-        profileMenu.classList.remove("active");
-        alert("Sesión cerrada correctamente.");
     });
 }
 
@@ -1880,14 +1979,14 @@ window.addEventListener("click", (e) => {
     }
 });
 
-// ES: Al proceder al pago desde el carrito abre la pÃ¡gina de checkout
+// ES: Al proceder al pago desde el carrito abre la página de checkout
 //     usando el producto principal del carrito y su cantidad actual.
 // EN: When proceeding to checkout from the cart, opens the checkout page
 //     using the main cart product and its current quantity.
 if (checkoutBtn) {
     checkoutBtn.addEventListener("click", async () => {
         if (cart.length === 0) {
-            showToast({ titulo: "Carrito vacÃ­o", mensaje: "Agrega productos antes de pagar.", tipo: "error" });
+            showToast({ titulo: "Carrito vacío", mensaje: "Agrega productos antes de pagar.", tipo: "error" });
             return;
         }
         if (!ensureAuthenticated()) return;
@@ -1929,16 +2028,16 @@ if (newsletterBtn && newsletterEmail) {
         const email = newsletterEmail.value.trim();
         
         if (!email) {
-            alert("Por favor ingresa tu correo electrÃ³nico.");
+            alert("Por favor ingresa tu correo electrónico.");
             return;
         }
 
         if (!email.includes("@")) {
-            alert("Por favor ingresa un correo electrÃ³nico vÃ¡lido.");
+            alert("Por favor ingresa un correo electrónico válido.");
             return;
         }
 
-        alert(`Â¡Gracias por suscribirte! ðŸŽ‰\\n\\nTe enviaremos las mejores ofertas a ${email}`);
+        alert(`¡Gracias por suscribirte! ðŸŽ‰\\n\\nTe enviaremos las mejores ofertas a ${email}`);
         newsletterEmail.value = "";
     });
 }

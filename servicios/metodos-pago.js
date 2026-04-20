@@ -1,9 +1,9 @@
 ﻿/* ES: Comentarios base para mantenimiento. EN: Baseline comments for maintenance. */
 // ============================================================
 //  servicios/metodos-pago.js
-//  GestiÃ³n de tarjetas guardadas por perfil de usuario.
+//  Gestión de tarjetas guardadas por perfil de usuario.
 //  Solo acepta Visa y Mastercard.
-//  Guarda en localStorage + Firestore (colecciÃ³n perfiles_pago).
+//  Guarda en localStorage + Firestore (colección perfiles_pago).
 // ============================================================
 
 import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
@@ -69,7 +69,7 @@ async function _syncFirestore(key, cards) {
     } catch (e) { console.warn("Firestore sync:", e); }
 }
 
-// â”€â”€ API pÃºblica â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â”€â”€ API pública â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 async function listCards() {
     const key = _userKey();
@@ -87,9 +87,9 @@ async function listCards() {
 function _buildCardPayload({ number, holderName, expiryMonth, expiryYear, cvv }, previousCard = {}) {
     const clean = String(number).replace(/\D/g, "");
     if (clean.length < 13 || clean.length > 19)
-        throw new Error("NÃºmero de tarjeta invÃ¡lido.");
+        throw new Error("Número de tarjeta inválido.");
     if (!_luhn(clean))
-        throw new Error("NÃºmero de tarjeta invÃ¡lido.");
+        throw new Error("Número de tarjeta inválido.");
 
     const brand = _detectBrand(clean);
     if (!brand)
@@ -97,7 +97,7 @@ function _buildCardPayload({ number, holderName, expiryMonth, expiryYear, cvv },
     if (!holderName?.trim())
         throw new Error("Escribe el nombre del titular.");
     if (!/^\d{3,4}$/.test(String(cvv || "").trim()))
-        throw new Error("El cÃ³digo de seguridad debe tener 3 o 4 dÃ­gitos.");
+        throw new Error("El código de seguridad debe tener 3 o 4 dígitos.");
 
     const now = new Date();
     const mo = parseInt(expiryMonth, 10);
@@ -105,7 +105,7 @@ function _buildCardPayload({ number, holderName, expiryMonth, expiryYear, cvv },
     if (!mo || !yr)
         throw new Error("Selecciona la fecha de vencimiento.");
     if (yr < now.getFullYear() || (yr === now.getFullYear() && mo < now.getMonth() + 1))
-        throw new Error("La tarjeta estÃ¡ vencida.");
+        throw new Error("La tarjeta está vencida.");
 
     return {
         id: previousCard.id || `card_${Date.now()}`,
@@ -122,7 +122,7 @@ function _buildCardPayload({ number, holderName, expiryMonth, expiryYear, cvv },
 
 async function saveCard({ number, holderName, expiryMonth, expiryYear, cvv, makeDefault = false }) {
     const key = _userKey();
-    if (!key) throw new Error("Inicia sesiÃ³n para guardar una tarjeta.");
+    if (!key) throw new Error("Inicia sesión para guardar una tarjeta.");
 
     const cards = await listCards();
     const isFirst = cards.length === 0;
@@ -138,7 +138,7 @@ async function saveCard({ number, holderName, expiryMonth, expiryYear, cvv, make
 
 async function updateCard(cardId, { number, holderName, expiryMonth, expiryYear, cvv, makeDefault = false }) {
     const key = _userKey();
-    if (!key) throw new Error("Inicia sesiÃ³n para editar una tarjeta.");
+    if (!key) throw new Error("Inicia sesión para editar una tarjeta.");
 
     const cards = await listCards();
     const cardIndex = cards.findIndex((card) => card.id === cardId);

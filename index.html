@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -388,7 +388,7 @@
                         <li><a href="ayuda/entregas.html">Informacion De Entrega</a></li>
                         <li><a href="ayuda/devoluciones.html">Politica De Devoluciones</a></li>
                         <!-- <li><a href="ayuda/devoluciones.html">Make A Return</a></li> -->
-                        <li><a href="ayuda/pedidos.html">Pedidos</a></li>
+                        <li><a href="paginas/Pedidos/pedidos.html">Pedidos</a></li>
                         <!-- <li><a href="ayuda/seguridad.html">Denunciar una pagina falsa</a></li> -->
                         <li><a href="soporte/index.html">Soporte</a></li>
                     </ul>
@@ -439,6 +439,25 @@
     <script type="module" src="servicios/stripe-pago.js"></script>
     <script type="module" src="servicios/emailjs-notificaciones.js"></script>
     
+
+
+    <!-- Modal de confirmación del menú de perfil (cerrar sesión / eliminar) -->
+    <div id="indexConfirmModal" class="index-confirm-modal" hidden aria-hidden="true">
+        <div class="index-confirm-card" role="dialog" aria-modal="true">
+            <p class="index-confirm-kicker" id="indexConfirmKicker">SMUCKY's By CHAVAMON</p>
+            <h3 id="indexConfirmTitle">Confirmar acción</h3>
+            <p id="indexConfirmMessage">¿Deseas continuar?</p>
+            <div id="indexConfirmInputWrap" class="index-confirm-input-wrap" hidden>
+                <label for="indexConfirmInput">Escriba "Eliminar" para eliminar su cuenta</label>
+                <input id="indexConfirmInput" type="text" autocomplete="off" placeholder="Eliminar">
+                <p id="indexConfirmInputHint" class="index-confirm-input-hint">Debes escribir exactamente Eliminar.</p>
+            </div>
+            <div class="index-confirm-actions">
+                <button type="button" class="index-confirm-accept" id="indexConfirmAccept">Aceptar</button>
+                <button type="button" class="index-confirm-cancel" id="indexConfirmCancel">Cancelar</button>
+            </div>
+        </div>
+    </div>
 
     <script src="scripts/pages/menu-global.js"></script>
 </body>

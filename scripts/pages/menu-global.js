@@ -135,6 +135,78 @@
 		padding-top: 10px;
 	}
 
+	/* Modal de confirmación del menú */
+	.smucky-confirm-modal {
+		position: fixed;
+		inset: 0;
+		z-index: 10000;
+		display: grid;
+		place-items: center;
+		background: rgba(2, 6, 23, 0.55);
+		backdrop-filter: blur(5px);
+		padding: 16px;
+	}
+	.smucky-confirm-modal[hidden] {
+		display: none !important;
+	}
+	.smucky-confirm-card {
+		width: min(460px, 95vw);
+		border-radius: 18px;
+		border: 1px solid rgba(255, 255, 255, 0.45);
+		padding: 18px;
+		color: #f8fafc;
+		background:
+			radial-gradient(circle at 12% 12%, rgba(34, 197, 94, 0.32) 0, transparent 33%),
+			radial-gradient(circle at 88% 0%, rgba(239, 68, 68, 0.33) 0, transparent 36%),
+			linear-gradient(140deg, #0f172a 0%, #1e293b 52%, #0b3d3a 100%);
+		box-shadow: 0 24px 48px rgba(2, 6, 23, 0.46);
+	}
+	.smucky-confirm-kicker {
+		display: inline-block;
+		font-size: 0.74rem;
+		text-transform: uppercase;
+		letter-spacing: 0.12em;
+		border-radius: 999px;
+		border: 1px solid rgba(148, 163, 184, 0.48);
+		background: rgba(148, 163, 184, 0.2);
+		padding: 5px 10px;
+	}
+	.smucky-confirm-card h3 {
+		margin-top: 10px;
+		font-family: "Archivo", "Segoe UI", sans-serif;
+		font-size: 1.35rem;
+	}
+	.smucky-confirm-card p {
+		margin-top: 6px;
+		line-height: 1.5;
+	}
+	.smucky-confirm-actions {
+		margin-top: 14px;
+		display: flex;
+		justify-content: flex-end;
+		gap: 10px;
+		flex-wrap: wrap;
+	}
+	.smucky-confirm-actions button {
+		border: none;
+		border-radius: 10px;
+		padding: 9px 16px;
+		font: inherit;
+		font-weight: 800;
+		cursor: pointer;
+		color: #f8fafc;
+	}
+	.smucky-confirm-accept {
+		background: linear-gradient(135deg, #ef4444 0%, #991b1b 100%);
+	}
+	.smucky-confirm-cancel {
+		background: linear-gradient(135deg, #22c55e 0%, #166534 100%);
+	}
+	.smucky-confirm-accept:hover,
+	.smucky-confirm-cancel:hover {
+		filter: brightness(1.08);
+	}
+
 	@media (max-width: 700px) {
 		.smucky-menu-toggle {
 			top: 72px;
@@ -177,7 +249,7 @@
 			<a href="${base}cuenta/login.html" id="smuckyMenuLoginLink" class="guest-link">Iniciar sesión</a>
 			<a href="${base}cuenta/registro.html" id="smuckyMenuRegisterLink" class="guest-link">Registrarse</a>
 			<a href="${base}cuenta/perfil.html" id="smuckyMenuProfileLink">Mi perfil</a>
-			<a href="${base}cuenta/pedidos.html" id="smuckyMenuOrdersLink">Mis pedidos</a>
+			<a href="${base}paginas/Pedidos/pedidos.html" id="smuckyMenuOrdersLink">Mis pedidos</a>
 			<a href="${base}paginas/checkout.html" id="smuckyMenuCheckoutLink">Checkout</a>
 			<a href="${base}ayuda/centro-ayuda.html">Centro de ayuda</a>
 			<a href="${base}soporte/index.html">Soporte</a>
@@ -186,6 +258,25 @@
 		</nav>
 		<div class="smucky-menu-foot">Ropa deportiva y casual con estilo propio.</div>
 	`;
+
+	// Modal de confirmación para cerrar sesión
+	const confirmModal = document.createElement("div");
+	confirmModal.id = "smuckyMenuConfirmModal";
+	confirmModal.className = "smucky-confirm-modal";
+	confirmModal.hidden = true;
+	confirmModal.setAttribute("aria-hidden", "true");
+	confirmModal.innerHTML = `
+		<div class="smucky-confirm-card" role="dialog" aria-modal="true">
+			<p class="smucky-confirm-kicker">SMUCKY\'s By CHAVAMON</p>
+			<h3>Cerrar sesi\u00f3n</h3>
+			<p>\u00bfDeseas cerrar sesi\u00f3n ahora?</p>
+			<div class="smucky-confirm-actions">
+				<button type="button" class="smucky-confirm-accept" id="smuckyConfirmAccept">Aceptar</button>
+				<button type="button" class="smucky-confirm-cancel" id="smuckyConfirmCancel">Cancelar</button>
+			</div>
+		</div>
+	`;
+	document.body.appendChild(confirmModal);
 
 	const firebaseConfig = {
 		apiKey: "AIzaSyCewAiOXXWT7O1L2WCBksejOnf8sZFj2KQ",
@@ -261,13 +352,34 @@
 	const checkoutLink = drawer.querySelector("#smuckyMenuCheckoutLink");
 
 	const logoutBtn = drawer.querySelector("#smuckyMenuLogoutBtn");
-	logoutBtn?.addEventListener("click", async () => {
-		await signOutFirebase();
-		clearSmuckyLocalData();
-		syncMenuByAuth();
+	logoutBtn?.addEventListener("click", () => {
 		closeMenu();
-		alert("Sesión cerrada correctamente.");
-		window.location.href = `${base}index.html`;
+		const modal = document.getElementById("smuckyMenuConfirmModal");
+		const acceptBtn = document.getElementById("smuckyConfirmAccept");
+		const cancelBtn = document.getElementById("smuckyConfirmCancel");
+		if (!modal) return;
+		modal.hidden = false;
+		modal.setAttribute("aria-hidden", "false");
+		const closeModal = () => {
+			modal.hidden = true;
+			modal.setAttribute("aria-hidden", "true");
+			acceptBtn.removeEventListener("click", onAccept);
+			cancelBtn.removeEventListener("click", onCancel);
+			modal.removeEventListener("click", onBackdrop);
+		};
+		const onAccept = async () => {
+			closeModal();
+			await signOutFirebase();
+			clearSmuckyLocalData();
+			syncMenuByAuth();
+			window.location.href = `${base}index.html`;
+		};
+		const onCancel = () => closeModal();
+		const onBackdrop = (e) => { if (e.target === modal) closeModal(); };
+		acceptBtn.addEventListener("click", onAccept);
+		cancelBtn.addEventListener("click", onCancel);
+		modal.addEventListener("click", onBackdrop);
+		acceptBtn.focus();
 	});
 
 	function toggleItem(element, show) {

@@ -1,9 +1,9 @@
 ﻿/* ES: Comentarios base para mantenimiento. EN: Baseline comments for maintenance. */
 // ============================================================
 //  servicios/auth.js
-//  ES: MÃ³dulo de autenticaciÃ³n de Smucky. Guarda y restaura los
+//  ES: Módulo de autenticación de Smucky. Guarda y restaura los
 //      datos del usuario en localStorage, sincroniza con Firebase
-//      Auth y redirige al login cuando no existe sesiÃ³n activa.
+//      Auth y redirige al login cuando no existe sesión activa.
 //  EN: Smucky authentication module. Saves and restores user data
 //      in localStorage, syncs with Firebase Auth, and redirects to
 //      login when no active session exists.
@@ -32,19 +32,19 @@
         }
     }
 
-    // ES: Devuelve el usuario activo (localStorage o cachÃ© de Firebase).
+    // ES: Devuelve el usuario activo (localStorage o caché de Firebase).
     // EN: Returns the active user (localStorage or Firebase cache).
     function getCurrentUser() {
         return readStoredUser() || firebaseUserCache;
     }
 
-    // ES: Indica si hay un usuario con sesiÃ³n activa.
+    // ES: Indica si hay un usuario con sesión activa.
     // EN: Indicates whether there is a user with an active session.
     function isLoggedIn() {
         return !!getCurrentUser();
     }
 
-    // ES: Guarda o actualiza los datos del usuario en localStorage y en el cachÃ© interno.
+    // ES: Guarda o actualiza los datos del usuario en localStorage y en el caché interno.
     // EN: Saves or updates user data in localStorage and in the internal cache.
     function saveUser(user) {
         const current = readStoredUser() || {};
@@ -58,14 +58,14 @@
         return nextUser;
     }
 
-    // ES: Elimina al usuario de localStorage y limpia el cachÃ©; cierra la sesiÃ³n local.
+    // ES: Elimina al usuario de localStorage y limpia el caché; cierra la sesión local.
     // EN: Removes the user from localStorage and clears the cache; closes the local session.
     function clearUser() {
         localStorage.removeItem(USER_KEY);
         firebaseUserCache = null;
     }
 
-    // ES: Devuelve la ruta completa de la pÃ¡gina actual (pathname + query + hash).
+    // ES: Devuelve la ruta completa de la página actual (pathname + query + hash).
     // EN: Returns the full path of the current page (pathname + query + hash).
     function getCurrentPath() {
         return `${window.location.pathname}${window.location.search}${window.location.hash}`;
@@ -79,7 +79,7 @@
         return new URL(inAccountFolder ? "login.html" : "cuenta/login.html", currentUrl.href);
     }
 
-    // ES: Redirige al usuario al login guardando la URL actual como parÃ¡metro "redirect".
+    // ES: Redirige al usuario al login guardando la URL actual como parámetro "redirect".
     // EN: Redirects the user to login, saving the current URL as the "redirect" parameter.
     function redirectToLogin() {
         const loginUrl = buildLoginUrl();
@@ -87,7 +87,7 @@
         window.location.href = loginUrl.toString();
     }
 
-    // ES: Sincroniza el estado de sesiÃ³n con Firebase Auth. Si hay un usuario de Firebase
+    // ES: Sincroniza el estado de sesión con Firebase Auth. Si hay un usuario de Firebase
     //     activo, actualiza o crea su registro local en SmuckyAuth.
     // EN: Syncs the session state with Firebase Auth. If an active Firebase user exists,
     //     updates or creates their local record in SmuckyAuth.

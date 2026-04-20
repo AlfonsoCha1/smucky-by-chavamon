@@ -2,10 +2,10 @@
 // ============================================================
 //  scripts/pages/login.js
 //  QUÃ‰ HACE: Login REAL con Firebase Auth
-//    - Verifica email + contraseÃ±a contra Firebase
+//    - Verifica email + contraseña contra Firebase
 //    - Guarda uid, email y nombre en SmuckyAuth (localStorage)
 //    - Redirige al usuario a donde iba o al inicio
-//    - Muestra mensajes de error claros en espaÃ±ol
+//    - Muestra mensajes de error claros en español
 // ============================================================
 
 import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
@@ -49,15 +49,15 @@ inicializarOjoContrasena();
 function mensajeError(code) {
     const errores = {
         "auth/user-not-found": "No existe una cuenta con ese correo.",
-        "auth/wrong-password": "ContraseÃ±a incorrecta. IntÃ©ntalo de nuevo.",
-        "auth/invalid-email": "El correo no tiene un formato vÃ¡lido.",
+        "auth/wrong-password": "Contraseña incorrecta. Inténtalo de nuevo.",
+        "auth/invalid-email": "El correo no tiene un formato válido.",
         "auth/user-disabled": "Esta cuenta ha sido desactivada.",
         "auth/too-many-requests": "Demasiados intentos fallidos. Espera unos minutos.",
-        "auth/invalid-credential": "Correo o contraseÃ±a incorrectos.",
-        "auth/network-request-failed": "Sin conexiÃ³n a internet. Revisa tu red."
+        "auth/invalid-credential": "Correo o contraseña incorrectos.",
+        "auth/network-request-failed": "Sin conexión a internet. Revisa tu red."
     };
 
-    return errores[code] || "Error al iniciar sesiÃ³n. Intenta de nuevo.";
+    return errores[code] || "Error al iniciar sesión. Intenta de nuevo.";
 }
 
 function mostrarError(msg) {
@@ -125,7 +125,7 @@ document.getElementById("sendRecoveryCode")?.addEventListener("click", async () 
         const nombreGuess = email.split("@")[0];
         await enviarCodigoRecuperacion(nombreGuess, email, _recCodigo);
 
-        // Mostrar campo de cÃ³digo dentro del panel de recuperaciÃ³n
+        // Mostrar campo de código dentro del panel de recuperación
         const wrap = document.getElementById("recoveryVerifyWrap");
         if (wrap) wrap.removeAttribute("hidden");
 

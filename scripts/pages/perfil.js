@@ -1,9 +1,9 @@
 ﻿/* ES: Comentarios base para mantenimiento. EN: Baseline comments for maintenance. */
 // ============================================================
 //  scripts/pages/perfil.js
-//  ES: PÃ¡gina de perfil de usuario. Muestra y permite editar
+//  ES: Página de perfil de usuario. Muestra y permite editar
 //      datos personales (nombre, email, ciudad). Integra con
-//      Firebase para persistencia y actualizaciÃ³n de datos.
+//      Firebase para persistencia y actualización de datos.
 //  EN: User profile page. Displays and allows editing of
 //      personal data (name, email, city). Integrates with
 //      Firebase for data persistence and updates.
@@ -105,7 +105,7 @@ const PHONE_COUNTRIES = [
 ];
 
 // ES: Productos por defecto en caso de que Firestore no responda.
-//     Se usan como fallback para garantizar datos en la pÃ¡gina.
+//     Se usan como fallback para garantizar datos en la página.
 // EN: Default products in case Firestore doesn't respond.
 //     Used as fallback to guarantee data on the page.
 const fallbackProducts = [
@@ -118,7 +118,7 @@ const fallbackProducts = [
 ];
 
 // ES: Normaliza y corrige la ruta de imagen, agregando ../ si es necesario
-//     para las imÃ¡genes locales relativas.
+//     para las imágenes locales relativas.
 // EN: Normalizes and corrects the image path, adding ../ if necessary
 //     for relative local images.
 function normalizeImage(src) {
@@ -128,7 +128,7 @@ function normalizeImage(src) {
 }
 
 // ES: Normaliza los datos de un producto asegurando que tenga nombre, precio
-//     e imagen vÃ¡lidos. Sirve para homogenizar productos de diferentes fuentes.
+//     e imagen válidos. Sirve para homogenizar productos de diferentes fuentes.
 // EN: Normalizes product data ensuring it has valid name, price,
 //     and image. Serves to homogenize products from different sources.
 function sanitizeProduct(rawProduct) {
@@ -160,7 +160,7 @@ function toCheckoutProduct(rawProduct) {
     };
 }
 
-// ES: Redirige el usuario a la pÃ¡gina de checkout con un producto especÃ­fico.
+// ES: Redirige el usuario a la página de checkout con un producto específico.
 //     Guarda el producto en sessionStorage para que checkout.js lo recupere.
 // EN: Redirects the user to the checkout page with a specific product.
 //     Saves the product in sessionStorage for checkout.js to retrieve.
@@ -171,10 +171,10 @@ function buyNow(rawProduct) {
     window.location.href = "../paginas/checkout.html";
 }
 
-// ES: Normaliza el nombre del usuario, aplicando mayÃºscula inicial y tratamientos
-//     especiales para nombres como JosÃ© y Chavamon. Retorna "Cliente" si estÃ¡ vacÃ­o.
+// ES: Normaliza el nombre del usuario, aplicando mayúscula inicial y tratamientos
+//     especiales para nombres como José y Chavamon. Retorna "Cliente" si está vacío.
 // EN: Normalizes user name, applying initial capitalization and special treatments
-//     for names like JosÃ© and Chavamon. Returns "Cliente" if empty.
+//     for names like José and Chavamon. Returns "Cliente" if empty.
 function normalizeProfileName(rawName) {
     const cleaned = String(rawName || "").trim().replace(/\s+/g, " ");
     if (!cleaned) return "Cliente";
@@ -359,7 +359,7 @@ function renderProfilePill(target, iconMarkup, label, value, tone = "default") {
 }
 
 // ES: Llena los campos del perfil con datos del usuario autenticado. Muestra como
-//     tarjetas su info (correo, ciudad) y estadÃ­sticas (favoritos, carrito).
+//     tarjetas su info (correo, ciudad) y estadísticas (favoritos, carrito).
 // EN: Fills profile fields with authenticated user data. Displays as
 //     cards their info (email, city) and statistics (favorites, cart).
 function hydrateProfile(user) {
@@ -406,7 +406,7 @@ function hydrateProfile(user) {
 }
 
 // ES: Obtiene productos de Firestore. Si no disponibles, usa fallback local.
-//     Elimina duplicados por nombre y filtra productos invÃ¡lidos.
+//     Elimina duplicados por nombre y filtra productos inválidos.
 // EN: Gets products from Firestore. If unavailable, uses local fallback.
 //     Removes duplicates by name and filters out invalid products.
 async function getSmuckyProducts() {
@@ -433,8 +433,8 @@ async function getSmuckyProducts() {
     return cleanFallback;
 }
 
-// ES: Renderiza tarjetas de productos recomendados y lista rÃ¡pida de compra.
-//     Filtra productos invÃ¡lidos y agrupa en 2 secciones (6 y 10 productos).
+// ES: Renderiza tarjetas de productos recomendados y lista rápida de compra.
+//     Filtra productos inválidos y agrupa en 2 secciones (6 y 10 productos).
 // EN: Renders recommended product cards and quick purchase list.
 //     Filters invalid products and groups in 2 sections (6 and 10 products).
 function renderRecommendations(products) {
@@ -497,7 +497,7 @@ function renderRecommendations(products) {
     };
 }
 
-// ES: Inicializa la pÃ¡gina de perfil: sincroniza con  Firebase, carga usuario
+// ES: Inicializa la página de perfil: sincroniza con  Firebase, carga usuario
 //     actual, rellena los campos, obtiene productos y renderiza recomendaciones.
 // EN: Initializes the profile page: syncs with Firebase, loads current user,
 //     fills fields, gets products, and renders recommendations.

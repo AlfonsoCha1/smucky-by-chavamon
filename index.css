@@ -38,7 +38,7 @@
     position: relative;
     overflow: hidden;
 
-    /* AnimaciÃ³n de entrada: desliza desde la derecha */
+    /* Animación de entrada: desliza desde la derecha */
     /* Entry animation: slides in from the right */
     animation: toastSlideIn .35s cubic-bezier(.22,.68,0,1.2) both;
 }
@@ -56,7 +56,7 @@
     animation: toastProgress var(--toast-duration, 3.5s) linear forwards;
 }
 
-/* Verde â€“ carrito / Ã©xito */
+/* Verde â€“ carrito / éxito */
 /* Green â€“ cart / success */
 .toast.toast-success {
     background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
@@ -77,7 +77,7 @@
     border: 1px solid rgba(255,255,255,.15);
 }
 
-/* CorazÃ³n / favoritos â€“ rosa */
+/* Corazón / favoritos â€“ rosa */
 /* Heart / favorites â€“ pink */
 .toast.toast-fav {
     background: linear-gradient(135deg, #e11d48 0%, #be185d 100%);
@@ -115,7 +115,7 @@
     line-height: 1.35;
 }
 
-/* BotÃ³n X para cerrar manualmente */
+/* Botón X para cerrar manualmente */
 /* X button to manually close */
 .toast-close {
     background: none;
@@ -135,7 +135,7 @@
     background: rgba(255,255,255,.2);
 }
 
-/* AnimaciÃ³n salida â€“ desliza a la derecha y se desvanece */
+/* Animación salida â€“ desliza a la derecha y se desvanece */
 /* Exit animation â€“ slides right and fades out */
 .toast.toast-out {
     animation: toastSlideOut .3s ease-in forwards;
@@ -170,7 +170,7 @@
     }
 }
 
-/* Reset bÃ¡sico */
+/* Reset básico */
 * {
     margin: 0;
     padding: 0;
@@ -1033,7 +1033,7 @@ html {
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
 }
 
-/* ===== DIVISOR DE CATEGORÃAS ===== */
+/* ===== DIVISOR DE CATEGORÍAS ===== */
 .category-divider {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     padding: 60px 20px;
@@ -2881,3 +2881,104 @@ svg {
     }
 }
 
+
+/* ── Modal de confirmación del menú de perfil ── */
+.index-confirm-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: grid;
+    place-items: center;
+    background: rgba(2, 6, 23, 0.55);
+    backdrop-filter: blur(5px);
+    padding: 16px;
+}
+.index-confirm-modal[hidden] {
+    display: none !important;
+}
+.index-confirm-card {
+    width: min(460px, 95vw);
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    padding: 18px;
+    color: #f8fafc;
+    background:
+        radial-gradient(circle at 12% 12%, rgba(34, 197, 94, 0.32) 0, transparent 33%),
+        radial-gradient(circle at 88% 0%, rgba(239, 68, 68, 0.33) 0, transparent 36%),
+        linear-gradient(140deg, #0f172a 0%, #1e293b 52%, #0b3d3a 100%);
+    box-shadow: 0 24px 48px rgba(2, 6, 23, 0.46);
+}
+.index-confirm-kicker {
+    display: inline-block;
+    font-size: 0.74rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    border-radius: 999px;
+    border: 1px solid rgba(148, 163, 184, 0.48);
+    background: rgba(148, 163, 184, 0.2);
+    padding: 5px 10px;
+}
+.index-confirm-card h3 {
+    margin-top: 10px;
+    font-family: "Archivo", "Segoe UI", sans-serif;
+    font-size: 1.35rem;
+}
+.index-confirm-card p {
+    margin-top: 6px;
+    line-height: 1.5;
+}
+.index-confirm-input-wrap {
+    margin-top: 10px;
+}
+.index-confirm-input-wrap label {
+    color: #e2e8f0;
+    font-size: 0.9rem;
+}
+.index-confirm-input-wrap input {
+    display: block;
+    width: 100%;
+    margin-top: 6px;
+    margin-bottom: 6px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(148, 163, 184, 0.8);
+    background: rgba(248, 250, 252, 0.92);
+    color: #0f172a;
+    font: inherit;
+    box-sizing: border-box;
+}
+.index-confirm-input-hint {
+    margin-top: 0;
+    font-size: 0.82rem;
+    color: #bfdbfe;
+}
+.index-confirm-actions {
+    margin-top: 14px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+.index-confirm-actions button {
+    border: none;
+    border-radius: 10px;
+    padding: 9px 16px;
+    font: inherit;
+    font-weight: 800;
+    cursor: pointer;
+    color: #f8fafc;
+}
+.index-confirm-actions button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+.index-confirm-accept {
+    background: linear-gradient(135deg, #ef4444 0%, #991b1b 100%);
+}
+.index-confirm-cancel {
+    background: linear-gradient(135deg, #22c55e 0%, #166534 100%);
+}
+.index-confirm-accept:hover,
+.index-confirm-cancel:hover {
+    filter: brightness(1.08);
+}

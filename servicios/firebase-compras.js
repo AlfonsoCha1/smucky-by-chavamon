@@ -76,7 +76,7 @@ async function resolverDocumentoProducto(productoId) {
 }
 
 // ES: Obtiene todos los productos de Firestore y los devuelve como array con
-//     sus datos normalizados (nombre, precio, stock, categorÃ­a e imagen).
+//     sus datos normalizados (nombre, precio, stock, categoría e imagen).
 // EN: Fetches all products from Firestore and returns them as a normalized array
 //     with name, price, stock, category, and image fields.
 async function cargarProductosDesdeFirestore() {
@@ -105,7 +105,7 @@ async function cargarProductosDesdeFirestore() {
 }
 
 // ES: Obtiene el stock actual de cada producto y lo devuelve como un mapa
-//     {id_producto: stock}. Ãštil para sincronizaciÃ³n rÃ¡pida del inventario.
+//     {id_producto: stock}. Ãštil para sincronización rápida del inventario.
 // EN: Gets the current stock for each product and returns it as a map
 //     {product_id: stock}. Useful for quick inventory synchronization.
 async function cargarStockDesdeFirestore() {
@@ -126,7 +126,7 @@ async function cargarStockDesdeFirestore() {
 }
 
 // ES: Procesa la compra de un producto: descuenta el stock en Firestore con una
-//     transacciÃ³n atÃ³mica, crea un documento en "pedidos" y otro en "ventas".
+//     transacción atómica, crea un documento en "pedidos" y otro en "ventas".
 //     Muestra alertas en caso de stock insuficiente o errores de permisos.
 // EN: Processes the purchase of a product: deducts stock in Firestore using an
 //     atomic transaction, creates a document in "pedidos" and one in "ventas".

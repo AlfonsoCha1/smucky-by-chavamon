@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mis pedidos | SMUCKY´s By CHAVAMON</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="../LOGO DE LA EMPRESA/La-pura-letra-logo.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="pedidos.css" />
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="brand">
+      <img class="brand-logo" src="../LOGO DE LA EMPRESA/La-pura-letra-logo.png" alt="Logo">
+      <div class="brand-text-single">SMUCKY´s By CHAVAMON</div>
+    </div>
+
+    <nav class="nav">
+      <a href="../index.html">INICIO</a>
+      <a href="../tienda.html">TIENDA</a>
+      <a href="../colecciones.html">COLECCIONES</a>
+      <a href="../novedades.html">NOVEDADES</a>
+      <a href="#" class="active">MIS PEDIDOS</a>
+    </nav>
+
+    <div class="top-icons">
+      <button class="icon-btn" aria-label="Buscar">⌕</button>
+      <button class="icon-btn" aria-label="Favoritos">♡</button>
+      <button class="icon-btn" aria-label="Carrito">🛍</button>
+    </div>
+  </header>
+
+  <main class="orders-page">
+    <section class="orders-hero">
+      <div class="hero-left">
+        <h1>Mis <span>pedidos</span></h1>
+        <p>Consulta y gestiona tus compras fácilmente</p>
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat-pill"><span>🛍</span> <strong id="totalOrders">0</strong> Pedidos</div>
+        <div class="stat-pill"><span>✅</span> <strong id="deliveredOrders">0</strong> Entregado</div>
+        <div class="stat-pill"><span>🚚</span> <strong id="progressOrders">0</strong> En proceso</div>
+      </div>
+    </section>
+
+    <div class="gradient-line"></div>
+
+    <section class="orders-grid" id="ordersGrid">
+
+      <article class="order-card green" data-status="entregado">
+        <div class="card-top">
+          <div class="order-id">#SMK-1023</div>
+          <div class="status delivered">✓ Entregado</div>
+        </div>
+
+        <div class="product-row">
+          <div class="product-info">
+            <div class="info-item">
+              <span class="label">Producto</span>
+              <span class="value">Playera deportiva negra</span>
+            </div>
+
+            <div class="info-item">
+              <span class="label">Fecha</span>
+              <span class="value">18 Abril 2026</span>
+            </div>
+
+            <div class="info-item">
+              <span class="label">Total</span>
+              <span class="value">$350 MXN</span>
+            </div>
+          </div>
+
+          <div class="product-image">
+            <img
+              src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=800&q=80"
+              alt="Playera deportiva negra"
+            />
+          </div>
+        </div>
+
+        <div class="order-meta">
+          <div class="meta-box">
+            <span class="meta-title">Fecha de compra</span>
+            <span class="meta-value">18 Abril 2026</span>
+          </div>
+
+          <div class="meta-box">
+            <span class="meta-title">Método de pago</span>
+            <span class="meta-value">Tarjeta •••• 4247</span>
+          </div>
+
+          <div class="meta-box">
+            <span class="meta-title">Total</span>
+            <span class="meta-value">$350 MXN</span>
+          </div>
+        </div>
+
+        <div class="order-actions">
+          <button class="btn btn-primary btn-details">Ver detalles</button>
+          <button class="btn btn-secondary btn-reorder">Reordenar</button>
+        </div>
+      </article>
+
+      <article class="order-card orange" data-status="proceso">
+        <div class="card-top">
+          <div class="order-id">#SMK-1024</div>
+          <div class="status progress">◔ En proceso</div>
+        </div>
+
+        <div class="product-row">
+          <div class="product-info">
+            <div class="info-item">
+              <span class="label">Producto</span>
+              <span class="value">Short deportivo mujer</span>
+            </div>
+
+            <div class="info-item">
+              <span class="label">Fecha</span>
+              <span class="value">17 Abril 2026</span>
+            </div>
+
+            <div class="info-item">
+              <span class="label">Total</span>
+              <span class="value">$150 MXN</span>
+            </div>
+          </div>
+
+          <div class="product-image">
+            <img
+              src="https://images.unsplash.com/photo-1506629905607-d9d13b2b3d91?auto=format&fit=crop&w=800&q=80"
+              alt="Short deportivo mujer"
+            />
+          </div>
+        </div>
+
+        <div class="order-meta">
+          <div class="meta-box">
+            <span class="meta-title">Fecha de compra</span>
+            <span class="meta-value">17 Abril 2026</span>
+          </div>
+
+          <div class="meta-box">
+            <span class="meta-title">Método de pago</span>
+            <span class="meta-value">Mercado Pago</span>
+          </div>
+
+          <div class="meta-box">
+            <span class="meta-title">Total</span>
+            <span class="meta-value">$150 MXN</span>
+          </div>
+        </div>
+
+        <div class="order-actions">
+          <button class="btn btn-primary btn-details">Ver detalles</button>
+        </div>
+      </article>
+
+    </section>
+
+    <section class="benefits">
+      <div class="benefit-card">
+        <div class="benefit-icon">🚚</div>
+        <div>
+          <h3>Envío rápido</h3>
+          <p>A todo México</p>
+        </div>
+      </div>
+
+      <div class="benefit-card">
+        <div class="benefit-icon">🛡</div>
+        <div>
+          <h3>Garantía SMUCKY'S</h3>
+          <p>Calidad asegurada</p>
+        </div>
+      </div>
+
+      <div class="benefit-card">
+        <div class="benefit-icon">🎧</div>
+        <div>
+          <h3>Soporte 24/7</h3>
+          <p>Siempre contigo</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal-overlay" id="detailsModal">
+    <div class="modal-box">
+      <button class="modal-close" id="closeModal">×</button>
+      <h2>Detalles del pedido</h2>
+      <div id="modalContent">
+        <p>Aquí se mostrará la información del pedido.</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="pedidos.js"></script>
+</body>
+
+ <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-section footer-links-grid" id="contacto">
+        <div>
+          <h4>AYUDA</h4>
+          <ul>
+            <li><a href="../../ayuda/entregas.html">Informacion De Entrega</a></li>
+            <li><a href="../../ayuda/devoluciones.html">Politica De Devoluciones</a></li>
+            <li><a href="../Pedidos/pedidos.html">Pedidos</a></li>
+            <li><a href="../../soporte/index.html">Soporte</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>SMUCKY´s By CHAVAMON</h4>
+          <ul>
+            <li><a href="../../informacion/sobre-mi.html">Sobre Nosotros</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-section">
+        <h4>Síguenos</h4>
+        <div class="social-and-logo">
+          <div class="social-links">
+            <a class="social-facebook" href="https://www.facebook.com/profile.php?id=61584479614840" target="_blank" rel="noopener noreferrer">Facebook</a>
+            <a class="social-instagram" href="https://www.instagram.com/smucky.by_chavamon/?hl=es-la" target="_blank" rel="noopener noreferrer">Instagram</a>
+            <a class="social-x" href="https://x.com" target="_blank" rel="noopener noreferrer">X</a>
+            <a class="social-tiktok" href="https://www.tiktok.com/@smuckys_by.chavamon" target="_blank" rel="noopener noreferrer">Tik Tok </a>
+            <a class="social-youtube" href="https://www.youtube.com/channel/UCcLRrl9z42RhSXBd7Mlbwwg" target="_blank" rel="noopener noreferrer">Youtube </a>
+            <p class="footer-phone">
+              <span>Tel: +52 (777) 520 6401</span>
+            </p>
+          </div>
+          <div class="footer-logo-card">
+            <img src="../../LOGO DE LA EMPRESA/LOGO.jpeg" alt="Logo SMUCKY´s By CHAVAMON">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 SMUCKY´s By CHAVAMON. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+</html>
