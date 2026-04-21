@@ -324,6 +324,14 @@ function renderSavedCards() {
                     </div>
                     <div class="co-card-meta">
                         <button type="button" class="co-card-edit" data-card-id="${card.id}">Editar</button>
+                        <button type="button" class="co-card-delete" data-card-id="${card.id}" title="Eliminar tarjeta" aria-label="Eliminar tarjeta">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                                <polyline points="3 6 5 6 21 6"/>
+                                <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+                                <path d="M10 11v6m4-6v6"/>
+                                <path d="M9 6V4h6v2"/>
+                            </svg>
+                        </button>
                         <span class="co-card-expiry">${card.expiryMonth}/${card.expiryYear}</span>
                         ${defaultPill}${statusPill}
                     </div>
@@ -827,8 +835,10 @@ window.addEventListener("DOMContentLoaded", () => {
         const radio = event.target.closest("input[name='coSavedCard']");
         if (!radio) return;
 
+        // ES: Deselecciona Mercado Pago al elegir tarjeta.
+        // EN: Deselects Mercado Pago when a card is chosen.
         selectedCardId = radio.value;
-        coPayMP.checked = false;
+        if (coPayMP) coPayMP.checked = false;
         if (coMpForm) coMpForm.style.display = "none";
         if (mpFormError) mpFormError.style.display = "none";
 
@@ -842,15 +852,47 @@ window.addEventListener("DOMContentLoaded", () => {
         renderSavedCards();
     });
 
-    coSavedCardsList?.addEventListener("click", (event) => {
+    coSavedCardsList?.addEventListener("click", async (event) => {
+        // Editar tarjeta
         const editBtn = event.target.closest(".co-card-edit");
-        if (!editBtn) return;
+        if (editBtn) {
+            event.preventDefault();
+            event.stopPropagation();
+            const card = cards.find((item) => item.id === editBtn.dataset.cardId);
+            if (card) openCardModal(card);
+            return;
+        }
 
-        event.preventDefault();
-        event.stopPropagation();
-        const cardId = editBtn.dataset.cardId;
-        const card = cards.find((item) => item.id === cardId);
-        if (card) openCardModal(card);
+        // Eliminar tarjeta
+        const deleteBtn = event.target.closest(".co-card-delete");
+        if (deleteBtn) {
+            event.preventDefault();
+            event.stopPropagation();
+            const cardId = deleteBtn.dataset.cardId;
+            const card = cards.find((item) => item.id === cardId);
+            if (!card) return;
+
+            const result = await showCheckoutDialog({
+                kicker: "Eliminar tarjeta",
+                title: `¿Eliminar la tarjeta que termina en ${card.last4}?`,
+                message: "Esta acción no se puede deshacer.",
+                acceptText: "Sí, eliminar",
+                cancelText: "Cancelar",
+                tone: "danger"
+            });
+
+            if (!result.confirmed) return;
+
+            try {
+                await waitForGlobal("SmuckyPayments");
+                cards = await window.SmuckyPayments.deleteCard(cardId);
+                if (selectedCardId === cardId) selectedCardId = null;
+                renderSavedCards();
+                showPaymentStatus("Tarjeta eliminada correctamente.", "success");
+            } catch (err) {
+                showPaymentStatus("No se pudo eliminar la tarjeta. Intenta de nuevo.");
+            }
+        }
     });
 
     // Cerrar modal
@@ -946,8 +988,17 @@ window.addEventListener("DOMContentLoaded", () => {
     coConfirmBtn?.addEventListener("click", handleConfirm);
     coConfirmBtnSide?.addEventListener("click", handleConfirm);
 
-    // ES: Oculta el formulario manual de MP (ya no se usa, MP redirige directamente).
-    // EN: Hides the manual MP form (no longer used, MP redirects directly).
+    // ES: Al seleccionar MP, deselecciona la tarjeta guardada.
+    // EN: When MP is selected, deselect the saved card.
+    coPayMP?.addEventListener("change", () => {
+        if (coPayMP.checked) {
+            selectedCardId = null;
+            // Deselect all saved card radios visually
+            document.querySelectorAll("input[name='coSavedCard']").forEach(r => r.checked = false);
+            renderSavedCards();
+        }
+        if (coMpForm) coMpForm.style.display = "none";
+    });
     if (coMpForm) coMpForm.style.display = "none";
 
     // Escape para cerrar modal

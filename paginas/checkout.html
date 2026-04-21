@@ -1,4 +1,3 @@
-
 <!-- ES: Comentarios base para mantenimiento. EN: Baseline comments for maintenance. -->
 <html lang="es">
 <head>
@@ -95,34 +94,12 @@
                         </span>
                     </label>
 
-                    <!-- Formulario Mercado Pago (se expande al seleccionar) -->
-                    <div id="coMpForm" class="co-mp-form" style="display:none;">
-                        <p class="co-mp-form-title">Ingresa tu informaciÃ³n de Mercado Pago</p>
-                        <div class="co-field-group">
-                            <label for="mpEmail">Correo de Mercado Pago <span class="co-required">*</span></label>
-                            <input id="mpEmail" type="email" placeholder="tucuenta@ejemplo.com" autocomplete="email" required>
-                        </div>
-                        <div class="co-field-group">
-                            <label for="mpName">Nombre completo <span class="co-required">*</span></label>
-                            <input id="mpName" type="text" placeholder="Como aparece en tu cuenta" autocomplete="name" required>
-                        </div>
-                        <div class="co-mp-form-row">
-                            <div class="co-field-group">
-                                <label for="mpPhone">TelÃ©fono (10 dÃ­gitos) <span class="co-required">*</span></label>
-                                <input id="mpPhone" type="tel" inputmode="numeric" maxlength="10" placeholder="5512345678" required>
-                            </div>
-                            <div class="co-field-group">
-                                <label for="mpAlias">Alias o CVU <span class="co-required">*</span></label>
-                                <input id="mpAlias" type="text" placeholder="ejm: juan.perez123" required>
-                            </div>
-                        </div>
-                        <p id="mpFormError" class="co-form-error" style="display:none;"></p>
-                    </div>
+<!-- Mercado Pago redirige directo, sin formulario manual -->
                 </div>
 
                 <hr class="co-divider">
 
-                <!-- BotÃ³n principal CTA -->
+                <!-- Botón principal CTA -->
                 <button id="coConfirmBtn" class="co-confirm-btn">Realiza tu pedido y paga</button>
                 <p class="co-terms">
                     Al realizar tu pedido, aceptas nuestra
@@ -340,7 +317,7 @@
     
     <script src="../servicios/stripe-pago.js"></script>
     <script type="module" src="../servicios/mercado-pago.js"></script>
-    <!-- 3. MÃ³dulos Firebase que exponen window globals -->
+    <!-- 3. Módulos Firebase que exponen window globals -->
     
     
     <script type="module" src="../servicios/firebase-compras.js"></script>
@@ -354,7 +331,7 @@
     
     
     <script type="module" src="../servicios/emailjs-notificaciones.js"></script>
-    <!-- 5. LÃ³gica de la pÃ¡gina -->
+    <!-- 5. Lógica de la página -->
     
     
     <script type="module" src="../scripts/pages/checkout.js"></script>
@@ -390,9 +367,3 @@
     <script src="../scripts/pages/menu-global.js"></script>
 </body>
 </html>
-
-
-
-
-
-
