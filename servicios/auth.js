@@ -110,12 +110,17 @@
                         return;
                     }
 
+                    // ES: Mantiene todos los campos ya guardados (dirección, teléfono, etc.)
+                    //     y solo sobreescribe uid, email, nombre y rol desde Firebase Auth.
+                    // EN: Preserves all already-saved fields (address, phone, etc.)
+                    //     and only overwrites uid, email, name and role from Firebase Auth.
+                    const existente = getCurrentUser() || {};
                     firebaseUserCache = saveUser({
+                        ...existente,
                         uid: firebaseUser.uid,
                         email: firebaseUser.email,
-                        nombre: getCurrentUser()?.nombre || firebaseUser.displayName || (firebaseUser.email || "").split("@")[0],
-                        ciudad: getCurrentUser()?.ciudad || "",
-                        rol: getCurrentUser()?.rol || "cliente",
+                        nombre: existente.nombre || firebaseUser.displayName || (firebaseUser.email || "").split("@")[0],
+                        rol: existente.rol || "cliente",
                         lastSeenAt: new Date().toISOString()
                     });
                     resolve(firebaseUserCache);
@@ -137,4 +142,3 @@
         ready: syncWithFirebaseAuth()
     };
 })();
-

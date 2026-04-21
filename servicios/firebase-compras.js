@@ -34,7 +34,9 @@ const firebaseConfig = {
     measurementId: "G-ZL3DD1KGH8"
 };
 
-const app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
+// ES: Reutiliza la misma instancia "auth-app" que usa auth.js (evita error de app duplicada).
+// EN: Reuses the same "auth-app" instance used by auth.js (avoids duplicate app error).
+const app = getApps().find(a => a.name === "auth-app") || initializeApp(firebaseConfig, "auth-app");
 const db = getFirestore(app);
 
 // ES: Busca el documento del producto en Firestore primero por ID directo,
@@ -221,4 +223,3 @@ async function realizarPedido(productoId, cantidad = 1, nombreProducto = "", pre
 window.realizarPedido = realizarPedido;
 window.cargarStockDesdeFirestore = cargarStockDesdeFirestore;
 window.cargarProductosDesdeFirestore = cargarProductosDesdeFirestore;
-

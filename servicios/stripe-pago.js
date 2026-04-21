@@ -66,47 +66,75 @@ async function iniciarPagoStripe(productoId, cantidad, nombreProducto, precioUni
     return false;
 }
 
+// ES: Espera sin límite de tiempo a que Firebase esté listo.
+//     Usa MutationObserver + polling para no perder el pedido si Firebase tarda.
+// EN: Waits without a time limit for Firebase to be ready.
+//     Uses MutationObserver + polling so the order isn't lost if Firebase is slow.
+function esperarFirebase() {
+    return new Promise((resolve) => {
+        if (typeof window.realizarPedido === "function") {
+            resolve();
+            return;
+        }
+        const interval = setInterval(() => {
+            if (typeof window.realizarPedido === "function") {
+                clearInterval(interval);
+                resolve();
+            }
+        }, 150);
+    });
+}
+
 async function confirmarPedidoTrasStripe() {
     const params = new URLSearchParams(window.location.search);
-    if (params.get("pago") !== "exitoso") {
-        return;
-    }
+    if (params.get("pago") !== "exitoso") return;
 
+    // --- Pedido individual ---
     const pendingRaw = localStorage.getItem("smucky_stripe_pending");
-    if (!pendingRaw) {
-        return;
-    }
+    if (pendingRaw) {
+        let pending;
+        try { pending = JSON.parse(pendingRaw); }
+        catch { localStorage.removeItem("smucky_stripe_pending"); return; }
 
-    let pending;
-    try {
-        pending = JSON.parse(pendingRaw);
-    } catch {
         localStorage.removeItem("smucky_stripe_pending");
+        await esperarFirebase();
+
+        const ok = await window.realizarPedido(
+            pending.productoId,
+            pending.cantidad,
+            pending.nombreProducto,
+            pending.precioUnitario,
+            "",
+            "stripe"
+        );
+        if (ok) console.log("✅ Pedido individual confirmado tras Stripe.");
+        else console.error("❌ realizarPedido devolvió false para pedido individual.");
         return;
     }
 
-    localStorage.removeItem("smucky_stripe_pending");
+    // --- Carrito completo ---
+    const cartRaw = localStorage.getItem("smucky_stripe_pending_cart");
+    if (cartRaw) {
+        let cartItems;
+        try { cartItems = JSON.parse(cartRaw); }
+        catch { localStorage.removeItem("smucky_stripe_pending_cart"); return; }
 
-    let attempts = 0;
-    while (typeof window.realizarPedido !== "function" && attempts < 20) {
-        await new Promise((resolve) => setTimeout(resolve, 200));
-        attempts += 1;
-    }
+        localStorage.removeItem("smucky_stripe_pending_cart");
+        await esperarFirebase();
 
-    if (typeof window.realizarPedido !== "function") {
-        console.error("Firebase no cargó a tiempo para confirmar el pedido.");
-        return;
-    }
-
-    const ok = await window.realizarPedido(
-        pending.productoId,
-        pending.cantidad,
-        pending.nombreProducto,
-        pending.precioUnitario
-    );
-
-    if (ok) {
-        console.log("Pedido confirmado tras pago con Stripe.");
+        let todosOk = true;
+        for (const item of cartItems) {
+            const ok = await window.realizarPedido(
+                String(item.firestoreId || item.id),
+                Number(item.qty || 1),
+                item.name,
+                item.price,
+                "",
+                "stripe"
+            );
+            if (!ok) { todosOk = false; console.error("❌ Falló pedido carrito:", item); }
+        }
+        if (todosOk) console.log("✅ Carrito confirmado tras Stripe.");
     }
 }
 
