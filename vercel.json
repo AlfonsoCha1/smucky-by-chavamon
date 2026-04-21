@@ -1,7 +1,0 @@
-{
-  "functions": {
-    "api/crear-preferencia-mp.js": {
-      "runtime": "nodejs20.x"
-    }
-  }
-}
