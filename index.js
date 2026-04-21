@@ -317,8 +317,20 @@ function applyPriceAdjustment(basePrice) {
 // EN: Global application state variables.
 let currentCategory = "all";
 let filteredProducts = [...products];
-let cart = JSON.parse(localStorage.getItem("smucky_cart") || "[]");
-let favorites = JSON.parse(localStorage.getItem("smucky_favorites") || "[]");
+// ES: Claves del carrito y favoritos basadas en el uid del usuario.
+//     Cada usuario tiene su propio carrito en localStorage.
+// EN: Cart and favorites keys based on the user's uid.
+//     Each user has their own cart in localStorage.
+function getCartKey() {
+    const uid = window.SmuckyAuth?.getCurrentUser?.()?.uid || "guest";
+    return `smucky_cart_${uid}`;
+}
+function getFavKey() {
+    const uid = window.SmuckyAuth?.getCurrentUser?.()?.uid || "guest";
+    return `smucky_favorites_${uid}`;
+}
+let cart = JSON.parse(localStorage.getItem(getCartKey()) || "[]");
+let favorites = JSON.parse(localStorage.getItem(getFavKey()) || "[]");
 let currentSlide = 0;
 let buySelection = { product: null, qty: 1 };
 let detailSelection = { product: null, images: [], activeIndex: 0 };
@@ -526,13 +538,13 @@ async function syncProductsFromFirestore() {
 // ES: Persiste el carrito en localStorage para conservarlo entre sesiones.
 // EN: Persists the cart in localStorage to keep it between sessions.
 function saveCart() {
-    localStorage.setItem("smucky_cart", JSON.stringify(cart));
+    localStorage.setItem(getCartKey(), JSON.stringify(cart));
 }
 
 // ES: Persiste la lista de favoritos en localStorage.
 // EN: Persists the favorites list in localStorage.
 function saveFavorites() {
-    localStorage.setItem("smucky_favorites", JSON.stringify(favorites));
+    localStorage.setItem(getFavKey(), JSON.stringify(favorites));
 }
 
 // ES: Actualiza los contadores de carrito y favoritos visibles en el encabezado.
@@ -789,12 +801,16 @@ async function confirmBuyModal() {
         return;
     }
 
-    const unsupportedPaymentMethods = [
-            "Mercado Pago"
-    ];
 
-    if (unsupportedPaymentMethods.includes(paymentMethod)) {
-            alert(`${paymentMethod} aun no esta integrado para cobro real.\n\nPor ahora solo puedes cobrar con tarjeta de credito o tarjeta de debito usando Stripe, o primero configurar ese metodo de pago.`);
+    // Mercado Pago
+    if (paymentMethod === "Mercado Pago" && typeof window.iniciarPagoMercadoPago === "function") {
+        await window.iniciarPagoMercadoPago(
+            String(product.id),
+            qty,
+            product.name,
+            product.price
+        );
+        // La función redirige, no sigue el flujo
         return;
     }
 
@@ -2051,4 +2067,3 @@ updateCartUI();
 syncProfileMenu();
 showSlide(0);
 syncProductsFromFirestore();
-

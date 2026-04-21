@@ -1,4 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // Confirma pedidos tras Stripe y Mercado Pago si aplica
+  if (typeof window.confirmarPedidoTrasStripe === "function") {
+    window.confirmarPedidoTrasStripe();
+  }
+  if (typeof window.confirmarPedidoTrasMP === "function") {
+    window.confirmarPedidoTrasMP();
+  }
   const orderCards = document.querySelectorAll(".order-card");
   const totalOrders = document.getElementById("totalOrders");
   const deliveredOrders = document.getElementById("deliveredOrders");
