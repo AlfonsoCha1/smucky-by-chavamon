@@ -590,24 +590,32 @@ async function handleConfirm() {
     const paymentMethodEl = document.querySelector("input[name='coPayment']:checked");
 
     // ── Mercado Pago ────────────────────────────────────────
+    // ES: Redirige directo a Mercado Pago. Sin formulario manual.
+    // EN: Redirects directly to Mercado Pago. No manual form needed.
     if (paymentMethodEl && paymentMethodEl.value === "Mercado Pago") {
-        // Validar que el formulario de Mercado Pago esté completo
-        const emailVal = mpEmail?.value.trim() || "";
-        const nameVal  = mpName?.value.trim()  || "";
-        const phoneVal = mpPhone?.value.trim()  || "";
-        const aliasVal = mpAlias?.value.trim()  || "";
-
-        if (!emailVal.includes("@") || !nameVal || !/^\d{10}$/.test(phoneVal) || !aliasVal) {
-            if (mpFormError) {
-                mpFormError.textContent = "Completa todos los campos de Mercado Pago: correo, nombre, teléfono de 10 dígitos y alias/CVU.";
-                mpFormError.style.display = "block";
-            }
-            if (coMpForm) coMpForm.style.display = "block";
+        if (typeof window.iniciarPagoMercadoPago !== "function") {
+            showPaymentStatus("Mercado Pago no está disponible. Recarga la página e intenta de nuevo.");
             return;
         }
 
-        mpProfile = { email: emailVal, name: nameVal, phone: phoneVal, alias: mpAlias?.value.trim() || "" };
-        showPaymentStatus("Mercado Pago todavía no está conectado al cobro real. Usa una tarjeta para terminar el pedido.");
+        if (checkoutMode === "cart" && typeof window.iniciarPagoCarritoMP === "function") {
+            await window.iniciarPagoCarritoMP(checkoutItems.map(item => ({
+                id: item.id,
+                firestoreId: item.firestoreId,
+                name: item.name,
+                qty: item.qty,
+                price: item.price
+            })));
+            return;
+        }
+
+        const product = checkoutItems[0];
+        await window.iniciarPagoMercadoPago(
+            String(product.firestoreId || product.id),
+            Number(product.qty || 1),
+            product.name,
+            Number(product.price)
+        );
         return;
     }
 
@@ -938,20 +946,12 @@ window.addEventListener("DOMContentLoaded", () => {
     coConfirmBtn?.addEventListener("click", handleConfirm);
     coConfirmBtnSide?.addEventListener("click", handleConfirm);
 
-    // Toggle formulario Mercado Pago
-    document.querySelectorAll("input[name='coPayment']").forEach(radio => {
-        radio.addEventListener("change", () => {
-            if (coMpForm) {
-                coMpForm.style.display = (radio.value === "Mercado Pago" && radio.checked) ? "block" : "none";
-            }
-            if (mpFormError) mpFormError.style.display = "none";
-        });
-    });
+    // ES: Oculta el formulario manual de MP (ya no se usa, MP redirige directamente).
+    // EN: Hides the manual MP form (no longer used, MP redirects directly).
+    if (coMpForm) coMpForm.style.display = "none";
 
     // Escape para cerrar modal
     document.addEventListener("keydown", (e) => {
         if (e.key === "Escape") closeCardModal();
     });
 });
-
-
