@@ -112,32 +112,22 @@ document.getElementById("sendRecoveryCode")?.addEventListener("click", async () 
         return;
     }
 
-    if (button) {
-        button.textContent = "Enviando codigo...";
-        button.disabled = true;
-    }
+    if (button) { button.textContent = "Enviando enlace..."; button.disabled = true; }
 
     try {
-        _recCodigo = generarCodigo6();
-        _recEmail  = email;
-        _recExpira = Date.now() + 10 * 60 * 1000;
-
-        const nombreGuess = email.split("@")[0];
-        await enviarCodigoRecuperacion(nombreGuess, email, _recCodigo);
-
-        // Mostrar campo de código dentro del panel de recuperación
-        const wrap = document.getElementById("recoveryVerifyWrap");
-        if (wrap) wrap.removeAttribute("hidden");
-
-        mostrarRecovery("Te enviamos un codigo a tu correo. Escribelo abajo para continuar.");
-    } catch (error) {
-        console.error("Error recuperacion:", error.code || error, error.message);
-        mostrarRecovery("No se pudo enviar el enlace de recuperacion. Verifica el correo.", true);
-    } finally {
-        if (button) {
-            button.textContent = "Enviar codigo";
-            button.disabled = false;
+        // ES: Manda el link de recuperación directo de Firebase, sin código intermedio.
+        // EN: Sends the Firebase recovery link directly, without an intermediate code.
+        await sendPasswordResetEmail(auth, email);
+        mostrarRecovery("Te enviamos un enlace a tu correo para restablecer tu contraseña. Revisa tu bandeja de entrada.");
+    } catch (err) {
+        console.error("Error reset password:", err);
+        if (err.code === "auth/user-not-found") {
+            mostrarRecovery("No existe una cuenta con ese correo.", true);
+        } else {
+            mostrarRecovery("No se pudo enviar el enlace. Verifica el correo e intenta de nuevo.", true);
         }
+    } finally {
+        if (button) { button.textContent = "Enviar enlace"; button.disabled = false; }
     }
 });
 

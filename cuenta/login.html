@@ -62,15 +62,10 @@
                         <input id="recoveryEmail" type="email" placeholder="tu@email.com" autocomplete="email">
                     </div>
 
-                    <button type="button" id="sendRecoveryCode" class="secondary-action">Enviar codigo</button>
+                    <button type="button" id="sendRecoveryCode" class="secondary-action">Enviar enlace</button>
 
-                    <div id="recoveryVerifyWrap" hidden>
-                        <div class="input-group">
-                            <label for="recoveryCode">Codigo recibido</label>
-                            <input id="recoveryCode" type="text" inputmode="numeric" maxlength="6" placeholder="Ingresa el codigo de 6 digitos">
-                        </div>
-                        <button type="button" id="verifyRecoveryCode" class="secondary-action">Validar y enviar enlace</button>
-                    </div>
+                    <!-- ES: Campo de código eliminado - ahora se manda el link directo de Firebase -->
+                    <!-- EN: Code field removed - Firebase link is now sent directly -->
                 </div>
 
                 <p class="bottom-text">No tienes cuenta? <a href="register.html" class="auth-link strong-link">Crear cuenta</a></p>
@@ -85,6 +80,3 @@
     <script src="../scripts/pages/menu-global.js"></script>
 </body>
 </html>
-
-
-

@@ -65,10 +65,17 @@ export async function enviarCodigoRecuperacion(nombre, email, codigo) {
     try {
         await cargarEmailJS();
 
+        // ES: Manda el código de 6 dígitos al usuario.
+        //     reset_link muestra el código visualmente en la plantilla.
+        //     El link real de Firebase lo manda Firebase directamente en un segundo correo.
+        // EN: Sends the 6-digit code to the user.
+        //     reset_link shows the code visually in the template.
+        //     The real Firebase link is sent by Firebase directly in a second email.
         await window.emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_RECUPERACION, {
-            user_name:  nombre,  // nombre del usuario
-            email:      email,   // correo destino
-            reset_link: `Tu código de recuperación es: ${codigo} (vence en 10 minutos)` // código como texto
+            user_name:          nombre,
+            email:              email,
+            verification_code:  String(codigo),
+            reset_link:         `Tu código de recuperación es: <strong style="font-size:28px;letter-spacing:6px;color:#6CCB3D;">${codigo}</strong><br><small>Vence en 10 minutos. No lo compartas.</small>`
         });
 
         console.log("✅ Código de recuperación enviado a:", email);

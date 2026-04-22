@@ -239,12 +239,19 @@
         await waitForSmucky();
         await waitForAuthReady();
 
+        // ES: Re-lee el carrito después de que auth esté listo para usar el uid correcto.
+        // EN: Re-reads cart after auth is ready to use the correct uid.
         updateSectionBadges();
         initSectionSearch();
         initSectionCartModal();
         initSectionFavModal();
         initSectionHeader();
         initSyncListeners();
+
+        // ES: Si SmuckyAuth tarda en cargar el uid, reintenta actualizar badges.
+        // EN: If SmuckyAuth is slow loading the uid, retries updating badges.
+        setTimeout(() => updateSectionBadges(), 800);
+        setTimeout(() => updateSectionBadges(), 2000);
     });
 
 })();
