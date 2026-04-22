@@ -58,16 +58,29 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  // ES: Volver a pedir — agrega el producto al carrito compartido y redirige al inicio.
+  // EN: Reorder — adds the product to the shared cart and redirects to home.
   reorderButtons.forEach((button) => {
     button.addEventListener("click", () => {
       const card = button.closest(".order-card");
-      const product = card.querySelector(".info-item .value")?.textContent || "producto";
+      const productName = card.querySelector(".info-item .value")?.textContent || "";
+      const productId   = card.dataset.productId   || card.dataset.id   || null;
+      const productPrice = Number(card.dataset.price) || 0;
+      const productImg  = card.dataset.image || "";
 
-      alert(`Se agregó nuevamente "${product}" al carrito.`);
-      
-      // Aquí puedes reemplazar el alert por tu lógica real:
-      // addToCart(productId)
-      // window.location.href = "../carrito.html";
+      if (typeof window.SmuckyCart !== "undefined" && productId) {
+        window.SmuckyCart.addItem({
+          id:    productId,
+          name:  productName,
+          price: productPrice,
+          qty:   1,
+          image: productImg
+        });
+        // Redirige al inicio para que el usuario vea el carrito actualizado
+        window.location.href = "../index.html?carrito=abierto";
+      } else {
+        alert(`Se agregó nuevamente "${productName}" al carrito.`);
+      }
     });
   });
 

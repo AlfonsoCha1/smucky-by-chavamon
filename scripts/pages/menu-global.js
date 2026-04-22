@@ -249,11 +249,13 @@
 			<a href="${base}cuenta/login.html" id="smuckyMenuLoginLink" class="guest-link">Iniciar sesión</a>
 			<a href="${base}cuenta/registro.html" id="smuckyMenuRegisterLink" class="guest-link">Registrarse</a>
 			<a href="${base}cuenta/perfil.html" id="smuckyMenuProfileLink">Mi perfil</a>
+			<a href="${base}informacion/sobre-mi.html">Acerca de nosotros</a>
 			<a href="${base}paginas/Pedidos/pedidos.html" id="smuckyMenuOrdersLink">Mis pedidos</a>
 			<a href="${base}paginas/checkout.html" id="smuckyMenuCheckoutLink">Checkout</a>
 			<a href="${base}ayuda/centro-ayuda.html">Centro de ayuda</a>
+			<a href="${base}ayuda/devoluciones.html">Cambios y devoluciones</a>
+			<a href="${base}ayuda/entregas.html">Información de entrega</a>
 			<a href="${base}soporte/index.html">Soporte</a>
-			<a href="${base}informacion/sobre-mi.html">Sobre nosotros</a>
 			<button type="button" id="smuckyMenuLogoutBtn">Cerrar sesión</button>
 		</nav>
 		<div class="smucky-menu-foot">Ropa deportiva y casual con estilo propio.</div>

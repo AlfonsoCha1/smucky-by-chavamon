@@ -1,27 +1,33 @@
 ﻿/* ES: Comentarios base para mantenimiento. EN: Baseline comments for maintenance. */
 // ============================================================
 //  ARCHIVO 2 DE 3: servicios/stripe-pago.js
-//  QUÃ‰ HACE: Maneja el cobro real con tarjeta usando Stripe
+//  QUÉ HACE: Maneja el cobro real con tarjeta usando Stripe
 // ============================================================
 
 const STRIPE_PUBLISHABLE_KEY = "pk_live_51TKmQjBzNG0S5esGgFTxl0a44Rm1c1mMLoxRe6dnqXGC3ZBE6rIp4LCurEsqmDv9EOYSx7fxOXEpI5rKqInFT2KL00yyYloMjr";
 
 const STRIPE_PRICE_IDS = {
+    // ── Playeras Premium ──────────────────────────────────────
     "1":  "price_1TL8b2BzNG0S5esGCJzOv7k3",  // Playera Premium Azul Claro    $158
-    "2":  "price_1TL8b3BzNG0S5esGCpLWL1Lv",  // Playera Premium Rojizo        $158
-    "3":  "price_1TL8ayBzNG0S5esGQCco4I0U",  // Playera Premium Rojo          $158
+    "2":  "price_1TL8ayBzNG0S5esGQCco4l0U",  // Playera Premium Rojo          $158
+    "3":  "price_1TL8b3BzNG0S5esGCpLWL1Lv",  // Playera Premium Rojizo        $158
     "4":  "price_1TL8azBzNG0S5esGC5msoIK6",  // Playera Premium Blanco        $158
-    "5":  "price_1TL8b4BzNG0S5esGTRYuJvEt",  // Playera Sin Mangas Negro      $78
-    "6":  "price_1TL8azBzNG0S5esGyp6Uor4U",  // Calcetines Premium Pack       $53
-    "7":  "price_1TL8ayBzNG0S5esGCQPts5UQ",  // Blusa Premium Roja            $68
-    "8":  "price_1TL8b2BzNG0S5esGvWg45Tvs",  // Blusa Premium Rosa            $68
-    "9":  "price_1TLESwBzNG0S5esGJzlA0hrF",  // Short Deportivo Rosa Claro    $158
-    "10": "price_1TLESNBzNG0S5esGZrgLoPH8",  // Short Deportivo Rosa Fuerte   $158
-    "11": "price_1TLEJNBzNG0S5esGBgH8ZB8s",  // Short Deportivo Rojo          $158
-    "12": "price_1TLEIvBzNG0S5esGj1pAsMWQ",  // Short Deportivo Negro         $158
-    "13": "price_1TLEAPBzNG0S5esGI72SBG1K",  // Short Deportivo Beige         $158
-    "14": "price_1TL8b0BzNG0S5esG515DtOEf",  // Short Deportivo Azul Claro    $158
-    "15": "price_1TL8ayBzNG0S5esGjVIWkxdG",  // Short Deportivo Azul Fuerte   $158
+    "5":  "price_1TOqqmBzNG0S5esG1RwGj6PC",  // Playera Premium Negro         $158
+    // ── Playeras Sin Mangas ───────────────────────────────────
+    "9":  "price_1TL8b4BzNG0S5esGTRYuJvEt",  // Playera Sin Mangas Negro      $78
+    // ── Calcetines ────────────────────────────────────────────
+    "8":  "price_1TL8azBzNG0S5esGyp6Uor4U",  // Calcetines Premium Pack       $53
+    // ── Blusas ────────────────────────────────────────────────
+    "10": "price_1TL8ayBzNG0S5esGCQPts5UQ",  // Blusa Premium Roja            $68
+    "12": "price_1TL8b2BzNG0S5esGvWg45Tvs",  // Blusa Premium Rosa            $68
+    // ── Shorts Deportivos ─────────────────────────────────────
+    "11": "price_1TL8b0BzNG0S5esG515DtOEf",  // Short Deportivo Azul Claro    $158
+    "13": "price_1TL8ayBzNG0S5esGjVIWkxdG",  // Short Deportivo Azul Fuerte   $158
+    "14": "price_1TLEAPBzNG0S5esGI72SBG1K",  // Short Deportivo Beige         $158
+    "15": "price_1TLEIvBzNG0S5esGj1pAsMWQ",  // Short Deportivo Negro         $158
+    "16": "price_1TLESNBzNG0S5esGZrgLoPH8",  // Short Deportivo Rosa Fuerte   $158
+    "17": "price_1TLEJNBzNG0S5esGBgH8ZB8s",  // Short Deportivo Rojo          $158
+    "18": "price_1TLESwBzNG0S5esGJzlA0hrF",  // Short Deportivo Rosa Claro    $158
 };
 
 const SUCCESS_URL = `${window.location.origin}/cuenta/pedidos.html?pago=exitoso`;

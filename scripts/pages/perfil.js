@@ -811,24 +811,44 @@ form?.addEventListener("submit", async (event) => {
     const coloniaNormalizada = normalizeColonia(rawColonia);
     const calleNormalizada = normalizeStreet(streetInput ? streetInput.value.trim() : "", coloniaNormalizada);
 
+    const updatedProfile = {
+        ...current,
+        nombre:           normalizeProfileName(nameInput ? nameInput.value : ""),
+        email:            emailInput ? emailInput.value.trim() : "",
+        ciudad:           cityInput ? cityInput.value.trim() : "",
+        fecha_cumpleanos: normalizedBirthdate,
+        fecha_nacimiento: normalizedBirthdate,
+        telefono:         fullPhone,
+        telefono_numero:  phoneNumber,
+        telefono_codigo:  phoneCode,
+        telefono_pais:    selectedCountry.iso,
+        calle:            calleNormalizada,
+        colonia:          coloniaNormalizada,
+        estado:           stateInput ? stateInput.value.trim() : "",
+        cp:               zipInput ? zipInput.value.trim() : "",
+        updatedAt:        new Date().toISOString()
+    };
+
+    // ES: Guarda en localStorage
+    // EN: Save to localStorage
     if (window.SmuckyAuth) {
-        window.SmuckyAuth.saveUser({
-            ...current,
-            nombre: normalizeProfileName(nameInput ? nameInput.value : ""),
-            email: emailInput ? emailInput.value.trim() : "",
-            ciudad: cityInput ? cityInput.value.trim() : "",
-            fecha_cumpleanos: normalizedBirthdate,
-            fecha_nacimiento: normalizedBirthdate,
-            telefono: fullPhone,
-            telefono_numero: phoneNumber,
-            telefono_codigo: phoneCode,
-            telefono_pais: selectedCountry.iso,
-            calle: calleNormalizada,
-            colonia: coloniaNormalizada,
-            estado: stateInput ? stateInput.value.trim() : "",
-            cp: zipInput ? zipInput.value.trim() : "",
-            updatedAt: new Date().toISOString()
-        });
+        window.SmuckyAuth.saveUser(updatedProfile);
+    }
+
+    // ES: Guarda en Firestore para que persista entre sesiones y dispositivos.
+    // EN: Saves to Firestore so it persists between sessions and devices.
+    try {
+        const { initializeApp, getApps } = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js");
+        const { getFirestore, doc, setDoc } = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js");
+        const firestoreApp = getApps().find(a => a.name === "auth-app") || initializeApp(firebaseConfig, "auth-app");
+        const firestoreDb = getFirestore(firestoreApp);
+        const uid = updatedProfile.uid || current.uid;
+        if (uid) {
+            await setDoc(doc(firestoreDb, "usuarios", uid), updatedProfile, { merge: true });
+            console.log("✅ Perfil guardado en Firestore.");
+        }
+    } catch (firestoreErr) {
+        console.warn("No se pudo guardar en Firestore (se guardó en localStorage):", firestoreErr);
     }
 
     hydrateProfile(window.SmuckyAuth?.getCurrentUser?.() || {});
@@ -910,4 +930,3 @@ logoutBtn?.addEventListener("click", async () => {
     });
     window.location.href = "../index.html";
 });
-

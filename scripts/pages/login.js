@@ -1,7 +1,7 @@
 ﻿/* ES: Comentarios base para mantenimiento. EN: Baseline comments for maintenance. */
 // ============================================================
 //  scripts/pages/login.js
-//  QUÃ‰ HACE: Login REAL con Firebase Auth
+//  QUÉ HACE: Login REAL con Firebase Auth
 //    - Verifica email + contraseña contra Firebase
 //    - Guarda uid, email y nombre en SmuckyAuth (localStorage)
 //    - Redirige al usuario a donde iba o al inicio
@@ -222,12 +222,28 @@ document.getElementById("loginForm")?.addEventListener("submit", async (event) =
         }
 
         if (window.SmuckyAuth) {
+            // ES: Guarda TODOS los campos del perfil desde Firestore al iniciar sesión.
+            //     Así el perfil sobrevive entre sesiones sin perderse.
+            // EN: Saves ALL profile fields from Firestore on login.
+            //     This way the profile survives between sessions without being lost.
+            const existente = window.SmuckyAuth.getCurrentUser() || {};
             window.SmuckyAuth.saveUser({
-                uid: user.uid,
-                email: user.email,
-                nombre: userData.nombre || email.split("@")[0],
-                ciudad: userData.ciudad || "",
-                rol: userData.rol || "cliente",
+                ...existente,
+                uid:                user.uid,
+                email:              user.email,
+                nombre:             userData.nombre             || existente.nombre  || email.split("@")[0],
+                ciudad:             userData.ciudad             || existente.ciudad  || "",
+                rol:                userData.rol                || existente.rol     || "cliente",
+                telefono:           userData.telefono           || existente.telefono           || "",
+                telefono_numero:    userData.telefono_numero    || existente.telefono_numero    || "",
+                telefono_codigo:    userData.telefono_codigo    || existente.telefono_codigo    || "",
+                telefono_pais:      userData.telefono_pais      || existente.telefono_pais      || "MX",
+                calle:              userData.calle              || existente.calle              || "",
+                colonia:            userData.colonia            || existente.colonia            || "",
+                estado:             userData.estado             || existente.estado             || "",
+                cp:                 userData.cp                 || existente.cp                 || "",
+                fecha_cumpleanos:   userData.fecha_cumpleanos   || existente.fecha_cumpleanos   || "",
+                fecha_nacimiento:   userData.fecha_nacimiento   || existente.fecha_nacimiento   || "",
                 loginAt: new Date().toISOString()
             });
         }
@@ -244,4 +260,3 @@ document.getElementById("loginForm")?.addEventListener("submit", async (event) =
         }
     }
 });
-

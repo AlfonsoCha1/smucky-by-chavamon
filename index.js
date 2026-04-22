@@ -15,7 +15,7 @@ const products = [
     },
     {
         id: 2,
-        name: "Playera Premium Rojizo",
+        name: "Playera Premium Rojo",
         category: ["playeras_hombre"],
         subtitle: "Tipo de talla: Mediana",
         price: 150,
@@ -26,7 +26,7 @@ const products = [
     },
     {
         id: 3,
-        name: "Playera Premium Rosa",
+        name: "Playera Premium Rojizo",
         category: ["playeras_hombre"],
         subtitle: "Tipo de talla: Chica",
         price: 150,
@@ -538,13 +538,19 @@ async function syncProductsFromFirestore() {
 // ES: Persiste el carrito en localStorage para conservarlo entre sesiones.
 // EN: Persists the cart in localStorage to keep it between sessions.
 function saveCart() {
+    // ES: Escribe en localStorage usando SmuckyCart para sincronizar todas las páginas.
+    // EN: Writes to localStorage using SmuckyCart to sync all pages.
     localStorage.setItem(getCartKey(), JSON.stringify(cart));
+    window.dispatchEvent(new CustomEvent("smucky:cart-changed", { detail: { cart } }));
 }
 
 // ES: Persiste la lista de favoritos en localStorage.
 // EN: Persists the favorites list in localStorage.
 function saveFavorites() {
+    // ES: Escribe favoritos y dispara evento para sincronizar otras páginas.
+    // EN: Writes favorites and fires event to sync other pages.
     localStorage.setItem(getFavKey(), JSON.stringify(favorites));
+    window.dispatchEvent(new CustomEvent("smucky:favs-changed", { detail: { favs: favorites } }));
 }
 
 // ES: Actualiza los contadores de carrito y favoritos visibles en el encabezado.
@@ -639,7 +645,7 @@ function getProductGalleryImages(product) {
 function updateDetailFavoriteButton() {
     if (!detailFavoriteBtn || !detailSelection.product) return;
     const isFavorite = favorites.includes(detailSelection.product.id);
-    detailFavoriteBtn.textContent = isFavorite ? "Quitar me gusta â¤" : "Me gusta â¤";
+    detailFavoriteBtn.textContent = isFavorite ? "Quitar me gusta ❤️" : "Me gusta ❤️";
     detailFavoriteBtn.classList.toggle("active", isFavorite);
 }
 
@@ -2067,3 +2073,41 @@ updateCartUI();
 syncProfileMenu();
 showSlide(0);
 syncProductsFromFirestore();
+// ── Sincronización con otras páginas ────────────────────────
+// ES: Escucha cambios del carrito y favoritos hechos desde otras páginas
+//     (checkout, pedidos, perfil) y actualiza la UI en tiempo real.
+// EN: Listens for cart and favorites changes from other pages and updates UI.
+window.addEventListener("smucky:cart-changed", (e) => {
+    const newCart = e.detail?.cart;
+    if (!Array.isArray(newCart)) return;
+    if (JSON.stringify(cart) !== JSON.stringify(newCart)) {
+        cart = newCart;
+        updateCartUI();
+        updateHeaderBadges();
+    }
+});
+
+window.addEventListener("smucky:favs-changed", (e) => {
+    const newFavs = e.detail?.favs;
+    if (!Array.isArray(newFavs)) return;
+    if (JSON.stringify(favorites) !== JSON.stringify(newFavs)) {
+        favorites = newFavs;
+        updateHeaderBadges();
+        if (favoritesModal && favoritesModal.style.display === "flex") renderFavoritesUI();
+        renderAllProductSections();
+    }
+});
+
+window.addEventListener("storage", (e) => {
+    const uid = window.SmuckyAuth?.getCurrentUser?.()?.uid || "guest";
+    if (e.key === `smucky_cart_${uid}`) {
+        try { cart = JSON.parse(e.newValue || "[]"); } catch { cart = []; }
+        updateCartUI();
+        updateHeaderBadges();
+    }
+    if (e.key === `smucky_favorites_${uid}`) {
+        try { favorites = JSON.parse(e.newValue || "[]"); } catch { favorites = []; }
+        updateHeaderBadges();
+        renderAllProductSections();
+    }
+});

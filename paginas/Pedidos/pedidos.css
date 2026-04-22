@@ -1,4 +1,18 @@
+/*
+  Mover individualmente los íconos superiores a la izquierda
+  Move each top icon individually to the left
+*/
+
+/* Agrupar los tres íconos juntos a la izquierda / Group all three icons together on the left */
+.top-icons {
+  margin-left: 60px; /* Ajusta este valor para mover el grupo más a la izquierda o derecha */
+  margin-right: 80px; /* Ajusta este valor para mover el grupo más a la derecha o izquierda */
+  display: flex;
+  gap: 18px;
+}
 @import url("../../index.css");
+
+
 :root {
   --bg: #07090d;
   --bg-soft: rgba(16, 20, 26, 0.88);
@@ -101,12 +115,15 @@ body {
 
 
 .top-icons {
-  display: flex;
-  gap: 18px;
+  display: flex; /* Contenedor flexible para los íconos / Flex container for icons */
+  gap: 20px;     /* Espacio entre íconos / Space between icons */
+  /* Para mover todos los íconos a la izquierda, descomenta la siguiente línea: */
+  /* margin-left: 0; margin-right: auto; */
+  /* O usa justify-content: flex-start; */
 }
 
 .icon-btn {
-  width: 60px;
+  width: 60px;    /* Tamaño del botón de ícono / Icon button size */
   height: 60px;
   border: 1.5px solid var(--line);
   border-radius: 50%;

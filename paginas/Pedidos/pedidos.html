@@ -3,10 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mis pedidos | SMUCKY´s By CHAVAMON</title>
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="../LOGO DE LA EMPRESA/La-pura-letra-logo.png" />
+  <title>Mis pedidos</title>
+  <!-- Favicon personalizado con el logo -->
+  <link rel="icon" type="image/png" sizes="32x32" href="../../LOGO DE LA EMPRESA/La-pura-letra-logo.png">
+  <link rel="shortcut icon" href="../../LOGO DE LA EMPRESA/La-pura-letra-logo.png">
+  <link rel="apple-touch-icon" href="../../LOGO DE LA EMPRESA/La-pura-letra-logo.png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,22 +23,33 @@
 
   <header class="topbar">
     <div class="brand">
-      <img class="brand-logo" src="../LOGO DE LA EMPRESA/La-pura-letra-logo.png" alt="Logo">
+      <!-- Logo principal -->
+      <img class="brand-logo" src="../../LOGO DE LA EMPRESA/La-pura-letra-logo.png" alt="SMUCKY´s By CHAVAMON logo">
       <div class="brand-text-single">SMUCKY´s By CHAVAMON</div>
     </div>
 
     <nav class="nav">
-      <a href="../index.html">INICIO</a>
-      <a href="../tienda.html">TIENDA</a>
-      <a href="../colecciones.html">COLECCIONES</a>
-      <a href="../novedades.html">NOVEDADES</a>
+      <a href="../../index.html">INICIO</a>
       <a href="#" class="active">MIS PEDIDOS</a>
     </nav>
 
     <div class="top-icons">
-      <button class="icon-btn" aria-label="Buscar">⌕</button>
-      <button class="icon-btn" aria-label="Favoritos">♡</button>
-      <button class="icon-btn" aria-label="Carrito">🛍</button>
+      <!-- Buscador de pedidos -->
+      <div class="section-search-wrap" id="sectionSearchWrap" style="display:none;">
+        <input id="sectionSearchInput" type="text" placeholder="Busca tu pedido..." autocomplete="off">
+        <button id="sectionSearchClose" class="icon-btn" aria-label="Cerrar búsqueda" style="font-size:18px;">✕</button>
+      </div>
+      <button class="icon-btn" id="sectionSearchBtn" aria-label="Buscar pedido">⌕</button>
+      <!-- Favoritos con contador -->
+      <button class="icon-btn" id="sectionFavBtn" aria-label="Favoritos">
+        <span class="icon-btn-symbol">♡</span>
+        <span class="icon-badge" id="sectionFavCount" style="display:none;">0</span>
+      </button>
+      <!-- Carrito con contador -->
+      <button class="icon-btn" id="sectionCartBtn" aria-label="Carrito">
+        <span class="icon-btn-symbol">🛍</span>
+        <span class="icon-badge" id="sectionCartCount" style="display:none;">0</span>
+      </button>
     </div>
   </header>
 
@@ -48,7 +61,7 @@
       </div>
 
       <div class="hero-stats">
-        <div class="stat-pill"><span>🛍</span> <strong id="totalOrders">0</strong> Pedidos</div>
+        <div class="stat-pill"><span>🛍</span> <strong id="totalOrders">0</strong> Mis pedidos</div>
         <div class="stat-pill"><span>✅</span> <strong id="deliveredOrders">0</strong> Entregado</div>
         <div class="stat-pill"><span>🚚</span> <strong id="progressOrders">0</strong> En proceso</div>
       </div>
@@ -206,8 +219,37 @@
     </div>
   </div>
 
-  <script src="../../servicios/Mercado-Pago.js"></script>
+
+  <script src="../../servicios/carrito-favoritos.js"></script>
+  <script src="../../servicios/mercado-pago.js"></script>
+  <script src="../../scripts/pages/header-secciones.js"></script>
   <script src="pedidos.js"></script>
+
+  <!-- ── Modal Carrito (sección) ──────────────────────── -->
+  <div id="sectionCartModal" style="display:none;position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.5);align-items:flex-start;justify-content:flex-end;" aria-modal="true">
+    <div style="background:#fff;width:min(380px,100%);height:100vh;overflow-y:auto;padding:24px;box-shadow:-4px 0 24px rgba(0,0,0,.15);">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+        <h3 style="margin:0;font-size:18px;">Tu carrito</h3>
+        <button id="sectionCartClose" style="background:none;border:none;font-size:22px;cursor:pointer;">✕</button>
+      </div>
+      <div id="sectionCartItems" style="display:flex;flex-direction:column;gap:12px;"></div>
+      <div style="margin-top:16px;border-top:1px solid #eee;padding-top:12px;display:flex;justify-content:space-between;font-weight:700;">
+        <span>Total</span><span>$<span id="sectionCartTotal">0.00</span></span>
+      </div>
+      <a id="sectionCartCheckout" href="../paginas/checkout.html" style="display:block;margin-top:16px;background:#1a1a2e;color:#fff;text-align:center;padding:12px;border-radius:8px;text-decoration:none;font-weight:600;">Ir a pagar</a>
+    </div>
+  </div>
+
+  <!-- ── Modal Favoritos (sección) ────────────────────── -->
+  <div id="sectionFavModal" style="display:none;position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.5);align-items:flex-start;justify-content:flex-end;" aria-modal="true">
+    <div style="background:#fff;width:min(380px,100%);height:100vh;overflow-y:auto;padding:24px;box-shadow:-4px 0 24px rgba(0,0,0,.15);">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+        <h3 style="margin:0;font-size:18px;">Mis favoritos</h3>
+        <button id="sectionFavClose" style="background:none;border:none;font-size:22px;cursor:pointer;">✕</button>
+      </div>
+      <div id="sectionFavItems" style="display:flex;flex-direction:column;gap:12px;"></div>
+    </div>
+  </div>
 </body>
 
  <!-- Footer -->
@@ -219,7 +261,7 @@
           <ul>
             <li><a href="../../ayuda/entregas.html">Informacion De Entrega</a></li>
             <li><a href="../../ayuda/devoluciones.html">Politica De Devoluciones</a></li>
-            <li><a href="../Pedidos/pedidos.html">Pedidos</a></li>
+            <li><a href="../Pedidos/pedidos.html">Mis pedidos</a></li>
             <li><a href="../../soporte/index.html">Soporte</a></li>
           </ul>
         </div>
